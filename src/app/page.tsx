@@ -1,7 +1,8 @@
 
 import Link from 'next/link'
 
-
+import Image from 'next/image'
+import AgentCard from '../components/user/agent_card'
 export const metadata = {
   title: 'Props24 - The TripAdvisor for Real Estate Agents',
   description: 'Find and review the best real estate agents in your area',
@@ -24,29 +25,55 @@ const Home = ()=>{
     </h1>
 
     {/* Navigation Links */}
-    <div className="flex space-x-6 mb-8">
+    <div className="flex space-x-16 mb-6">
       <Link 
         href="/agents" 
-        className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary-light"
+        className="inline-flex items-center px-3 py-2 font-trip text-[18px] font-bold  text-gray-900 hover:text-primary-light"
       >
-        Find Agent
+       
+        {/* Find Agent */}
+        <img 
+    src="icons/agent.png"
+    alt="Agent Icon" 
+    className="w-8 h-6 object-contain pr-0"
+  />
+ 
+  <span className='pt-1'> Find Agent</span>
       </Link>
+
       <Link 
         href="/agencies" 
-        className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary-light"
+        className="inline-flex items-center px-3 py-2 font-trip text-[18px] font-bold text-gray-900 hover:text-primary-light"
       >
-        Find Agencies
+         <img 
+    src="icons/agency.png"
+    alt="Agent Icon" 
+    className="w-8 h-6 object-contain pr-1"
+  />
+ 
+  <span className='pt-1'> Find Agent</span>
+     
+        {/* Find Agencies */}
       </Link>
       <Link 
         href="/locations" 
-        className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary-light"
+        className="inline-flex items-center px-3 py-2 font-trip text-[18px] font-bold text-gray-900 hover:text-primary-light"
       >
-        Area
+
+<img 
+    src="icons/city.png"
+    alt="Agent Icon" 
+    className="w-8 h-7 object-contain pr-0"
+  />
+ 
+  <span className='pt-1'> Area </span>
+
+        
       </Link>
     </div>
 
     {/* Search Form - Moved Here */}
-    <form className="w-full max-w-md">
+    <form className="w-full max-w-xl">
       <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only">
         Search
       </label>
@@ -78,15 +105,29 @@ const Home = ()=>{
         />
         <button
           type="submit"
-          className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 
+          className="text-white absolute end-2.5 bottom-2.5 bg-[#2ab481] hover:bg-[#97e4c7]  focus:ring-4 
             focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-4 py-2"
         >
           Search
         </button>
       </div>
     </form>
-  </div>
+
+    <br></br>
+    <Image 
+    className='pt-8'
+  src='/images/banner.png'
+  width={1190} 
+  height={920}  
+  alt='banner'></Image>
+  
+  <AgentCard  />
 </div>
+
+
+  </div>
+
+
 
   )
 }
