@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* 
+@import "tailwindcss/preflight";  
+
+@import "tailwindcss/theme";  
+
+@import "tailwindcss/utilities";  */
+
 
 :root {
   --background: #ffffff;
@@ -20,4 +24,28 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+/* Add the hide-scrollbar utility */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+
+@theme {
+ 
+  
+  --color-primary: #0E214E;
+  --color-primary-light: #46AAFF;
+  --color-secondary: #2FB697;
+  --color-accent: #8958FE;
+  --color-white: #FFFFFF;
+  
 }

@@ -39,7 +39,7 @@ const content = [
   },
 ]
 
-const AgenciesCard = () => {
+const Popular_Cities = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showArrows, setShowArrows] = useState({
     left: false,
@@ -67,7 +67,7 @@ const AgenciesCard = () => {
         container.removeEventListener('scroll', checkScrollPosition);
       }
     };
-    
+
   }, []);
 
   const scrollLeft = () => {
@@ -109,7 +109,7 @@ const AgenciesCard = () => {
 
   return (
     <div className="relative p-5 max-w-7xl mx-auto">
-         <h1 className='text-black text-2xl font-bold mb-6'>Top Rated Real Estate Agencies in Italy</h1>
+      <h1 className='text-black text-2xl font-bold mb-6'>Popular Cities </h1>
       <div
         ref={scrollContainerRef}
         onTouchStart={handleTouchStart}
@@ -121,37 +121,14 @@ const AgenciesCard = () => {
         {content.map((a, b) => (
           <div
             key={b}
-            className="w-[280px] sm:w-[300px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
+            className="w-[280px] sm:w-[350px] h-[200px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
           >
-            <Link href="#">
-              <div className="flex justify-center pt-4">
-                <Image
-                  className="rounded-t-lg"
-                  src="/images/profile.png"
-                  alt="Technology acquisitions"
-                  width={255}
-                  height={235}
-                />
+         
+              <div className="flex items-center justify-center h-full w-full ">
+                <h1 className="text-black">{a.name}</h1>
+              
               </div>
-            </Link>
-            <div className="flex items-center p-3 pl-6">
-              <div className="flex text-yellow-400">
-                <StarIcon key={1} className="h-5 w-5" />
-                <StarIcon key={2} className="h-5 w-5" />
-                <StarIcon key={3} className="h-5 w-5" />
-              </div>
-              <span className="text-black text-1 text-sm">(20 reviews)</span>
-            </div>
-            <div className="text-start pl-6">
-              <Link href="#">
-                <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
-                  {a.name}
-                </h5>
-              </Link>
-              <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
-                {a.specialty}
-              </p>
-            </div>
+      
           </div>
         ))}
       </div>
@@ -175,18 +152,9 @@ const AgenciesCard = () => {
         </button>
       )}
 
-      {/* <style jsx global>{`
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style> */}
-
+    
     </div>
   );
 }
 
-export default AgenciesCard
+export default Popular_Cities
