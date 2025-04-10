@@ -3,36 +3,169 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useState ,useRef,useEffect } from 'react'
 import Link from 'next/link'
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { FormValues } from '@/src/type/validation_type/formTypes';
 import registerSchema from '@/src/util/validation/register_schema';
-
-
+import axiosClient from '@/src/lib/axios_client';
+import { requestOtpApi, verifyOtpApi } from '@/src/lib/api_service_client/user_service/otp_handler';
+import { toast } from 'react-hot-toast';
+import { registerUserApi } from '@/src/lib/api_service_client/user_service/auth_handler';
 
 const Register = ()=>{
 
 
 
-      const [email, setEmail] = useState('')
-      const [password, setPassword] = useState('')
-      const [conformPassword,setConformPassword]=useState('')
+      const [allFormData, setAllFormData] = useState<FormValues>({email:'', password: '',confirmPassword:'',role:''});
+      const [otpVerification,setOtpVerification]=useState<Boolean>(false)
+      const [resendOtp, setResendOtp] = useState(false);
+      const [timeLeft, setTimeLeft] = useState<number>(0);
+      const timeRef = useRef<NodeJS.Timeout | null>(null);
+       
 
-      const initialValues: FormValues = { email: '', password: '',confirmPassword:'' };
+
+      const sendOtp=(email:string)=>{
+        console.log("sendotp ")
+        console.log(email)
+
+        requestOtpApi(email)
+
+         
+      }
+     
+
+      const handleResendOtp = (email: string = allFormData.email) => {
+        // Logic to resend OTP
+        console.log(timeLeft)
+        console.log("Resending OTP...");
+        console.log("client first")
+        console.log(email)
+        setTimeLeft(10);
+        setResendOtp(false);
+        sendOtp(email)
+      };
 
 
-      const handleSubmit = () =>{
+     
 
-        alert("submit")
+      const initialValues: FormValues = { email: '', password: '',confirmPassword:'',role:'agent' };
+
+
+
+
+      const handleSubmit = async(values_data:FormValues,formikHelpers: FormikHelpers<FormValues>) =>{
+
+        console.log("all dataaaaaaaaaaaaaa")
+        setAllFormData({email:values_data.email,password:values_data.password,confirmPassword:values_data.confirmPassword,role:values_data.role})
+
+       
+        setOtpVerification(true)
+        handleResendOtp(values_data.email)
+
+
+        formikHelpers.resetForm();
+
+    
+
+      }
+
+
+
+
+      const [digits, setDigits] = useState<string[]>(["", "", "", ""]); 
+      const inputRefNext = useRef<(HTMLInputElement | null)[]>([]);
+
+      const onSetDigit = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        const newDigits = [...digits];
+        let value = e.target.value;
+        newDigits[index] = value;
+        setDigits(newDigits);
+        if (value && inputRefNext.current && index < inputRefNext.current.length - 1) {
+          inputRefNext.current[index + 1]?.focus();
+        }
+      };
+
+    
+
+      useEffect(() => {
+        console.log("inside ")
+       
+        
+        if (timeLeft > 0) {
+          timeRef.current = setInterval(() => {
+            setTimeLeft((prev) => prev - 1);
+          }, 1000);
+        } else {
+          setResendOtp(true);
+        }
+    
+        return () => {
+          if (timeRef.current) {
+            console.log("here cleaned up")
+            clearInterval(timeRef.current);
+          }
+        };
+      }, [timeLeft]);
+
+
+     
+
+    
+     
+
+
+
+      const afterOtpSubmit = async()=>{
+
+
+        let otp = digits.join("");
+
+        if(otp.length == 0){
+          toast.error('ENTER THE OTP');
+        }else{
+          const verified = await verifyOtpApi(otp,allFormData.email) 
+         
+
+          if(!verified.status){
+            const errorMessage = verified.data?.message || 'Failed to verify OTP';
+            toast.error(errorMessage);
+          }else{
+
+
+             registerUserApi(allFormData)
+
+
+
+
+
+          }
+
+
+        }
+
 
 
       }
+
+
+
+
+
+
+
+      
+    
+
+
+
+
     
 
 
     return (
-        <div className="min-h-[80vh] flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8 bg-gray-50">
+      <>
+        {!otpVerification ?<div className="min-h-[80vh] flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8 bg-gray-50">
         <div className="w-full max-w-md bg-white rounded-lg shadow-sm p-8"> 
   <div className="sm:mx-auto sm:w-full sm:max-w-md">
     <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -58,14 +191,15 @@ const Register = ()=>{
         Choose your role
       </label>
       <div className="relative">
-        <select
+        <Field
+          as="select"
           id="role"
           name="role"
           className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md text-gray-700 bg-white appearance-none"
         >
           <option value="agent">I am an Agent</option>
-          <option value="agency">I represent an Agency</option>
-        </select>
+          <option value="agencies">I represent an Agency</option>
+        </Field>
         <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
           <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -148,7 +282,7 @@ const Register = ()=>{
           <button
             type="submit"
 
-            className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 "
           >
             sign up
           </button>
@@ -171,7 +305,74 @@ const Register = ()=>{
       </div>
     </div>
     </div>
-  </div>
+  </div>:
+  
+  
+  <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
+          <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
+            <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
+              <div className="flex flex-col items-center justify-center text-center space-y-2">
+                <div className="font-semibold text-3xl">
+                  <p>Email Verification</p>
+                </div>
+                <div className="flex flex-row text-sm font-medium text-gray-400">
+                  <p>We have sent a code to your email emilshiju10@gmail.com</p>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex flex-col space-y-16">
+                  
+                  <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+                    {digits.map((digit, index) => (
+                      <div className="w-16 h-16" key={index}>
+                        <input
+                          
+                          ref={(el) => {(inputRefNext.current[index] = el)}}
+                          className="w-full h-full text-black flex flex-col items-center justify-center text-center px-0 py-0 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                          type="text"
+                          value={digit}
+                          onChange={(e) => onSetDigit(e, index)} // Pass index to identify which digit to update
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-col space-y-5">
+                    <div>
+                      <button
+                        className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
+                        onClick={afterOtpSubmit}
+                      >
+                        Verify Account
+                      </button>
+                    </div>
+
+                    <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
+                      <p>Didn't receive code?</p>
+                      {resendOtp && (
+                        <p
+                          className="flex flex-row items-center text-blue-600"
+                          onClick={()=>handleResendOtp()}
+                        >
+                          Resend
+                        </p>
+                      )} 
+                      {!resendOtp && (
+                        <p className="flex flex-row items-center text-blue-600">
+                          {timeLeft}
+                        </p>
+                      )} 
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        }
+  </>
 
     )
 }

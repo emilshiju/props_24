@@ -1,0 +1,19 @@
+
+
+
+enum Role {
+  ADMIN
+  USER
+  AGENT
+  AGENCIES
+}
+
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  password  String
+  role Role
+  status Boolean
+ 
+}
