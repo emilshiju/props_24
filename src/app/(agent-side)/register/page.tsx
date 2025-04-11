@@ -30,7 +30,6 @@ const Register = ()=>{
         console.log(email)
 
         requestOtpApi(email)
-
          
       }
      
@@ -125,22 +124,24 @@ const Register = ()=>{
           toast.error('ENTER THE OTP');
         }else{
           const verified = await verifyOtpApi(otp,allFormData.email) 
-         
 
           if(!verified.status){
             const errorMessage = verified.data?.message || 'Failed to verify OTP';
             toast.error(errorMessage);
           }else{
 
+            const registered = await registerUserApi(allFormData)
+            if(!registered.status){
+              const errorMessage = registered.data?.message || 'Failed to register';
+              toast.error(errorMessage);
+            }else{
 
-             registerUserApi(allFormData)
+              alert("sucessfuly registered ")
 
-
-
+            }
 
 
           }
-
 
         }
 

@@ -3,16 +3,19 @@ import axiosClient from "../../axios_client"
 
 
 
-export const registerUserApi=async(UserDetails:FormValues)=>{
+export const registerUserApi=async(userDetails:FormValues)=>{
 
     try{
 
-        const responseRegisterUsrApi = await axiosClient.post('/register',{UserDetails})
-        
+        const responseRegisterUsrApi = await axiosClient.post('/register',{userDetails})
+
+        return {status:responseRegisterUsrApi.data.status,data:responseRegisterUsrApi.data,statusCode:responseRegisterUsrApi.status}
+
 
     }catch(error){
 
         console.log("error occur in registerUserApi",error)
+        return {status:false,data:{message:"error occur in registration"}}
     }
 }
 

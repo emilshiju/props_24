@@ -1,15 +1,15 @@
 import { UserDetails } from "@/src/type/api_type/user_type";
 import prisma from "../prisma_client";
-import { VerifyOTPResponse } from "@/src/type/controller_type/user_controller";
+import { registeredUser, VerifyOTPResponse } from "@/src/type/controller_type/user_controller";
+import { v4 as uuidv4 } from 'uuid';
 
 
 
 
-
-export async function registerUser(details:UserDetails){
+export async function registerUser(details:UserDetails):Promise<{status:boolean,user?: registeredUser }>{
 
     try {
-        const user = await prisma.user.create({
+        let  user = await prisma.user.create({
           data: {
             email: details.email,
             password: details.password,
@@ -17,11 +17,26 @@ export async function registerUser(details:UserDetails){
           },
         });
         console.log("User registered successfully:", user);
+
+        
+
+        return {status:true,user: {
+          ...user,
+          id: user.id.toString()  
+        }}
+
+        
       } catch (error) {
+
         console.error("Error registering user:", error);
+
+        return {status:false}
+        
       }
 
 }
+
+
 
 export async function otpRegister(email:string,otp:string):Promise<boolean> {
 
@@ -31,7 +46,11 @@ export async function otpRegister(email:string,otp:string):Promise<boolean> {
     console.log("otp register")
     console.log(email,otp)
 
-      await prisma.otp.deleteMany({where: { email: email }});
+    const existingOtp = await prisma.otp.findFirst({
+      where: { email: email },
+    });
+    
+    if(existingOtp){  await prisma.otp.deleteMany({where: { email: email }})  }
     
 
 
