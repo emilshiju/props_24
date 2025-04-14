@@ -42,3 +42,14 @@ model otp {
   createdAt DateTime @default(now())
   
 }
+
+
+model profile {
+  id              String   @id @default(uuid())
+  userId          user     @relation(fields: [userId], references: [id])
+  phone           String
+  licenseNumber   String
+  bio             String
+  specialisation  String
+  createdAt       DateTime @default(now())      
+}

@@ -14,6 +14,16 @@ export function middleware(request: NextRequest) {
       console.log("dcoded token")
       console.log(decoded)
 
+      const requestHeaders = new Headers(request.headers);
+      requestHeaders.set('x-decoded-token', JSON.stringify(decoded));
+
+      return NextResponse.next({
+        request: {
+            headers: requestHeaders,
+        },
+      });
+
+
     }
 
 

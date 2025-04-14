@@ -1,92 +1,137 @@
+'use client'
+import { useState ,useRef,useEffect } from 'react'
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
+import { ProfileData } from '@/src/type/validation_type/profilePage_type';
+import profileSchema from '@/src/util/validation/profile_scehma';
+import { createProfileApi } from '@/src/lib/api_service_client/user_service/profile_handler';
 
 
 
 
 const CreateProfile = ()=>{
+
+
+    const initialValues:ProfileData = { userName: '', phone: '',licenseNumber:'',bio:'',specialization:'' };
+
+    const handleSubmit = async(values_data:ProfileData,formikHelpers: FormikHelpers<ProfileData>)=>{
+
+                console.log("create profile submit")
+                console.log(values_data)
+
+                createProfileApi(values_data)
+    }
+
+    
     
 
     return (
-        // <div className="text-black">HELLO</div>
-
+     
+        <Formik 
+        initialValues={initialValues}
+        validationSchema={profileSchema}
+        onSubmit={handleSubmit}
+        >
+            {({ values, handleChange, errors, touched }) => (
+         
         <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white shadow rounded-lg p-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Profile Information</h2>
           
-          <form  className="space-y-6">
+          <Form  className="space-y-6">
             <div>
-              <label htmlFor="userId" className="block text-sm font-medium text-gray-700">
-                User ID
+              <label  className="block text-sm font-medium text-gray-700">
+                User Number
               </label>
-              <input
+              <Field
                 type="text"
-                id="userId"
-                name="userId"
-                // value={profile.userId}
-                // onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                required
+                id="userName"
+                name="userName"
+                value={values.userName}
+                onChange={handleChange}
+                className="mt-1  block w-full text-black rounded-md focus:outline-none border-gray-300 shadow-sm  sm:text-sm h-8"
+                
               />
+               <div className="h-1">
+                {errors.userName&&touched.userName ?<div className="text-red-500 text-xs mt-1 ">{errors.userName}</div>:null}
+            </div>
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+               
+              <label  className="block text-sm font-medium text-gray-700">
                 Phone Number
               </label>
-              <input
+              <Field
                 type="tel"
                 id="phone"
                 name="phone"
-                // value={profile.phone}
-                // onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                required
+                value={values.phone}
+                onChange={handleChange}
+                className="mt-1 block w-full text-black rounded-md border-gray-300 shadow-sm focus:outline-none h-8 sm:text-sm"
+            
               />
+              <div className="h-1">
+                {errors.phone&&touched.phone ?<div className="text-red-500 text-xs mt-1 ">{errors.phone}</div>:null}
+            </div>
             </div>
 
             <div>
               <label htmlFor="licenseNumber" className="block text-sm font-medium text-gray-700">
                 License Number
               </label>
-              <input
+              <Field
                 type="text"
                 id="licenseNumber"
                 name="licenseNumber"
-                // value={profile.licenseNumber}
-                // onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                required
+                value={values.licenseNumber}
+                onChange={handleChange}
+                className="mt-1 block w-full text-black rounded-md border-gray-300 shadow-sm focus:outline-none h-8  sm:text-sm"
+                
               />
+              <div className="h-1">
+                {errors.licenseNumber&&touched.licenseNumber ?<div className="text-red-500 text-xs mt-1 ">{errors.licenseNumber}</div>:null}
+            </div>
             </div>
 
             <div>
-              <label htmlFor="specialization" className="block text-sm font-medium text-gray-700">
+              <label  className="block text-sm font-medium text-gray-700">
                 Specialization
               </label>
-              <input
-                type="text"
+              <Field
+                as="select"
                 id="specialization"
                 name="specialization"
-                // value={profile.specialization}
-                // onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                required
-              />
+                // value={values.specialization}
+                onChange={handleChange}
+                className="mt-1 block w-full text-black rounded-md border-gray-300 shadow-sm focus:outline-none h-8  sm:text-sm"
+                >
+            
+              <option value="" disabled hidden></option>
+               <option value="agent">I am an Agent</option>
+               <option value="agencies">I represent an Agency</option>
+               </Field>
+              <div className="h-1">
+                {errors.specialization&&touched.specialization ?<div className="text-red-500 text-xs mt-1 ">{errors.specialization}</div>:null}
+            </div>
             </div>
 
             <div>
               <label htmlFor="bio" className="block text-sm font-medium text-gray-700">
                 Bio
               </label>
-              <textarea
+              <Field
                 id="bio"
                 name="bio"
                 rows={4}
-                // value={profile.bio}
-                // onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                required
+                value={values.bio}
+                onChange={handleChange}
+                className="mt-1 block w-full text-black rounded-md border-gray-300 shadow-sm focus:outline-none h-8  sm:text-sm"
+                
               />
+              <div className="h-1">
+                {errors.bio&&touched.bio ?<div className="text-red-500 text-xs mt-1 ">{errors.bio}</div>:null}
+            </div>
             </div>
 
             <div className="flex justify-end">
@@ -97,11 +142,17 @@ const CreateProfile = ()=>{
                 Save Profile
               </button>
             </div>
-          </form>
+          </Form>
+
+
         </div>
       </div>
     </div>
+    
+      )}
+    </Formik>
     )
+    
 
 }
 
