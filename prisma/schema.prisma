@@ -30,6 +30,7 @@ model user {
   role Role
   status Boolean @default(false)
   createdAt DateTime @default(now())
+  profile profile?
  
 }
 
@@ -46,10 +47,13 @@ model otp {
 
 model profile {
   id              String   @id @default(uuid())
-  userId          user     @relation(fields: [userId], references: [id])
+  user            user     @relation(fields: [userId], references: [id]) 
+  userName        String   
   phone           String
   licenseNumber   String
   bio             String
   specialisation  String
-  createdAt       DateTime @default(now())      
+  imageUrl       String? 
+  createdAt       DateTime @default(now())    
+  userId          String   @unique
 }

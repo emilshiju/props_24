@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { ProfileData } from '@/src/type/validation_type/profilePage_type';
 import profileSchema from '@/src/util/validation/profile_scehma';
 import { createProfileApi } from '@/src/lib/api_service_client/user_service/profile_handler';
-
+import { toast } from 'react-hot-toast';
 
 
 
@@ -15,10 +15,21 @@ const CreateProfile = ()=>{
 
     const handleSubmit = async(values_data:ProfileData,formikHelpers: FormikHelpers<ProfileData>)=>{
 
-                console.log("create profile submit")
-                console.log(values_data)
+              console.log("create profile submit")
+              console.log(values_data)
 
-                createProfileApi(values_data)
+              const ress = await createProfileApi(values_data)
+              
+              if(ress.status){
+              
+              }else{
+
+                const errorMessage = ress.message || 'Failed to verify OTP';
+                toast.error(errorMessage)
+              }
+
+              console.log("afterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+              console.log(ress)
     }
 
     

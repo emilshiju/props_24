@@ -4,6 +4,11 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
+import loginSchema from '@/src/util/validation/login_scehma';
+import { LoginValues } from '@/src/type/validation_type/formTypes';
+import { loginUserApi } from '@/src/lib/api_service_client/user_service/auth_handler';
+import { toast } from 'react-hot-toast';
 
 
 const LoginPage =()=>{
@@ -11,6 +16,24 @@ const LoginPage =()=>{
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+
+    const initialValues = {role:'', email:'',password:'' };
+
+    const handleSubmit = async(values_data:LoginValues,formikHelpers:FormikHelpers<LoginValues>)=>{
+
+     
+      const response = await loginUserApi(values_data)
+       
+      if(!response.status){
+        
+        toast.error(response.message)
+      }
+
+
+
+
+    }
 
 
 
@@ -27,11 +50,20 @@ const LoginPage =()=>{
         </p>
       </div>
 
+
+
+     <Formik 
+           initialValues={initialValues}
+           validationSchema={loginSchema}
+           onSubmit={handleSubmit}
+           >
+               {({ values, handleChange, errors, touched }) => (
+
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         
           
 
-          <form className="space-y-6" >
+          <Form className="space-y-6" >
 
           
         <div>
@@ -39,14 +71,21 @@ const LoginPage =()=>{
             Choose your role
           </label>
           <div className="relative">
-            <select
+            <Field
+              as="select"
               id="role"
               name="role"
+              onChange={handleChange}
               className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md text-gray-700 bg-white appearance-none"
             >
-              <option value="agent">I am an Agent</option>
-              <option value="agency">I represent an Agency</option>
-            </select>
+               <option value="" disabled hidden></option>
+               <option value="agent">I am an Agent</option>
+               <option value="agencies">I represent an Agency</option>
+
+            </Field>
+            <div className="h-1">
+                {errors.role&&touched.role?<div className="text-red-500 text-xs mt-1 ">{errors.role}</div>:null}
+            </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
               <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -65,12 +104,14 @@ const LoginPage =()=>{
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                  value={values.email}
+                  onChange={handleChange}
+                  className="block w-full text-black appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 />
+                 <div className="h-1">
+                {errors.email&&touched.email?<div className="text-red-500 text-xs mt-1 ">{errors.email}</div>:null}
+            </div>
+
               </div>
             </div>
 
@@ -83,12 +124,13 @@ const LoginPage =()=>{
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                  value={values.password}
+                  onChange={handleChange}
+                  className="block w-full text-black  rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 />
+                 <div className="h-1">
+                {errors.password&&touched.password ?<div className="text-red-500 text-xs mt-1 ">{errors.password}</div>:null}
+            </div>
               </div>
             </div>
 
@@ -106,12 +148,12 @@ const LoginPage =()=>{
               <button
                 type="submit"
     
-                className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 "
               >
                 sign In
               </button>
             </div>
-          </form>
+          </Form>
 
           <div className="mt-6">
             <div className="relative">
@@ -125,6 +167,13 @@ const LoginPage =()=>{
 
           </div>
         </div>
+      )}
+    </Formik>
+
+
+
+
+
         </div>
       </div>
     

@@ -6,3 +6,8 @@ export  interface UserDetails {
     role:'admin'|'user'|'agent'|'agencies'
   }
   
+  export interface createProfileRes {
+    status: boolean;
+    message: string;
+    statusCode?: number;
+  }

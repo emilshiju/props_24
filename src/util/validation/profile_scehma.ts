@@ -22,10 +22,10 @@ const profileSchema = Yup.object({
     .matches(/^[A-Z0-9-]+$/, 'License number can only contain uppercase letters, numbers, and hyphens')
     .required('License number is required'),
 
-  specialization: Yup.string()
-    .min(3, 'Specialization must be at least 3 characters')
-    .max(50, 'Specialization must not exceed 50 characters')
-    .required('Specialization is required'),
+  // specialization: Yup.string()
+  //   .min(3, 'Specialization must be at least 3 characters')
+  //   .max(50, 'Specialization must not exceed 50 characters')
+  //   .required('Specialization is required'),
 
   bio: Yup.string()
     .min(10, 'Bio must be at least 10 characters')

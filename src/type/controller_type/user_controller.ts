@@ -14,3 +14,17 @@ export interface VerifyOTPResponse {
     createdAt: Date;     
   }
   
+
+
+
+  
+
+export interface profileType {
+  userName: string;
+  phone: string;
+  licenseNumber: string;
+  bio: string;
+  specialization: string;
+}
+
+
