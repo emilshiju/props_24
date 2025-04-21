@@ -34,7 +34,7 @@ export const verifyOtpApi=async(otp:string,email:string)=>{
         console.log("error in verifyOTPAPI",error)
 
         return {
-            status:false,
+                status:false,
             data:{message:"Failed to verify OTP"}
         }
 

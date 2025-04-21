@@ -11,7 +11,7 @@ import { toast } from 'react-hot-toast';
 const CreateProfile = ()=>{
 
 
-    const initialValues:ProfileData = { userName: '', phone: '',licenseNumber:'',bio:'',specialization:'' };
+    const initialValues:ProfileData = { businessName: '', phone: '',licenseNumber:'',bio:'',specialization:'' };
 
     const handleSubmit = async(values_data:ProfileData,formikHelpers: FormikHelpers<ProfileData>)=>{
 
@@ -52,19 +52,19 @@ const CreateProfile = ()=>{
           <Form  className="space-y-6">
             <div>
               <label  className="block text-sm font-medium text-gray-700">
-                User Number
+              Business Name
               </label>
               <Field
                 type="text"
-                id="userName"
-                name="userName"
-                value={values.userName}
+                id="businessName"
+                name="businessName"
+                value={values.businessName}
                 onChange={handleChange}
                 className="mt-1  block w-full text-black rounded-md focus:outline-none border-gray-300 shadow-sm  sm:text-sm h-8"
                 
               />
                <div className="h-1">
-                {errors.userName&&touched.userName ?<div className="text-red-500 text-xs mt-1 ">{errors.userName}</div>:null}
+                {errors.businessName&&touched.businessName ?<div className="text-red-500 text-xs mt-1 ">{errors.businessName}</div>:null}
             </div>
             </div>
 

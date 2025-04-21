@@ -16,7 +16,7 @@ const Register = ()=>{
 
 
 
-      const [allFormData, setAllFormData] = useState<FormValues>({email:'', password: '',confirmPassword:'',role:''});
+      const [allFormData, setAllFormData] = useState<FormValues>({userName:'',email:'', password: '',confirmPassword:'',role:''});
       const [otpVerification,setOtpVerification]=useState<Boolean>(false)
       const [resendOtp, setResendOtp] = useState(false);
       const [timeLeft, setTimeLeft] = useState<number>(0);
@@ -47,7 +47,7 @@ const Register = ()=>{
 
      
 
-      const initialValues: FormValues = { email: '', password: '',confirmPassword:'',role:'agent' };
+      const initialValues: FormValues = { userName:"", email: '', password: '',confirmPassword:'',role:'agent' };
 
 
 
@@ -55,7 +55,7 @@ const Register = ()=>{
       const handleSubmit = async(values_data:FormValues,formikHelpers: FormikHelpers<FormValues>) =>{
 
         console.log("all dataaaaaaaaaaaaaa")
-        setAllFormData({email:values_data.email,password:values_data.password,confirmPassword:values_data.confirmPassword,role:values_data.role})
+        setAllFormData({userName:values_data.userName,email:values_data.email,password:values_data.password,confirmPassword:values_data.confirmPassword,role:values_data.role})
 
        
         setOtpVerification(true)
@@ -207,7 +207,24 @@ const Register = ()=>{
         </div>
       </div>
     </div>
-
+    <div>
+          <label  className="block text-sm font-medium text-gray-700">
+          user Name
+          </label>
+          <div >
+            <Field
+              id="userName"
+              name="userName"
+              type="text"
+              value={values.userName}
+              onChange={handleChange}
+              className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm text-black"
+            />
+            <div className="h-1">
+            {errors.userName && touched.userName ? <div className="text-red-500 text-xs mt-1 ">{errors.userName}</div> : null}
+            </div>
+          </div>
+        </div>
 
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">

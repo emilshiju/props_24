@@ -11,19 +11,28 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #0E214E;
+  --primary-light: #46AAFF;
+  --secondary: #2FB697;
+  --accent: #8958FE;
+  --white: #FFFFFF;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    --foreground: #171717;
-  }
+.dark {
+  --background: #171717;
+  --foreground: #ffffff;
+  --primary: #46AAFF;
+  --primary-light: #0E214E;
+  --secondary: #2FB697;
+  --accent: #8958FE;
+  --white: #171717;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 
@@ -40,12 +49,9 @@ body {
 
 
 @theme {
- 
-  
-  --color-primary: #0E214E;
-  --color-primary-light: #46AAFF;
-  --color-secondary: #2FB697;
-  --color-accent: #8958FE;
-  --color-white: #FFFFFF;
-  
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-white: var(--white);
 }

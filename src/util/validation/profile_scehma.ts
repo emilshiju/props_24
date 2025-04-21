@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 
 const profileSchema = Yup.object({
 
-  userName: Yup.string()
+  businessName: Yup.string()
     .min(3, 'User ID must be at least 3 characters')
     .max(20, 'User ID must not exceed 20 characters')
     .matches(/^[a-zA-Z0-9_]+$/, 'User ID can only contain letters, numbers, and underscores')

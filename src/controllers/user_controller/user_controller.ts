@@ -11,6 +11,7 @@ export async function registerUser(details:UserDetails):Promise<{status:boolean,
     try {
         let  user = await prisma.user.create({
           data: {
+            userName:details.userName,
             email: details.email,
             password: details.password,
             role:details.role,
@@ -115,7 +116,7 @@ export async function createProfile(userId:string,profileDetails:profileType){
     console.log(userId,profileDetails)
 
 
-    const created = await prisma.profile.create({data:{userId:userId,userName:profileDetails.userName,phone:profileDetails.phone,licenseNumber:profileDetails.licenseNumber, bio:profileDetails.bio,specialisation:profileDetails.specialization}})
+    const created = await prisma.profile.create({data:{userId:userId,businessName:profileDetails.businessName,phone:profileDetails.phone,licenseNumber:profileDetails.licenseNumber, bio:profileDetails.bio,specialisation:profileDetails.specialization}})
 
     console.log("created")
     console.log(created)

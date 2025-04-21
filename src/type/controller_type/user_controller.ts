@@ -20,7 +20,7 @@ export interface VerifyOTPResponse {
   
 
 export interface profileType {
-  userName: string;
+  businessName: string;
   phone: string;
   licenseNumber: string;
   bio: string;

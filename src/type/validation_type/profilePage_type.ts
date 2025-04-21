@@ -1,7 +1,7 @@
 
 
 export interface ProfileData {
-    userName: string;
+    businessName: string;
     phone: string;
     licenseNumber: string;
     bio: string;

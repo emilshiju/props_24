@@ -7,6 +7,14 @@ const nextConfig:NextConfig = {
       use: ['@svgr/webpack'],
     });
     return config;
+  },images: {
+    domains: ['firebasestorage.googleapis.com'], 
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.inforwaves.com',
+      },
+    ]
   },
 };
 
