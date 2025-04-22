@@ -59,3 +59,13 @@ model profile {
   createdAt       DateTime @default(now())    
   userId          String   @unique
 }
+
+
+model city{
+
+  id        String   @id @default(uuid())
+  cityName  String
+  country   String
+  createdAt DateTime @default(now())
+
+}

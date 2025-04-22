@@ -16,7 +16,7 @@ export async function GET(request:NextRequest,{params}:{params:{userId:string}})
         const resUserDetails = await getUserDetails(userId)
 
         if(!resUserDetails){
-            return NextResponse.json({status:false, message:resUserDetails},{status:500});
+            return NextResponse.json({status:false,message: 'internal error'},{status:500});
         }
         console.log("user detailssssssssssssssssssssssssss")
         console.log(resUserDetails)
@@ -27,6 +27,8 @@ export async function GET(request:NextRequest,{params}:{params:{userId:string}})
 
     }catch(error){
         
+        console.log("error occured in route userdetails")
+
         return NextResponse.json({status:false, message: 'internal error' },{status:500});
         
     }

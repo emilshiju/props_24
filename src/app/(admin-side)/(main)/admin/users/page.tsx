@@ -118,8 +118,13 @@ const ListUsers=()=>{
     const fetchUsers = async (): Promise<void> => {
       try {
         const res_all_users:resListUsers = await listAllUsersApi();
+        if(res_all_users.status){
         
         setAllUsers(res_all_users.data)
+
+        }else{
+          alert("occured error")
+        }
 
       } catch (error) {
         console.error('Failed to fetch users:', error);

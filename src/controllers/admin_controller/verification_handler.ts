@@ -6,9 +6,9 @@ export async function get_All_Pending_VerificationAgent(){
 
     try{
 
-        const res_agent = await prisma.user.findMany({where: {
-            role: "agent", 
-        }})
+        const res_agent = await prisma.user.findMany({where: { role: "agent" },
+            include: { profile: true }
+        })
 
         return res_agent
 
@@ -17,6 +17,8 @@ export async function get_All_Pending_VerificationAgent(){
     }catch(error){
 
         console.log("error occur in get_all_pending_verification_agent")
+
+        return false
     }
 
 }
@@ -28,9 +30,9 @@ export async function get_All_Pending_VerificationAgencies(){
 
     try{
 
-        const res_agencies = await prisma.user.findMany({where: {
-            role: "agencies", 
-        }})
+        const res_agencies = await prisma.user.findMany({where: { role: "agencies" },
+            include: { profile: true }
+        })
 
         
 
@@ -40,6 +42,32 @@ export async function get_All_Pending_VerificationAgencies(){
     }catch(error){
 
         console.log("error occur in get_all_pending_verification_agencies")
+
+        return false
     }
 
+}
+
+export async  function getDetails(userId:string){
+
+    try{
+
+
+        const res_Details= await prisma.user.findFirst({
+            where: {
+              id: userId, 
+            },
+            include: {
+              profile: true, 
+            },
+          });
+
+          return res_Details
+
+
+    }catch(error){
+        console.log("error occured in getDetails",error)
+
+        return false
+    }
 }

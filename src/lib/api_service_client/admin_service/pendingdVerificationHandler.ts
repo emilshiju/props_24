@@ -8,12 +8,21 @@ export const get_AllPending_Verification_AgentApi=async()=>{
 
         const res_Get_AllPending_Verification_AgenciesApi = await axiosClient.get('/admin/verification/agent')
 
-
-
+        return {
+            status:res_Get_AllPending_Verification_AgenciesApi.data.status,
+            data:res_Get_AllPending_Verification_AgenciesApi.data.message,
+            statusCode:res_Get_AllPending_Verification_AgenciesApi.status
+        }
 
 
     }catch(error){
+
         console.log("error occured in getAllPendingVerificationAgent",error)
+
+        return {
+            status:false,
+            data:'error occured'
+        }
     }
 
 }
@@ -26,13 +35,49 @@ export const get_AllPending_Verification_AgenciesApi=async()=>{
 
         const res_Get_AllPending_Verification_AgenciesApi = await axiosClient.get('/admin/verification/agencies')
 
-
+        return {
+            status:res_Get_AllPending_Verification_AgenciesApi.data.status,
+            data:res_Get_AllPending_Verification_AgenciesApi.data.message,
+            statusCode:res_Get_AllPending_Verification_AgenciesApi.status
+        }
 
 
 
     }catch(error){
+
         console.log("error occrued in getAllPedingVericationAgencies ",error)
+
+        return {
+            status:false,
+            data:'error occured'
+        }
     }
 
     
+}
+
+
+
+export const get_EntitiDetails_Api=async(userId:string)=>{
+
+    try{
+
+      const  res_EntitiDetails_Api = await axiosClient.get(`/verification/${userId}`)
+
+      return {
+        status:res_EntitiDetails_Api.data.status,
+        data:res_EntitiDetails_Api.data.message,
+        statusCode:res_EntitiDetails_Api.status
+      }
+
+
+    }catch(error){
+
+        console.log("error occrued in getEntitieDetails",error)
+
+        return {
+            status:false,
+            data:'error occured'
+        }
+    }
 }

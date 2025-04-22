@@ -14,6 +14,7 @@ import {
   import Badge from "@/src/components/admin/ui/badge/badge"
   import Image from "next/image";
 import { get_AllPending_Verification_AgenciesApi } from "@/src/lib/api_service_client/admin_service/pendingdVerificationHandler";
+import { user_type } from "@/src/type/components_type/verification_type";
 
 
 const AgenciesVerificationPage=()=>{
@@ -21,9 +22,18 @@ const AgenciesVerificationPage=()=>{
 
     const hey='Active'
 
-    useEffect(()=>{
+    const [allAgencies,setAllAgencies]=useState<user_type[]>([])
 
-      get_AllPending_Verification_AgenciesApi()
+    const fetchAllAgencies=async()=>{
+      const allAgencies = await  get_AllPending_Verification_AgenciesApi()
+      if(allAgencies.status){
+        setAllAgencies(allAgencies.data)
+      }
+    }
+
+    useEffect(()=>{
+      fetchAllAgencies()
+      
       
     },[])
 

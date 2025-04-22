@@ -19,7 +19,7 @@ export async function GET(request:NextRequest){
         }
        
 
-        return NextResponse.json({status:false, message:allPendingAgent },{status:200})
+        return NextResponse.json({status:true, message:allPendingAgent },{status:200})
         
         
 

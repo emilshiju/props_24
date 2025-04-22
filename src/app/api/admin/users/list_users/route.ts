@@ -18,6 +18,7 @@ export async function GET(request:NextRequest){
        if(!allUsers){
         return NextResponse.json({status:false, message: 'internal error' },{status:500});
        }
+       
 
        return NextResponse.json({status:true,message:allUsers},{status:200})
 
