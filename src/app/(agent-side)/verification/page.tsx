@@ -13,12 +13,12 @@ const VerificationStatusPage = () => {
         <p className="text-gray-500 mb-4">
           Once verified, you will be notified via email and can proceed to use all features of the platform.
         </p>
-        <a
-          href="/"
+        <div
+          
           className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
         >
-          Back to Home
-        </a>
+          waiting
+        </div>
       </div>
     </div>
   );

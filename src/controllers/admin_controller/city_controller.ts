@@ -1,11 +1,26 @@
 import { cityType } from "@/src/type/components_type/all_admin_type"
 import prisma from "../prisma_client"
+import { AddCityResponse } from "@/src/type/controller_type/admin_controller";
 
 
 
-export async function addCity(data:cityType){
+export async function addCity(data:cityType):Promise<AddCityResponse>{
 
     try{
+
+
+      const existingCity = await prisma.city.findFirst({
+        where: {
+          cityName: data.city,
+        },
+      });
+
+      if(existingCity){
+
+        console.log("city already exists ")
+        console.log(existingCity)
+        return {status:false,message:"already exists"}
+      }
 
         const response= await prisma.city.create({
             data: {
@@ -14,15 +29,17 @@ export async function addCity(data:cityType){
               },
         })
 
-        return true
+        return {status:true,message:"sucessfuy added"}
 
 
 
     }catch(error){
         console.log("error ocured in addCitie",error)
-        return false
+
+       return  {status:false,message:"internal error"}
     }
 }
+
 
 export async function  listCity(){
 

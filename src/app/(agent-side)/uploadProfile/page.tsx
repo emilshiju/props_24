@@ -8,6 +8,7 @@ import { ref, uploadBytes ,getDownloadURL } from "firebase/storage";
 import { storage } from '@/src/service/firebase/firebase_init';
 import { toast } from 'react-hot-toast';
 import {  uploadProfileImageAPi } from '@/src/lib/api_service_client/user_service/profile_handler';
+import { useRouter } from 'next/navigation';
 
 const  ImageUploader=()=>{
 
@@ -15,6 +16,8 @@ const  ImageUploader=()=>{
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [file, setFile] = useState<File | null>(null);
     const [previewURL, setPreviewURL] = useState<string>("");
+
+    const router = useRouter();
 
   
     
@@ -78,6 +81,9 @@ const  ImageUploader=()=>{
           if (!ressAPI.status) {
             handleRemove();
             toast.error("error occurred try again");
+          }else{
+            
+            router.push('/verification')
           }
 
           
@@ -140,9 +146,9 @@ const  ImageUploader=()=>{
           <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
   {/* Choose Button */}
-  <button onClick={handleChooseClick} className="border-2 border-blue-400 text-blue-400 w-12 h-12 rounded-full flex items-center justify-center hover:bg-blue-50">
+  {!file&&<button onClick={handleChooseClick} className="border-2 border-blue-400 text-blue-400 w-12 h-12 rounded-full flex items-center justify-center hover:bg-blue-50">
     <i className="pi pi-images text-xl" />
-  </button>
+  </button>}
 
   {/* Upload Button */}
   {file&&<button  onClick={handleUpload} className="border-2 border-green-400 text-green-400 w-12 h-12 rounded-full flex items-center justify-center hover:bg-green-50">

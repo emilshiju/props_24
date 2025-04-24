@@ -28,3 +28,7 @@ export interface profileType {
 }
 
 
+
+export interface LoginType {role:"admin" | "user" | "agent" | "agencies",email:string,password:string}
+
+

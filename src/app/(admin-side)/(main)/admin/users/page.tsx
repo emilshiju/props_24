@@ -12,8 +12,9 @@ import {
 
 import Badge from "@/src/components/admin/ui/badge/badge"
 import Image from "next/image";
-import { listAllUsersApi } from "@/src/lib/api_service_client/admin_service/listAllUsersHandler";
+import { blockUserApi, listAllUsersApi, unblockUserApi } from "@/src/lib/api_service_client/admin_service/listAllUsersHandler";
 import { resListUsers, user_type } from "@/src/type/api_type/admin_type";
+
 
 
 interface Order {
@@ -113,23 +114,26 @@ const ListUsers=()=>{
   const [allUsers,setAllUsers]=useState<user_type[]>([]);
 
 
+  const fetchUsers = async (): Promise<void> => {
+    try {
+      const res_all_users:resListUsers = await listAllUsersApi();
+      if(res_all_users.status){
+      
+      setAllUsers(res_all_users.data)
+
+      }else{
+        alert("occured error")
+      }
+
+    } catch (error) {
+      console.error('Failed to fetch users:', error);
+    }
+  };
+
+
 
   useEffect(() => {
-    const fetchUsers = async (): Promise<void> => {
-      try {
-        const res_all_users:resListUsers = await listAllUsersApi();
-        if(res_all_users.status){
-        
-        setAllUsers(res_all_users.data)
-
-        }else{
-          alert("occured error")
-        }
-
-      } catch (error) {
-        console.error('Failed to fetch users:', error);
-      }
-    };
+    
   
     fetchUsers();
   }, []);
@@ -148,6 +152,33 @@ const ListUsers=()=>{
     const handleViewProfileDetails=(userId:string)=>{
 
       router.push(`/admin/users/viewProfile/${userId}`);
+
+    }
+
+    const showNotVerified=()=>{
+      alert("user not submited Profile")
+    }
+
+
+    const handleBlock=async(userId:string)=>{
+   
+
+     const blocked = await  blockUserApi(userId)
+        if(blocked.status){
+          
+          fetchUsers()
+        }
+    }
+
+
+    const handleUnBlock=async(userId:string)=>{
+      alert(userId)
+
+     const unBlocked=await unblockUserApi(userId)
+     if(unBlocked.status){
+    
+      fetchUsers()
+     }
 
     }
 
@@ -196,7 +227,7 @@ const ListUsers=()=>{
               {/* Table Body */}
               <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
                 {allUsers&&allUsers.map((user,index) => (
-                  <TableRow key={index}>
+                  <TableRow key={user.id}>
                     <TableCell className="px-5 py-4 sm:px-6 text-start">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 overflow-hidden rounded-full">
@@ -210,7 +241,7 @@ const ListUsers=()=>{
                         {/* {user.profile?.userName||"account not verified"} */}
                         <div>
                           <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                            {user.profile?.userName||'not accoutn verifited'}
+                            {user.userName||'not accoutn verifited'}
                           </span>
                           <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
                           {/* {user.role} */}
@@ -224,20 +255,7 @@ const ListUsers=()=>{
                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                       <div className="flex -space-x-2">
                       {user.email}
-                        {/* {order.team.images.map((teamImage, index) => (
-                          <div
-                            key={index}
-                            className="w-6 h-6 overflow-hidden border-2 border-white rounded-full dark:border-gray-900"
-                          >
-                            <Image
-                              width={24}
-                              height={24}
-                              src={teamImage}
-                              alt={`Team member ${index + 1}`}
-                              className="w-full"
-                            />
-                          </div>
-                        ))} */}
+                        
                       </div>
                     </TableCell>
                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
@@ -253,23 +271,39 @@ const ListUsers=()=>{
                       >
                         {hey}
                       </Badge>
+                    
                        
                     </TableCell>
                     <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                       {/* {order.budget} */}
-                      <button
+                      {user.profile?<button
   type="button"
   onClick={()=>handleViewProfileDetails(user.id)}
-  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+  className="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-700 dark:hover:bg-blue-900 focus:outline-none dark:focus:ring-blue-800"
 >
   View
-</button>
-<button
+</button>:<button
   type="button"
-  className="text-white bg-red-700 hover:bg-red-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+  onClick={showNotVerified}
+  className="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-700 dark:hover:bg-blue-900 focus:outline-none dark:focus:ring-blue-800"
+>
+  View
+</button>}
+
+{user.status?<button
+  type="button"
+  onClick={()=>handleUnBlock(user.id)}
+  className="text-white bg-red-700 hover:bg-red-900 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+>
+  UnBlock
+</button>:<button
+  type="button"
+  onClick={()=>handleBlock(user.id)}
+  className="text-white bg-red-700 hover:bg-red-900 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
 >
   Block
-</button>
+</button>}
+
 
                     </TableCell>
                   </TableRow>

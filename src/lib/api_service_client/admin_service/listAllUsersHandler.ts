@@ -1,5 +1,7 @@
 
+import axios from "axios"
 import axiosClient from "../../axios_client"
+import { useId } from "react"
 
 
 
@@ -54,5 +56,61 @@ export const getSingleUserDetailsApi=async(userId:string)=>{
             status:false,
             data:'error occured'
         }
+    }
+}
+
+
+
+
+export const blockUserApi=async(userId:string)=>{
+
+
+
+    try{
+
+        const resBlockUserApi=await axiosClient.patch('/admin/block',{userId:userId})
+
+        return {
+            status:resBlockUserApi.data.status,
+            data:resBlockUserApi.data.message,
+            statusCode:resBlockUserApi.status
+        }
+
+
+
+    }catch(error){
+
+        console.log("error occur in blockUserApi",error)
+
+        return {
+            status:false,
+            data:'error occured'
+        }
+    }
+}
+
+export const unblockUserApi=async(userId:string)=>{
+
+    try{
+
+        const resUnBlockUserAPi=await axiosClient.patch('/admin/unblock',{userId:userId})
+
+        return {
+            status:resUnBlockUserAPi.data.status,
+            data:resUnBlockUserAPi.data.message,
+            statusCode:resUnBlockUserAPi.status
+        }
+
+
+
+    }catch(error){
+
+        console.log("error occurin unblockUserAPi",error)
+        
+        return {
+            status:false,
+            data:'error occured'
+        }
+        
     }
 }

@@ -2,6 +2,7 @@ export interface resListUsers{status:boolean,data:any,statusCode?: number}
 
 export interface singeUser {
     id: string;
+    userName:string;
     email: string;
     password: string;
     role: string;
@@ -13,18 +14,20 @@ export interface singeUser {
 
   interface profile_type {
     id: string;
-    userName: string;
+    businessName: string;
     phone: string;
     licenseNumber: string;
     bio: string;
     specialisation: string;
     imageUrl: string;
+    verified:boolean
     createdAt: string;
     userId: string;
   }
   
   export interface user_type {
     id: string;
+    userName:string;
     email: string;
     password: string;
     role: string;
@@ -33,3 +36,9 @@ export interface singeUser {
     profile?: profile_type;
   }
   
+
+
+  export interface specialisation_Type{
+    title:string
+    description:string
+  }

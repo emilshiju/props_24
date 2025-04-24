@@ -12,7 +12,12 @@ import { requestOtpApi, verifyOtpApi } from '@/src/lib/api_service_client/user_s
 import { toast } from 'react-hot-toast';
 import { registerUserApi } from '@/src/lib/api_service_client/user_service/auth_handler';
 
+import { useRouter } from 'next/navigation';
+
+
 const Register = ()=>{
+
+     const router = useRouter();
 
 
 
@@ -135,8 +140,8 @@ const Register = ()=>{
               toast.error(errorMessage);
             }else{
 
-              alert("sucessfuly registered ")
-
+              router.push('/afterRegister')
+              
             }
 
 
@@ -358,7 +363,7 @@ const Register = ()=>{
                   <div className="flex flex-col space-y-5">
                     <div>
                       <button
-                        className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
+                        className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-600 hover:bg-blue-900 border-none text-white text-sm shadow-sm"
                         onClick={afterOtpSubmit}
                       >
                         Verify Account

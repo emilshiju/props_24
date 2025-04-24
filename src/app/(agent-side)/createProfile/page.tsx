@@ -6,9 +6,11 @@ import profileSchema from '@/src/util/validation/profile_scehma';
 import { createProfileApi } from '@/src/lib/api_service_client/user_service/profile_handler';
 import { toast } from 'react-hot-toast';
 
-
+import { useRouter } from 'next/navigation';
 
 const CreateProfile = ()=>{
+
+  const router = useRouter();
 
 
     const initialValues:ProfileData = { businessName: '', phone: '',licenseNumber:'',bio:'',specialization:'' };
@@ -21,6 +23,8 @@ const CreateProfile = ()=>{
               const ress = await createProfileApi(values_data)
               
               if(ress.status){
+
+                router.push('/uploadProfile')
               
               }else{
 

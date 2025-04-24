@@ -13,7 +13,7 @@ const Header = () =>{
       <nav className="bg-white border-gray-200">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-25 py-5">
     <Image  
-      src="/images/Asset 2.svg" 
+      src="/images/props_24.svg" 
       alt="Props24 Logo" 
       width={120} 
       height={40} 

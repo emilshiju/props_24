@@ -6,11 +6,11 @@ import { MagnifyingGlassIcon, StarIcon, ArrowLeftIcon, ArrowRightIcon } from '@h
 
 const content = [
   {
-    name: 'Marco Rossi 1',
+    name: 'Turin',
     specialty: 'Proprietà di Investimento',
   },
   {
-    name: 'Marco Rossi 2',
+    name: 'Venince',
     specialty: 'Proprietà di Investimento',
   },
   {

@@ -1,3 +1,4 @@
+import { verifyProfile } from "@/src/controllers/admin_controller/verification_handler";
 import { createProfile } from "@/src/controllers/user_controller/user_controller";
 import { extracted_token } from "@/src/type/controller_type/token_type";
 import { profileType } from "@/src/type/controller_type/user_controller";
@@ -46,3 +47,39 @@ export async function POST(request:NextRequest){
     }
 
 }
+
+
+
+
+
+export async function PATCH(request:NextRequest){
+
+
+    try{
+
+
+        // const decodedToken = request.headers.get('decoded-token')
+        // const tokenData:extracted_token = decodedToken ? JSON.parse(decodedToken) : null;
+
+        const data:{profileId:string}=await request.json()
+
+        const verified =await verifyProfile(data.profileId)
+
+        if(!verified){
+            return NextResponse.json({status:false, message: "error occur in verifying" },{ status: 500 })
+        }
+
+
+        return NextResponse.json({status:true, message: "sucesssfulyy verified" },{ status: 200 })
+
+
+
+    }catch(error){
+
+        console.log("error occred in the patch reqeust",error)
+
+        return NextResponse.json({status:false, message: "error occur in verifying" },{ status: 500 })
+    }
+
+}
+

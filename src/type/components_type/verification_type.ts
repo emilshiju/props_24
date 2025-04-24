@@ -20,6 +20,7 @@ export interface user_type {
     bio: string;
     specialisation: string;
     imageUrl: string 
+    verified:boolean
     createdAt: Date;
     userId: string;
     user:user_type

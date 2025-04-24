@@ -69,3 +69,13 @@ model city{
   createdAt DateTime @default(now())
 
 }
+
+
+model specialization{
+  
+  id  String @id @default(uuid())
+  title String
+  description String
+  createdAt DateTime @default(now())
+
+ }

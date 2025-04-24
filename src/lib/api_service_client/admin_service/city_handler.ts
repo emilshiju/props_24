@@ -17,12 +17,13 @@ export const addCityApi=async(data:cityType)=>{
 
 
 
-    }catch(error){
-        console.log("error occured in add cities api",error)
+    }catch(error:any){
+        // console.log("error occured in add cities api",error)
 
         return {
             status:false,
-            data:'error occured',
+            data:error.response?.data?.message || "Internal server error",
+
         }
 
     }

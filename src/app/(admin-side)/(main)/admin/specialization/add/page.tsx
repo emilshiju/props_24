@@ -1,42 +1,44 @@
+
+
+
 "use client"
 import { addCityApi } from '@/src/lib/api_service_client/admin_service/city_handler';
+import { addSpecializationApi } from '@/src/lib/api_service_client/admin_service/specialization_handler';
+import { specialisation_Type } from '@/src/type/api_type/admin_type';
 import { cityType } from '@/src/type/components_type/all_admin_type';
-import citySchema from '@/src/util/validation/cities_scehma';
+import specializationSchema from '@/src/util/validation/specialization_scehma';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import {toast} from 'react-hot-toast';
 
-const AddCitie=()=>{
 
- 
+const AddSpecialization=()=>{
 
-    
+    const initialValues={title:"",description:""}
 
-    const initialValues={city:"",country:""}
 
-    const handleSubmit=async(values_data:cityType,formikHelpers:FormikHelpers<cityType>)=>{
+    const handleSubmit=async(values_data:specialisation_Type,formikHelpers:FormikHelpers<specialisation_Type>)=>{
 
-       const response = await addCityApi(values_data)
+       const added = await  addSpecializationApi(values_data)
+       
+       formikHelpers.resetForm()
 
-        formikHelpers.resetForm();
+       if(added.status){
+        alert("added")
+       }else{
+        alert("not added")
+       }
 
-        if(response.status){
-          alert("added sucessfuly ")
-           
-            // toast.success("sucessfuly added")
-        }else{
-          alert(response.data)
-            // toast.success("error occur while adding")
-        }
-        
     }
 
 
+
     return (
-      <>
+
+ <>
       
         <Formik 
       initialValues={initialValues}
-      validationSchema={citySchema}
+      validationSchema={specializationSchema}
       onSubmit={handleSubmit}
       >
          {({ values, handleChange, errors, touched }) => (
@@ -44,33 +46,33 @@ const AddCitie=()=>{
           
         <div className="max-w-lg  mx-auto p-6 mt-5 bg-white rounded-2xl shadow-sm border border-gray-100">
 
-      <h2 className="text-lg font-semibold text-gray-800 mb-6">Add City</h2>
+      <h2 className="text-lg font-semibold text-gray-800 mb-6">Add Specialization</h2>
 
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
         <Field
           type="text"
-          name='city'
-          value={values.city}
+          name='title'
+          value={values.title}
           onChange={handleChange}
           className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
         />
         <div className="h-1">
-            {errors.city && touched.city ? <div className="text-red-500 text-xs mt-1 ">{errors.city}</div> : null}
+            {errors.title && touched.title ? <div className="text-red-500 text-xs mt-1 ">{errors.title}</div> : null}
             </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Add Country</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
         <Field
           type="text"
-          name='country'
-          values={values.country}
+          name='description'
+          values={values.description}
           onChange={handleChange}
           className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-200"
         />
         <div className="h-1">
-            {errors.country && touched.country ? <div className="text-red-500 text-xs mt-1 ">{errors.country}</div> : null}
+            {errors.description && touched.description? <div className="text-red-500 text-xs mt-1 ">{errors.description}</div> : null}
             </div>
       </div>
       <br/>
@@ -89,4 +91,4 @@ const AddCitie=()=>{
     )
 }
 
-export default AddCitie
+export default AddSpecialization

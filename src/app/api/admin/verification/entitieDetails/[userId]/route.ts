@@ -10,6 +10,7 @@ export async function GET(request:NextRequest,{params}:{params:{userId:string}})
         const { userId } = await Promise.resolve(params);
 
         const resEntitieDetails = await getDetails(userId)
+        console.log("got deteailsss",resEntitieDetails)
 
 
         if(!resEntitieDetails){
@@ -18,7 +19,7 @@ export async function GET(request:NextRequest,{params}:{params:{userId:string}})
         }
 
 
-    return NextResponse.json({status:false, message:resEntitieDetails},{status:200});
+    return NextResponse.json({status:true, message:resEntitieDetails},{status:200});
 
 
 

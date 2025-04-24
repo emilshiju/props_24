@@ -32,40 +32,41 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    subItems: [{ name: "data", path: "/", pro: false }],
   },
   {
-    icon: <CalenderIcon />,
+    icon: <UserCircleIcon />,
     name: "Users",
     subItems: [{ name: "List Users", path: "/admin/users", pro: false }],
   },
   {
-    icon: <UserCircleIcon />,
+    icon:<ListIcon /> ,
     name: "Verification Request",
-    subItems: [{ name: "Agencies", path: "/", pro: false },{ name: "Agent", path: "/", pro: false }],
+    subItems: [{ name: "Agencies", path: "/admin/verification/agenciesVerification", pro: false },{ name: "Agent", path: "/admin/verification/agentVerification", pro: false }],
   },
 
   {
     name: "Cities",
-    icon: <ListIcon />,
-    subItems: [{ name: "Add Cities", path: "/form-elements", pro: false },{ name: "List Cities", path: "/form-elements", pro: false }],
+    icon: <CalenderIcon />,
+    
+    subItems: [{ name: "Add Cities", path: "/admin/city/addCity", pro: false },{ name: "List Cities", path: "/admin/city/listCity", pro: false }],
   },
   {
-    name: "Reports",
+    name: "Specialization",
     icon: <TableIcon />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
+    subItems: [{ name: "Add Specialization", path: "/basic-tables", pro: false },{ name: "List Specialization", path: "/basic-tables", pro: false }],
   },{
     name: "Reviews",
     icon: <TableIcon />,
-    subItems: [{ name: "Add Reviews", path: "/basic-tables", pro: false },{ name: "List Reviews", path: "/basic-tables", pro: false }],
+    // subItems: [{ name: "Add Reviews", path: "/basic-tables", pro: false },{ name: "List Reviews", path: "/basic-tables", pro: false }],
   },
   {
     name: "Banners",
     icon: <PageIcon />,
-    subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
-    ],
+    // subItems: [
+    //   { name: "Blank Page", path: "/blank", pro: false },
+    //   { name: "404 Error", path: "/error-404", pro: false },
+    // ],
   },
 ];
 
@@ -75,30 +76,30 @@ const othersItems: NavItem[] = [
   {
     icon: <PieChartIcon />,
     name: "Charts",
-    subItems: [
-      { name: "Line Chart", path: "/line-chart", pro: false },
-      { name: "Bar Chart", path: "/bar-chart", pro: false },
-    ],
+    // subItems: [
+    //   { name: "Line Chart", path: "/line-chart", pro: false },
+    //   { name: "Bar Chart", path: "/bar-chart", pro: false },
+    // ],
   },
   {
     icon: <BoxCubeIcon />,
     name: "UI Elements",
-    subItems: [
-      { name: "Alerts", path: "/alerts", pro: false },
-      { name: "Avatar", path: "/avatars", pro: false },
-      { name: "Badge", path: "/badge", pro: false },
-      { name: "Buttons", path: "/buttons", pro: false },
-      { name: "Images", path: "/images", pro: false },
-      { name: "Videos", path: "/videos", pro: false },
-    ],
+    // subItems: [
+    //   { name: "Alerts", path: "/alerts", pro: false },
+    //   { name: "Avatar", path: "/avatars", pro: false },
+    //   { name: "Badge", path: "/badge", pro: false },
+    //   { name: "Buttons", path: "/buttons", pro: false },
+    //   { name: "Images", path: "/images", pro: false },
+    //   { name: "Videos", path: "/videos", pro: false },
+    // ],
   },
   {
     icon: <PlugInIcon />,
     name: "Authentication",
-    subItems: [
-      { name: "Sign In", path: "/signin", pro: false },
-      { name: "Sign Up", path: "/signup", pro: false },
-    ],
+    // subItems: [
+    //   { name: "Sign In", path: "/signin", pro: false },
+    //   { name: "Sign Up", path: "/signup", pro: false },
+    // ],
   },
 ];
 
@@ -375,16 +376,16 @@ const AppSidebar: React.FC = () => {
                 }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
-                  "Others"
+                  ""
                 ) : (
                   <HorizontaLDots />
                 )}
               </h2>
-              {renderMenuItems(othersItems, "others")}
+              {/* {renderMenuItems(othersItems, "others")} */}
             </div>
           </div>
         </nav>
-        {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null}
+        {isExpanded || isHovered || isMobileOpen }
       </div>
     </aside>
   );

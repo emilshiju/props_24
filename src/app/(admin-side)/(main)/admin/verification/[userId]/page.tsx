@@ -3,10 +3,11 @@
 "use client"
 
 import { useState } from "react";
-import { get_EntitiDetails_Api } from "@/src/lib/api_service_client/admin_service/pendingdVerificationHandler";
+import { get_EntitiDetails_Api, verifyEntitieApi } from "@/src/lib/api_service_client/admin_service/pendingdVerificationHandler";
 import { user_type } from "@/src/type/components_type/verification_type";
 import {use, useEffect} from "react"
 import Image from "next/image";
+import Badge from "@/src/components/admin/ui/badge/badge";
 
 
 const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })=>{
@@ -18,13 +19,23 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
     const [userDetails,setUserDetails]=useState<user_type|null>(null)
 
 
+
+    console.log("got user detailss",userDetails?.userName)
+    console.log(userDetails?.email)
+
+    
+
+
     const fetchEntitieDetails=async()=>{
 
         const resDetails = await get_EntitiDetails_Api(userId)
 
         if(resDetails.status){
+
+          console.log("got user details")
             setUserDetails(resDetails.data)
         }
+
     }
 
     
@@ -38,10 +49,32 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
     },[])
 
 
+
+    const handleVerify=async(profileId:string)=>{
+
+      const verified = await verifyEntitieApi(profileId)
+
+      if(verified.status){
+        fetchEntitieDetails()
+      }else{
+        alert("error")
+      }
+
+    }
+
+
+
+
+
+    if (!userDetails) {
+      return <div>Loading...</div>; // or any loading indicator you prefer
+    }
+
+    const hey='Active'
+
     return (
          <div>
         
-                  <h1>{userId}</h1>
                   
         
                   <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
@@ -63,16 +96,26 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                     </div>
                     <div className="order-3 xl:order-2">
                       <h4 className="mb-2 text-lg font-semibold text-center text-gray-800 dark:text-white/90 xl:text-left">
-                        haiiii
+                        {userDetails?.userName}
                       </h4>
                       <div className="flex flex-col items-center gap-1 text-center xl:flex-row xl:gap-3 xl:text-left">
                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                          emilshiju@gmial.com
+                          
+                          {userDetails?.email}
                         </p>
                         <div className="hidden h-3.5 w-px bg-gray-300 dark:bg-gray-700 xl:block"></div>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                          9999999999
+                        
+                          {userDetails?.profile.phone}
                         </p>
+                      </div>
+                      <div className="flex flex-col items-center gap-1 text-center xl:flex-row xl:gap-3 xl:text-left">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          
+                          {userDetails?.status}
+                        </p>
+                        <div className="hidden h-3.5 w-px bg-gray-300 dark:bg-gray-700 xl:block"></div>
+                       
                       </div>
                     </div> 
                     
@@ -91,10 +134,11 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                   <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
                     <div>
                       <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                         Name
+                      
+                      Business Name
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        uesss
+                        {userDetails?.profile?.businessName}
                       </p>
                     </div>
         
@@ -103,7 +147,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         Role
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        agent
+                        {userDetails.role}
                       </p>
                     </div>
         
@@ -112,7 +156,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         Email
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        233334343434
+                        {userDetails.email}
                       </p>
                     </div>
         
@@ -121,7 +165,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         Phone
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                      9909090
+                      {userDetails.profile.phone}
                       </p>
                     </div>
         
@@ -130,17 +174,17 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         Bio
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                     jjojj
+                     {userDetails.profile.bio}
                       </p>
                     </div>
         
         
                     <div>
                       <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
-                        Bio
+                      specialisation
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        lkjoj
+                        {userDetails.profile.specialisation}
                       </p>
                     </div>
         
@@ -150,7 +194,28 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         license - Number
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        kjojon
+                        {userDetails.profile.specialisation}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400">
+                        verification  Status
+                      </p>
+                      <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                        {/* {userDetails.profile.verified} */}
+                        <Badge
+                        size="sm"
+                        color={
+                          hey === "Active"
+                            ? "success"
+                            : hey === "Pending"
+                            ? "warning"
+                            : "error"
+                        }
+                      >
+                         Pending
+                      </Badge>
                       </p>
                     </div>
         
@@ -158,9 +223,15 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
         
                     
                   </div>
+                  <br />
+                  {userDetails.profile.verified==false&&<button onClick={()=>handleVerify(userDetails.profile.id)} className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 w-full focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    verify </button>}
+                   {userDetails.profile.verified==true&&<button  className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 w-full focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    verified </button>
+                    }
                 </div>
         
-                <button
+                {/* <button
                 //   onClick={openModal}
                   className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
                 >
@@ -180,7 +251,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                     />
                   </svg>
                   Edit
-                </button>
+                </button> */}
               </div>
         
         

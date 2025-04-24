@@ -15,7 +15,7 @@ const Footer = ()=>{
                   <div className="col-span-1 md:col-span-1">
                     <div className="flex flex-col items-center md:items-start">
                       <Image 
-                        src="/images/Asset 7.svg" 
+                        src="/images/props_24.svg" 
                         alt="Props24 Logo Emblem" 
                         width={50} 
                         height={50} 

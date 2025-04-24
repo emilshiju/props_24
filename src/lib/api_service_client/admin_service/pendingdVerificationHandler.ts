@@ -62,7 +62,9 @@ export const get_EntitiDetails_Api=async(userId:string)=>{
 
     try{
 
-      const  res_EntitiDetails_Api = await axiosClient.get(`/verification/${userId}`)
+      const  res_EntitiDetails_Api = await axiosClient.get(`admin/verification/entitieDetails/${userId}`)
+
+      console.log("get get get get get get ",res_EntitiDetails_Api.data.status)
 
       return {
         status:res_EntitiDetails_Api.data.status,
@@ -79,5 +81,32 @@ export const get_EntitiDetails_Api=async(userId:string)=>{
             status:false,
             data:'error occured'
         }
+    }
+}
+
+
+
+
+export const verifyEntitieApi=async(profileId:string)=>{
+
+    try{
+
+        const resVerifyEntitieApi=await axiosClient.patch('/profile',{profileId:profileId})
+
+        return {
+            status:resVerifyEntitieApi.data.status,
+            data:resVerifyEntitieApi.data.message,
+            statusCode:resVerifyEntitieApi.status
+        }
+
+        
+    }catch(error){
+        console.log("error occred in verifyEntitie",error)
+        
+        return {
+            status:false,
+            data:'error occured'
+        }
+
     }
 }

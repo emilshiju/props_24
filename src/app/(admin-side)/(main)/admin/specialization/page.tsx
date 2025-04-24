@@ -2,6 +2,8 @@
 
 
 
+
+
 "use client"
 import React, { useEffect, useState }  from "react";
 import { useRouter } from 'next/navigation';
@@ -12,77 +14,59 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/admin/ui/table"
-import { deleteCityApi,  listCityApi } from "@/src/lib/api_service_client/admin_service/city_handler";
-import { cityResType } from "@/src/type/components_type/all_admin_type";
+
 import { toast } from 'react-hot-toast';
 
-
-const ListCitie=()=>{
-
-    const [allCitie,setCitie]=useState<cityResType []>([])
+import { specialisation_Res_Type } from "@/src/type/components_type/all_admin_type";
+import { deleteSpecializationApi ,listSpecializationApi} from "@/src/lib/api_service_client/admin_service/specialization_handler";
 
 
-    const router = useRouter();
 
-    const fetchCities=async()=>{
 
-        const response =await listCityApi()
 
-        if(response.status){
-            setCitie(response.data)
-        }else{
-            alert("error occured")
+const Specialization=()=>{
+
+
+    const [allSpecialization,setSpecialization]=useState<specialisation_Res_Type[]>([]);
+
+
+    const fetchAllSpecialization=async()=>{
+
+        const ress =await listSpecializationApi()
+
+        if(ress.status){
+            console.log("got all data",ress.data)
+            setSpecialization(ress.data)
         }
 
-    
     }
-
-
 
 
     useEffect(()=>{
 
-        fetchCities()
-
+        fetchAllSpecialization()
 
     },[])
 
 
 
-    const editCity=(id:string)=>{
-        
+    const handleDelete=async(id:string)=>{
 
-      router.push(`/admin/city/${id}`)
-
-    }
-
-
-    const deleteCity=async(id:string)=>{
-
-     
-
-        const deleted = await deleteCityApi(id)
+        const deleted =await deleteSpecializationApi(id)
 
         if(deleted.status){
-          
-          fetchCities()
-          alert("sucessfuly deleted")
-
-          toast.success("sucessfuly deleted")
+            alert("sucess")
+            fetchAllSpecialization()
         }else{
-          alert("error occured")
-          toast.error("error occur ")
+            alert("error")
         }
-
 
     }
 
 
-
-       const hey='Active'
-
     return (
-<div className="overflow-hidden rounded-xl  border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
+
+        <div className="overflow-hidden rounded-xl  border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
           <div className="min-w-[1102px]">
             <Table>
@@ -120,15 +104,15 @@ const ListCitie=()=>{
               {/* Table Body */}
               <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
                 
-                  {allCitie&&allCitie.map((city,index)=>(
-                    <TableRow  key={city.id}>
+                  {allSpecialization&&allSpecialization.map((list,index)=>(
+                    <TableRow  key={index}>
 
                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                      {city.cityName}
+                      {list.title}
                     </TableCell>
                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                       <div className="flex -space-x-2">
-                      {city.country}
+                      {list.description}
                        
                       </div>
                     </TableCell>
@@ -141,13 +125,13 @@ const ListCitie=()=>{
                       
                       <button
   type="button"
-onClick={()=>editCity(city.id)}
+// onClick={()=>editCity(city.id)}
   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
 >
   Edit
 </button>
 <button
-onClick={()=>deleteCity(city.id)}
+onClick={()=>handleDelete(list.id)}
   type="button"
   className="text-white bg-red-700 hover:bg-red-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
 >
@@ -162,8 +146,7 @@ onClick={()=>deleteCity(city.id)}
           </div>
         </div>
       </div>
-
     )
 }
 
-export default ListCitie
+export default Specialization

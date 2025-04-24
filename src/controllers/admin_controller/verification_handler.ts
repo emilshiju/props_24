@@ -71,3 +71,29 @@ export async  function getDetails(userId:string){
         return false
     }
 }
+
+
+
+export async function verifyProfile(profileId:string){
+
+    try{
+
+        const verifiedProfile = await prisma.profile.update({
+            where: {
+              id: profileId,
+            },
+            data: {
+              verified: true,
+            },
+          });
+
+
+        return true
+
+
+    }catch(error){
+        console.log("error ocrred in verifyProfile",error)
+
+        return false
+    }
+}

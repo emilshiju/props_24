@@ -1,6 +1,6 @@
 import { UserDetails } from "@/src/type/api_type/user_type";
 import prisma from "../prisma_client";
-import { profileType, registeredUser, VerifyOTPResponse } from "@/src/type/controller_type/user_controller";
+import { LoginType, profileType, registeredUser, VerifyOTPResponse } from "@/src/type/controller_type/user_controller";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -160,7 +160,7 @@ export async function uploadProfileImageUrl(userId:string,imageUrl:string){
 
 
 
-export async function  loginUser(loginDetails:{role:string,email:string,password:string}){
+export async function  loginUser(loginDetails:LoginType){
 
   try{
 
@@ -171,6 +171,7 @@ export async function  loginUser(loginDetails:{role:string,email:string,password
 
     const user = await prisma.user.findFirst({
       where: {
+        role:loginDetails.role,
         email:loginDetails.email,
         password:loginDetails.password,
       },
@@ -191,3 +192,7 @@ export async function  loginUser(loginDetails:{role:string,email:string,password
     return {status:false,message:"occured error"}
   }
 }
+
+
+
+

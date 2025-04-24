@@ -9,9 +9,13 @@ import loginSchema from '@/src/util/validation/login_scehma';
 import { LoginValues } from '@/src/type/validation_type/formTypes';
 import { loginUserApi } from '@/src/lib/api_service_client/user_service/auth_handler';
 import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 
 const LoginPage =()=>{
+
+
+    const router = useRouter();
 
 
     const [email, setEmail] = useState('')
@@ -24,10 +28,14 @@ const LoginPage =()=>{
 
      
       const response = await loginUserApi(values_data)
+      formikHelpers.resetForm()
        
       if(!response.status){
         
         toast.error(response.message)
+      }else{
+        // router.push('/')
+        toast.success(response.message)
       }
 
 

@@ -1,12 +1,6 @@
 import prisma from "../prisma_client"
 
 
-
-
-
-
-
-
 export async function getAllUsersList(){
 
 
@@ -17,6 +11,9 @@ export async function getAllUsersList(){
        const all_users =  await prisma.user.findMany({
         include: {
           profile: true, 
+        },
+        orderBy: {
+          userName: 'asc',
         },
       });
 
@@ -64,4 +61,56 @@ export async function getUserDetails(userId:string){
 
         return false
     }
+}
+
+
+export  async function blockUser(userId:string){
+
+  try{
+
+
+    const  blockedUser=await prisma.user.update({
+      where: { id: userId },
+      data: { status: true },
+    })
+    console.log("blockedUser",blockedUser)
+
+    return true
+
+
+  }catch(error){
+    console.log("error occured in blockuser",error)
+
+    return false
+  }
+
+
+}
+
+
+
+
+export async function unBlockUser(userId:string){
+
+
+  try{
+
+
+    const  unBlockUser=await prisma.user.update({
+      where: { id: userId },
+      data: { status: false },
+    })
+
+    console.log("unBlockedUser",unBlockUser)
+
+    return true
+
+
+
+  }catch(error){
+    console.log("error ocured in the unblockuser",error)
+    return false
+  }
+
+
 }

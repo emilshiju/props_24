@@ -1,4 +1,4 @@
-
+"use client"
 import Link from 'next/link'
 
 import Image from 'next/image'
@@ -8,14 +8,14 @@ import Why_props_24 from '../../components/user/why_props_24'
 import Footer from '../../components/user/footer'
 import Popular_Cities from '../../components/user/popular_cities'
 
-export const metadata = {
-  title: 'Props24 - The TripAdvisor for Real Estate Agents',
-  description: 'Find and review the best real estate agents in your area',
-  icons: {
-    icon: '/images/Asset 7.svg',
-    apple: '/images/Asset 7.svg',
-  },
-}
+// export const metadata = {
+//   title: 'Props24 - The TripAdvisor for Real Estate Agents',
+//   description: 'Find and review the best real estate agents in your area',
+//   icons: {
+//     icon: '/images/Asset 7.svg',
+//     apple: '/images/Asset 7.svg',
+//   },
+// }
 
 
 
@@ -105,7 +105,7 @@ const Home = ()=>{
           id="default-search"
           className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50
             focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Search Mockups, Logos..."
+          placeholder="Search Agent, Agencies..."
           required
         />
         <button

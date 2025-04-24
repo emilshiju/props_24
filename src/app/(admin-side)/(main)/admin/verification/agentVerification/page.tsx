@@ -3,8 +3,6 @@
 import React, { useEffect, useState }  from "react";
 import { useRouter } from 'next/navigation';
 
-
-
 import {
     Table,
     TableBody,
@@ -91,7 +89,7 @@ const AgentVerificationPage=()=>{
                     <TableCell className="px-4 py-3 sm:px-6 text-start">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 overflow-hidden rounded-full">
-                        {agent?.profile.imageUrl?<Image
+                        {agent?.profile?.imageUrl?<Image
                             width={40}
                             height={40}
                             src={agent.profile.imageUrl}

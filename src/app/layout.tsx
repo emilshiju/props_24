@@ -24,12 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // <html lang="en"suppressHydrationWarning>
+    <html lang="en" className="translated-ltr">
       <body
         // className={inter.className}
       >
         <div className="min-h-screen bg-gray-50">
-        <div><Toaster/></div>
+        <div><Toaster /></div>
         {children}
         </div>
       </body>
