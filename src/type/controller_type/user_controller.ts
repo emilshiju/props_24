@@ -25,6 +25,7 @@ export interface profileType {
   licenseNumber: string;
   bio: string;
   specialization: string;
+  city:string
 }
 
 

@@ -23,9 +23,10 @@ const profileSchema = Yup.object({
     .required('License number is required'),
 
   specialization: Yup.string()
-    .min(3, 'Specialization must be at least 3 characters')
-    .max(50, 'Specialization must not exceed 50 characters')
     .required('Specialization is required'),
+
+  city:Yup.string()
+     .required('city is requied'),
 
   bio: Yup.string()
     .min(10, 'Bio must be at least 10 characters')

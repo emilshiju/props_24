@@ -116,7 +116,7 @@ export async function createProfile(userId:string,profileDetails:profileType){
     console.log(userId,profileDetails)
 
 
-    const created = await prisma.profile.create({data:{userId:userId,businessName:profileDetails.businessName,phone:profileDetails.phone,licenseNumber:profileDetails.licenseNumber, bio:profileDetails.bio,specialisation:profileDetails.specialization}})
+    const created = await prisma.profile.create({data:{userId:userId,businessName:profileDetails.businessName,phone:profileDetails.phone,licenseNumber:profileDetails.licenseNumber, bio:profileDetails.bio,specializationId:profileDetails.specialization,cityId:profileDetails.city}})
 
     console.log("created")
     console.log(created)

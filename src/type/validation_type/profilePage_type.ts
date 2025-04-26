@@ -5,5 +5,6 @@ export interface ProfileData {
     phone: string;
     licenseNumber: string;
     bio: string;
+    city:string;
     specialization: string;
   }

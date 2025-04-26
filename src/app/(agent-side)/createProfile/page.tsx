@@ -7,13 +7,40 @@ import { createProfileApi } from '@/src/lib/api_service_client/user_service/prof
 import { toast } from 'react-hot-toast';
 
 import { useRouter } from 'next/navigation';
+import { cityResType, specialisation_Res_Type } from '@/src/type/components_type/all_admin_type';
+import { listCityApi } from '@/src/lib/api_service_client/admin_service/city_handler';
+import { listSpecializationApi } from '@/src/lib/api_service_client/admin_service/specialization_handler';
 
 const CreateProfile = ()=>{
 
   const router = useRouter();
 
+  const [allCity,setAllCity]=useState<cityResType[]>([])
+  const [allSpecialization,setSpecialization]=useState<specialisation_Res_Type []>([])
 
-    const initialValues:ProfileData = { businessName: '', phone: '',licenseNumber:'',bio:'',specialization:'' };
+  const fetchAllCity=async()=>{
+    const resAllCity = await  listCityApi()
+    if(resAllCity.status){
+      setAllCity(resAllCity.data)
+    }
+  }
+
+  const fetchAllSpecialization=async()=>{
+    const resAllSpecialization = await  listSpecializationApi()
+    if(resAllSpecialization.status){
+      setSpecialization(resAllSpecialization.data)
+    }
+  }
+
+
+  useEffect(()=>{
+    fetchAllCity()
+    fetchAllSpecialization()
+
+  },[])
+
+
+    const initialValues:ProfileData = { businessName: '', phone: '',licenseNumber:'',bio:'',specialization:'',city:'' };
 
     const handleSubmit = async(values_data:ProfileData,formikHelpers: FormikHelpers<ProfileData>)=>{
 
@@ -109,6 +136,38 @@ const CreateProfile = ()=>{
             </div>
             </div>
 
+
+
+            <div>
+              <label  className="block text-sm font-medium text-gray-700">
+                City
+              </label>
+              <Field
+                as="select"
+                id="city"
+                name="city"
+                // value={values.specialization}
+                onChange={handleChange}
+                className="mt-1 block w-full text-black rounded-md border-gray-300 shadow-sm focus:outline-none h-8  sm:text-sm"
+                >
+            
+              <option value="" disabled hidden></option>
+               {/* <option value="agent">I am an Agent</option>
+               <option value="agencies">I represent an Agency</option> */}
+
+               {allCity?.map((city, idx) => (
+    <option key={idx} value={city.id}>
+      {city.cityName}
+    </option>
+  ))}
+
+               </Field>
+              <div className="h-1">
+                {errors.city&&touched.city ?<div className="text-red-500 text-xs mt-1 ">{errors.city}</div>:null}
+            </div>
+            </div>
+
+
             <div>
               <label  className="block text-sm font-medium text-gray-700">
                 Specialization
@@ -123,8 +182,15 @@ const CreateProfile = ()=>{
                 >
             
               <option value="" disabled hidden></option>
-               <option value="agent">I am an Agent</option>
-               <option value="agencies">I represent an Agency</option>
+               {/* <option value="agent">I am an Agent</option>
+               <option value="agencies">I represent an Agency</option> */}
+
+              {allSpecialization?.map((spec, idx) => (
+                  <option key={idx} value={spec.id}>
+                    {spec.title}
+                  </option>
+              ))}
+
                </Field>
               <div className="h-1">
                 {errors.specialization&&touched.specialization ?<div className="text-red-500 text-xs mt-1 ">{errors.specialization}</div>:null}
