@@ -19,9 +19,27 @@ export async function getFilter(){
             label: spec.title,
             checked: false,
           }));
+          
+        
 
+          const all=[
+            {value:"agencies",
+            label:"agencies",
+            checked:false},
+            {value:"agent",
+            label:"agent",
+            checked:false}
+          ]
+
+       
 
         const sideBarFilter=[
+          {
+            id:'all',
+            name:'all',
+            options:all
+          },
+          
             {
                 id:'city',
                 name:"city",
@@ -52,6 +70,7 @@ export async function applyComplexFilters(sideBarFilteredData:any,sectionName:an
     try{
 
         console.log("sectin nameeeeeeeeeeeeeeeeeeeeeeeeeee")
+        console.log(sideBarFilteredData)
         
         const promises = sideBarFilteredData.map(async (data: any) => {
             if (data.name === 'city') {
@@ -82,14 +101,24 @@ export async function applyComplexFilters(sideBarFilteredData:any,sectionName:an
               return allFilteredSpecialization;
             }
           
-            if (data.label === 'agent' || data.label === 'agencies') {
+            if (data.name === 'all') {
+      
+              const aa=data.options
+                        .filter((option: any) => option.checked)
+                        .map((option: any) => option.value);
+              console.log("00000000000000000000")
+              console.log(aa)
+
               const allEntities = await prisma.user.findMany({
                 where: {
-                  role: data.value, // assuming you have role inside `data.value`
+                  role:{in:aa}, // assuming you have role inside `data.value`
+                },
+                select: {
+                  profile: true, // Only select the profile field, not the rest of the user data
                 },
               });
           
-              return allEntities;
+              return allEntities.map((user) => user.profile);
             }
           
             return []; // default if none matched

@@ -131,29 +131,59 @@ export default function Example() {
 
   const changeSideBarFiltering=async(sectionName:string,valueId:string,isChecked:boolean)=>{
     console.log("got valueee idddddddddddddddddddddddddddd")
-    console.log(sectionName)
-    console.log(sideBarFilter)
-   const res= sideBarFilter.map((data:any,index)=>{
+    
+    console.log(sectionName,valueId,isChecked)
+
+
+
+
+   const updatedSideBarFilter:any= sideBarFilter.map((data:any,index)=>{
+
       if(data.name==sectionName){
-        console.log("got")
-        data.options.map((one:any)=>{
-          if(isChecked){
-          if(one.value==valueId){one.checked=true}
-          }else{
-            if(one.value==valueId){one.checked=false}
+        console.log("got",data.name)
+        data.options = data.options.map((one:any)=>{
+          
+          if (one.value === valueId) {
+            console.log("secc",one.value)
+            return { ...one, checked: isChecked }; // Set the checked value accordingly
           }
+          return one
         })
-      }else{
-        console.log("lost")
       }
+
+      return data;
+
     })
     console.log("tttttttttttttttttttttttttttttt")
-    console.log(sideBarFilter)
+    console.log(updatedSideBarFilter)
+
+    // if(sectionName=='Agent'){
+
+    //   if(valueId=='Agent'&&isChecked==true)
+    //     res.push({ name: 'agent', options: [{ checked: true }] });
+    //   else
+    //     res.push({ name: 'agent', options: [{ checked: false}] }); 
+
+    // }
+
+    //   if(sectionName=='Agencies'){
+
+    //     if(valueId=='Agencies'&&isChecked==true){
+    //       res.push({ name: 'agencies', options: [{ checked: true }] });
+    //     }else{
+    //       res.push({ name: 'agencies', options: [{ checked: false}] });
+    //     }
+
+    //   }
+
+
+    // console.log(res)
+    setSideBarFilter(updatedSideBarFilter); 
 
 
 
       
-    const filteredResult = await  getChangedSideBarFilterApi(sideBarFilter,{sectionName:sectionName},{value:valueId},{status:isChecked})
+    const filteredResult = await  getChangedSideBarFilterApi(updatedSideBarFilter,{sectionName:sectionName},{value:valueId},{status:isChecked})
     
     setAllFilteredProduct(filteredResult.data)
 
@@ -200,9 +230,9 @@ export default function Example() {
                 <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                   {subCategories.map((category) => (
                     <li key={category.name}>
-                      <a href={category.href} className="block px-2 py-3">
+                      <div  className="block px-2 py-3">
                         {category.name}
-                      </a>
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -360,6 +390,7 @@ export default function Example() {
                                   // defaultChecked={option.checked}
                                   // id={`filter-${section.id}-${optionIdx}`}
                                   // name={`${section.id}[]`}
+                                  onChange={(e)=>changeSideBarFiltering(category.name,category.name,e.target.checked)}
                                   type="checkbox"
                                   className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
                                 />
