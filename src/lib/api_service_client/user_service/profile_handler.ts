@@ -42,3 +42,26 @@ export const uploadProfileImageAPi=async(imageUrl:string)=>{
         return {status:false,message:"error" }
     }
 }
+
+
+export const getProfileDetailsApi=async(id:string)=>{
+
+    try{
+
+        const resProfielDetailsApi=await axiosClient.get(`/user/view/${id}`)
+
+        return {
+            status:resProfielDetailsApi.data.status,
+            data:resProfielDetailsApi.data.message,
+            statusCode:resProfielDetailsApi.status
+        }
+
+        
+
+
+    }catch(error){
+        console.log("error occured in getProfileDetails",error)
+
+        return {status:false,message:"error" }
+    }
+}

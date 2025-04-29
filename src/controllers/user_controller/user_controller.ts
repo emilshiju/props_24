@@ -196,3 +196,27 @@ export async function  loginUser(loginDetails:LoginType){
 
 
 
+
+
+export async function detailedViewProfile(userId:string){
+
+  try{
+
+    const findProfile = await prisma.profile.findFirst({
+      where: {
+        id: userId,  
+      }, include: {
+        user: true,  
+      },
+    })
+
+    return findProfile
+
+
+
+  }catch(error){
+    console.log("error occured in detailedView",error)
+
+    return false
+  }
+}

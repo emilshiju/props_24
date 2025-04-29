@@ -36,11 +36,11 @@ export async function POST(request:NextRequest){
 
     try{
 
-        const {sideBarFilteredData,sectionName,currentData,status}=await request.json()
+        const {sideBarFilteredData,sectionName,currentData,status,item}=await request.json()
         console.log("in serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
         console.log(sideBarFilteredData,sectionName,currentData,status)
 
-        const filteredResult =await  applyComplexFilters(sideBarFilteredData,sectionName,currentData,status)
+        const filteredResult =await  applyComplexFilters(sideBarFilteredData,sectionName,currentData,status,item)
 
         
 

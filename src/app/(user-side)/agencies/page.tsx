@@ -1,3 +1,5 @@
+
+
 "use client"
 import { MagnifyingGlassIcon, StarIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 
@@ -23,7 +25,7 @@ import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from
 import { listCityApi } from '@/src/lib/api_service_client/admin_service/city_handler'
 import { listSpecializationApi } from '@/src/lib/api_service_client/admin_service/specialization_handler'
 import { cityResType, specialisation_Res_Type } from '@/src/type/components_type/all_admin_type'
-import {  getSideBarFilterAPi ,getChangedSideBarFilterApi, getAll, getAllSearchedListApi} from '@/src/lib/api_service_client/user_service/filter_handler'
+import {  getSideBarFilterAPi ,getChangedSideBarFilterApi, getAll, getAllSearchedListApi, getAllAgentApi, getAllAgenciesApi} from '@/src/lib/api_service_client/user_service/filter_handler'
 import { string } from 'yup'
 
 const sortOptions = [
@@ -82,26 +84,17 @@ function classNames(...classes:any) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function Agencies() {
+    
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   const [sideBarFilter,setSideBarFilter]=useState<FilterSection_Type []>([])
 
   const [listAllFilteredProduct,setAllFilteredProduct]=useState([])
 
-  const [listAll,setAll]=useState([])
 
-  const searchParams = useSearchParams()
-  const searchQuery = searchParams.get("search")
   const router = useRouter()
-  const pathname = usePathname();
-
-  console.log("gotttttttttttttt searchparamsssssssssssssssssssss")
-  console.log(searchParams)
-
-
-
-
+  
   
   const fetchSideBarFilter=async()=>{
 
@@ -116,52 +109,28 @@ export default function Example() {
   }
 
 
-  const fetchAllList=async()=>{
+  const fetchAllAgencies=async()=>{
 
-    const ress= await getAll()
+    const ress= await getAllAgenciesApi()
 
     if(ress.status){
       // setAll(ress.data)
       setAllFilteredProduct(ress.data)
     }
-  }
-
-  
-
-  const fetchAllSearchedList=async(data:string)=>{
-
-    const ress= await getAllSearchedListApi(data)
-
-    if(ress.status){
-      setAllFilteredProduct(ress.data)
-    }
 
   }
 
-  useEffect(()=>{
-
   
-
-    if(searchQuery){
-        
-        fetchAllSearchedList(searchQuery )
-    }
-
-  },[searchParams])
 
 
   
 
   useEffect(()=>{
 
-    if(searchQuery==null){
+   
 
-        fetchAllList()
-    }else{
-      
-      fetchAllSearchedList(searchQuery)
-
-    }
+        fetchAllAgencies()
+   
 
     fetchSideBarFilter()
 
@@ -175,13 +144,7 @@ export default function Example() {
     console.log("got valueee idddddddddddddddddddddddddddd")
     
     console.log(sectionName,valueId,isChecked)
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete('search')
-    router.replace(`${pathname}?${params.toString()}`);
-      // setSearchParams(searchParams);
     
-
-
 
 
    const updatedSideBarFilter:any= sideBarFilter.map((data:any,index)=>{
@@ -201,47 +164,23 @@ export default function Example() {
       return data;
 
     })
-    console.log("tttttttttttttttttttttttttttttt")
-    console.log(updatedSideBarFilter)
-
-    // if(sectionName=='Agent'){
-
-    //   if(valueId=='Agent'&&isChecked==true)
-    //     res.push({ name: 'agent', options: [{ checked: true }] });
-    //   else
-    //     res.push({ name: 'agent', options: [{ checked: false}] }); 
-
-    // }
-
-    //   if(sectionName=='Agencies'){
-
-    //     if(valueId=='Agencies'&&isChecked==true){
-    //       res.push({ name: 'agencies', options: [{ checked: true }] });
-    //     }else{
-    //       res.push({ name: 'agencies', options: [{ checked: false}] });
-    //     }
-
-    //   }
-
-
-    // console.log(res)
+    
     setSideBarFilter(updatedSideBarFilter); 
 
 
 
       
-    const filteredResult = await  getChangedSideBarFilterApi(updatedSideBarFilter,{sectionName:sectionName},{value:valueId},{status:isChecked})
+    const filteredResult = await  getChangedSideBarFilterApi(updatedSideBarFilter,{sectionName:sectionName},{value:valueId},{status:isChecked},'agencies')
     
     setAllFilteredProduct(filteredResult.data)
 
   
   }
 
-  useEffect(()=>{
 
-    console.log("use effecttttttttttttttttttttttttttttttttttttttttt")
-  },[])
-
+  const navigateToDetailPage=(id:string)=>{
+    router.push(`/viewDetails/${id}`) 
+  }
 
 
   return (
@@ -431,49 +370,6 @@ export default function Example() {
 
 
 
-                {/* <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <div key={category.name} className="flex gap-3">
-                            <div className="flex h-5 shrink-0 items-center">
-                              <div className="group grid size-4 grid-cols-1">
-                                <input
-                                  onChange={(e)=>changeSideBarFiltering(category.name,category.name,e.target.checked)}
-                                  type="checkbox"
-                                  className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                                />
-                                <svg
-                                  fill="none"
-                                  viewBox="0 0 14 14"
-                                  className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
-                                >
-                                  <path
-                                    d="M3 8L6 11L11 3.5"
-                                    strokeWidth={2}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="opacity-0 group-has-checked:opacity-100"
-                                  />
-                                  <path
-                                    d="M3 7H11"
-                                    strokeWidth={2}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="opacity-0 group-has-indeterminate:opacity-100"
-                                  />
-                                </svg>
-                              </div>
-                            </div>
-                            <label  className="text-sm text-gray-600">
-                            {category.name}
-                            </label>
-                          </div>
-                    </li>
-                  ))}
-                </ul> */}
-
-
-
                 {sideBarFilter.map((section) => (
                   <Disclosure key={section.id} as="div" className="border-b border-gray-200 py-6">
                     <h3 className="-my-3 flow-root">
@@ -551,158 +447,58 @@ export default function Example() {
                 
               
                 <div className="flex flex-wrap justify-center sm:justify-start gap-4">
-              {/* <div className="flex justify-center" > */}
-              {/* <div className="sm:grid grid-cols-1  sm:grid-cols-1 md:grid-cols-3 gap-4"> */}
+           
               {listAllFilteredProduct&&listAllFilteredProduct.map((data:any,index)=>(
                 
-                  <div
-                            key={index}
-                            className="w-[280px] sm:w-[285px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
-                          >
-                            <Link href="#">
-                              <div className="flex justify-center pt-4">
-                                <Image
-                                  className="rounded-t-lg"
-                                  src={data?.imageUrl}
-                                  alt="Technology acquisitions"
-                                  width={245}
-                                  height={235}
-                                />
-                              </div>
-                            </Link>
-                            <div className="flex items-center p-3 pl-6">
-                              <div className="flex text-yellow-400">
-                                <StarIcon key={1} className="h-5 w-5" />
-                                <StarIcon key={2} className="h-5 w-5" />
-                                <StarIcon key={3} className="h-5 w-5" />
-                              </div>
-                              <span className="text-black text-1 text-sm">(20 reviews)</span>
-                            </div>
-                            <div className="text-start pl-6">
-                              <Link href="#">
-                                <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
-                                  {data?.businessName}
-                                </h5>
-                              </Link>
-                              <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
-                                jhiuhiu
-                              </p>
-                            </div>
-                          </div>
+                <div
+                onClick={()=>navigateToDetailPage(data.id)}
+                key={index}
+                className="w-[280px] sm:w-[410px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
+              >
+                
+                  <div className="flex items-center p-3 pl-6">
+                    <Image
+                      className="rounded-t-lg"
+                      src={data?.imageUrl}
+                      alt="Technology acquisitions"
+                      width={160}
+                      height={110}
+                    />
+                    <div className="pl-5 flex flex-col">
+                      <h1 className="text-sm sm:text-lg font-bold">sdhfisuhfiuhsi</h1>
+                      <h1 className="text-sm sm:text-lg font-bold">sdhfisuhfiuhsi</h1>
+                    </div>
+                  </div>
+              
+              
+                <div className="flex items-center p-3 pl-6">
+                  <div className="flex text-yellow-400">
+                    <StarIcon key={1} className="h-5 w-5" />
+                    <StarIcon key={2} className="h-5 w-5" />
+                    <StarIcon key={3} className="h-5 w-5" />
+                  </div>
+                  <span className="text-black text-sm sm:text-base">(20 reviews)</span>
+                </div>
+              
+                <div className="flex justify-start text-start  px-6">
+                  <Link href="#">
+                    <h5 className="mb-2 text-sm sm:text-sm font-bold tracking-tight text-gray-900">
+                      {data?.businessName}
+                    </h5>
+                  </Link>
+                  <p className="mb-3 pl-8  font-normal text-gray-700 text-sm sm:text-base">
+                    jhiuhiu
+                  </p>
+                </div>
+              
+                <div className="flex items-center mt-4 mb-4 px-6">
+                  <button className="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                    Visualizza Agenzia
+                  </button>
+                </div>
+              </div>
+              
 
-
-
-
-
-
-                          /* <div
-                            key='2'
-                            className="w-[280px] sm:w-[285px]  flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
-                          >
-                            <Link href="#">
-                              <div className="flex justify-center pt-4">
-                                <Image
-                                  className="rounded-t-lg"
-                                  src="/images/profile.png"
-                                  alt="Technology acquisitions"
-                                  width={245}
-                                  height={235}
-                                />
-                              </div>
-                            </Link>
-                            <div className="flex items-center p-3 pl-6">
-                              <div className="flex text-yellow-400">
-                                <StarIcon key={1} className="h-5 w-5" />
-                                <StarIcon key={2} className="h-5 w-5" />
-                                <StarIcon key={3} className="h-5 w-5" />
-                              </div>
-                              <span className="text-black text-1 text-sm">(20 reviews)</span>
-                            </div>
-                            <div className="text-start pl-6">
-                              <Link href="#">
-                                <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
-                                  'okjio'
-                                </h5>
-                              </Link>
-                              <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
-                                jhiuhiu
-                              </p>
-                            </div>
-                          </div>
-
-
-
-                          <div
-                            key='3'
-                            className="w-[280px] sm:w-[285px]  flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
-                          >
-                            <Link href="#">
-                              <div className="flex justify-center pt-4">
-                                <Image
-                                  className="rounded-t-lg"
-                                  src="/images/profile.png"
-                                  alt="Technology acquisitions"
-                                  width={245}
-                                  height={235}
-                                />
-                              </div>
-                            </Link>
-                            <div className="flex items-center p-3 pl-6">
-                              <div className="flex text-yellow-400">
-                                <StarIcon key={1} className="h-5 w-5" />
-                                <StarIcon key={2} className="h-5 w-5" />
-                                <StarIcon key={3} className="h-5 w-5" />
-                              </div>
-                              <span className="text-black text-1 text-sm">(20 reviews)</span>
-                            </div>
-                            <div className="text-start pl-6">
-                              <Link href="#">
-                                <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
-                                  'okjio'
-                                </h5>
-                              </Link>
-                              <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
-                                jhiuhiu
-                              </p>
-                            </div>
-                          </div>
-
-
-
-                          <div
-                            key='4'
-                            className="w-[280px] sm:w-[285px]  flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
-                          >
-                            <Link href="#">
-                              <div className="flex justify-center pt-4">
-                                <Image
-                                  className="rounded-t-lg"
-                                  src="/images/profile.png"
-                                  alt="Technology acquisitions"
-                                  width={245}
-                                  height={235}
-                                />
-                              </div>
-                            </Link>
-                            <div className="flex items-center p-3 pl-6">
-                              <div className="flex text-yellow-400">
-                                <StarIcon key={1} className="h-5 w-5" />
-                                <StarIcon key={2} className="h-5 w-5" />
-                                <StarIcon key={3} className="h-5 w-5" />
-                              </div>
-                              <span className="text-black text-1 text-sm">(20 reviews)</span>
-                            </div>
-                            <div className="text-start pl-6">
-                              <Link href="#">
-                                <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
-                                  'okjio'
-                                </h5>
-                              </Link>
-                              <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
-                                jhiuhiu
-                              </p>
-                            </div>
-                          </div>  */
                         ))}
               </div>
 

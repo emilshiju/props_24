@@ -1,0 +1,238 @@
+"use client"
+import { StarIcon, MapPinIcon, BuildingOfficeIcon, EnvelopeIcon, PhoneIcon, CheckBadgeIcon, ClockIcon, HomeIcon, UserGroupIcon } from '@heroicons/react/24/solid'
+import { HeartIcon, CalendarIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
+import { useEffect,use, useState } from 'react'
+import { getProfileDetailsApi } from '@/src/lib/api_service_client/user_service/profile_handler'
+
+import Image from 'next/image'
+const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
+
+  const { id } = use(params)
+
+  const [allData,setAllData]=useState()
+
+
+  const fetchProfileData=async(id:string)=>{
+
+        const response = await getProfileDetailsApi(id)
+
+        console.log("got profileeeeeeeeeeee detailssssssssssssssssssssssssssssssssssssssss")
+        console.log(response.data)
+
+        if(response.status){
+          setAllData(response.data)
+        }else{
+          alert("internal server error")
+        }
+  }
+
+
+  useEffect(()=>{
+
+  
+
+      fetchProfileData(id)
+
+    
+
+  },[])
+
+
+  
+
+  
+
+  const specialties =[
+    'Luxury Homes','Historic Properties'
+  ]
+
+
+    return (
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Agent Header */}
+        <div className="bg-white overflow-hidden shadow-lg rounded-lg">
+
+
+
+
+          <div className='bg-gradient-to-br from-primary to-primary-light px-4 py-16 sm:px-6 lg:px-8 relative'>
+            <div className="absolute inset-0 bg-black opacity-20"></div>
+            <div className="relative flex flex-col md:flex-row items-center">
+              <div className="h-42 w-42 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white text-4xl font-bold">
+              <Image 
+    src="/images/banner.png"
+    alt="Profile"
+    fill
+    className="object-cover rounded-full"
+  />
+              </div>
+              <div className="mt-4 md:mt-0 md:ml-6 text-center md:text-left">
+                <div className="flex items-center space-x-2">
+                  <h1 className="text-3xl font-bold text-white">uyguyg8yhiuhiu</h1>
+                  
+                    <CheckBadgeIcon className="h-6 w-6 text-accent" title="Agente verificato" />
+                  
+                </div>
+                <div className="flex items-center justify-center md:justify-start mt-1 text-white/80">
+                  <MapPinIcon className="h-5 w-5 mr-1" />
+                  <span>uyguguigu</span>
+                  <span className="mx-2">•</span>
+                  <BuildingOfficeIcon className="h-5 w-5 mr-1" />
+                  <span>agent</span>
+                </div>
+                <div className="flex items-center justify-center md:justify-start mt-2">
+                  <div className="flex text-yellow-300">
+                    {/* {[...Array(5)].map((_, i) => (
+                      <StarIcon 
+                        key={i} 
+                        className={`h-6 w-6 ${i < Math.floor(agentWithDefaults.rating) ? '' : 'opacity-30'}`} 
+                      />
+                    ))} */}
+                     <StarIcon className="h-6 w-6" />
+  <StarIcon className="h-6 w-6" />
+  <StarIcon className="h-6 w-6" />
+  <StarIcon className="h-6 w-6 opacity-30" />
+  <StarIcon className="h-6 w-6 opacity-30" />
+                  </div>
+                  <p className="ml-2 text-white"> 4.9 ( 48 reviews)</p>
+                </div>
+              </div>
+              <div className="md:ml-auto mt-6 md:mt-0 flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-3">
+                <a href={`mailto:emilshiju10@gmail.com`} className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-accent hover:bg-accent/90">
+                  <EnvelopeIcon className="h-5 w-5 mr-2" />
+                  Send Email
+                </a>
+                <a href={`tel:12345678`} className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-secondary hover:bg-secondary/90">
+                  <PhoneIcon className="h-5 w-5 mr-2" />
+                  Call
+                </a>
+              </div>
+            </div>
+          </div>
+
+
+
+          
+          {/* Agent Stats */}
+          <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div className="p-3">
+                <div className="text-2xl font-bold text-primary">48</div>
+                <div className="text-sm text-gray-500">Reviews</div>
+              </div>
+              <div className="p-3">
+                <div className="text-2xl font-bold text-primary">
+                  20
+                </div>
+                <div className="text-sm text-gray-500">Properties Sold</div>
+              </div>
+              <div className="p-3">
+                <div className="text-2xl font-bold text-primary">
+                  7
+                </div>
+                <div className="text-sm text-gray-500">Years of Experience</div>
+              </div>
+              <div className="p-3">
+                <div className="text-2xl font-bold text-primary">
+                124 %
+                </div>
+                <div className="text-sm text-gray-500">sucess rate</div>
+              </div>
+            </div>
+          </div>
+  
+          {/* Contact Info */}
+          <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
+            <dl className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+              <div className="sm:col-span-1">
+                <dt className="text-sm font-medium text-gray-500">Email</dt>
+                <dd className="mt-1 text-sm text-gray-900 flex items-center">
+                  <EnvelopeIcon className="h-4 w-4 text-gray-400 mr-1" />
+                  <a href={`mailto:emilshiju10@gmail.com`} className="hover:text-accent">emilshiju10@gmail.com`</a>
+                </dd>
+              </div>
+              <div className="sm:col-span-1">
+                <dt className="text-sm font-medium text-gray-500">Telefono</dt>
+                <dd className="mt-1 text-sm text-gray-900 flex items-center">
+                  <PhoneIcon className="h-4 w-4 text-gray-400 mr-1" />
+                  <a href={`tel:8086780430`} className="hover:text-accent">8086780430</a>
+                </dd>
+              </div>
+              <div className="sm:col-span-1">
+                <dt className="text-sm font-medium text-gray-500">Agency</dt>
+                <dd className="mt-1 text-sm text-gray-900 flex items-center">
+                  <BuildingOfficeIcon className="h-4 w-4 text-gray-400 mr-1" />
+                  <Link href={`/agencies`} className="hover:text-accent">
+                    dsofjsojif
+                  </Link>
+                </dd>
+              </div>
+              <div className="sm:col-span-1">
+                <dt className="text-sm font-medium text-gray-500">Active Since</dt>
+                <dd className="mt-1 text-sm text-gray-900 flex items-center">
+                  <ClockIcon className="h-4 w-4 text-gray-400 mr-1" />
+                  January 2022
+                </dd>
+              </div>
+            </dl>
+          </div>
+  
+          {/* Specialties */}
+          <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
+            <div className="flex items-center mb-2">
+              <h3 className="text-lg font-medium text-gray-900">Specializations</h3>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {specialties.map((specialty: string) => (
+                <span key={specialty} className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                  {specialty}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+  
+        {/* Bio Section */}
+        <div className="mt-8 bg-white overflow-hidden shadow rounded-lg">
+          <div className="px-4 py-5 sm:px-6 flex items-center">
+            <DocumentTextIcon className="h-6 w-6 text-primary mr-2" />
+            <h2 className="text-xl font-semibold text-gray-900">Su About Alessandro Conti</h2>
+          </div>
+          <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
+            <p className="text-gray-700 whitespace-pre-line">With over 15 years of experience in the luxury real estate sector, Alessandro specializes in prestigious properties in the main Italian cities</p>
+          </div>
+        </div>
+  
+
+
+  
+        {/* CTA Section */}
+        <div className="mt-8 bg-primary rounded-lg shadow-lg overflow-hidden">
+          <div className="px-4 py-8 sm:px-6 text-center text-white">
+            <h2 className="text-2xl font-bold mb-4">Are you looking for a house in Milan ?</h2>
+            <p className="text-primary-light mb-6 max-w-3xl mx-auto">
+            Alessandro Conti is here to help you find the perfect property.
+            </p>
+            <div className="flex justify-center space-x-4">
+              <Link href='/contact'>
+                <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-primary bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+                  Contatta Alesndario
+                </button>
+              </Link>
+              <Link href="/search">
+                <button className="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md shadow-sm text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+                  Cerca Proprietà
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+}
+
+
+
+export default ViewDetails

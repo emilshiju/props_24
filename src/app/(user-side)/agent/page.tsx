@@ -1,3 +1,5 @@
+
+
 "use client"
 import { MagnifyingGlassIcon, StarIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 
@@ -23,7 +25,7 @@ import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from
 import { listCityApi } from '@/src/lib/api_service_client/admin_service/city_handler'
 import { listSpecializationApi } from '@/src/lib/api_service_client/admin_service/specialization_handler'
 import { cityResType, specialisation_Res_Type } from '@/src/type/components_type/all_admin_type'
-import {  getSideBarFilterAPi ,getChangedSideBarFilterApi, getAll, getAllSearchedListApi} from '@/src/lib/api_service_client/user_service/filter_handler'
+import {  getSideBarFilterAPi ,getChangedSideBarFilterApi, getAll, getAllSearchedListApi, getAllAgentApi} from '@/src/lib/api_service_client/user_service/filter_handler'
 import { string } from 'yup'
 
 const sortOptions = [
@@ -82,23 +84,12 @@ function classNames(...classes:any) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function Agent() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   const [sideBarFilter,setSideBarFilter]=useState<FilterSection_Type []>([])
 
   const [listAllFilteredProduct,setAllFilteredProduct]=useState([])
-
-  const [listAll,setAll]=useState([])
-
-  const searchParams = useSearchParams()
-  const searchQuery = searchParams.get("search")
-  const router = useRouter()
-  const pathname = usePathname();
-
-  console.log("gotttttttttttttt searchparamsssssssssssssssssssss")
-  console.log(searchParams)
-
 
 
 
@@ -116,52 +107,28 @@ export default function Example() {
   }
 
 
-  const fetchAllList=async()=>{
+  const fetchAllAgent=async()=>{
 
-    const ress= await getAll()
+    const ress= await getAllAgentApi()
 
     if(ress.status){
       // setAll(ress.data)
       setAllFilteredProduct(ress.data)
     }
-  }
-
-  
-
-  const fetchAllSearchedList=async(data:string)=>{
-
-    const ress= await getAllSearchedListApi(data)
-
-    if(ress.status){
-      setAllFilteredProduct(ress.data)
-    }
 
   }
 
-  useEffect(()=>{
-
   
-
-    if(searchQuery){
-        
-        fetchAllSearchedList(searchQuery )
-    }
-
-  },[searchParams])
 
 
   
 
   useEffect(()=>{
 
-    if(searchQuery==null){
+   
 
-        fetchAllList()
-    }else{
-      
-      fetchAllSearchedList(searchQuery)
-
-    }
+        fetchAllAgent()
+   
 
     fetchSideBarFilter()
 
@@ -175,13 +142,7 @@ export default function Example() {
     console.log("got valueee idddddddddddddddddddddddddddd")
     
     console.log(sectionName,valueId,isChecked)
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete('search')
-    router.replace(`${pathname}?${params.toString()}`);
-      // setSearchParams(searchParams);
     
-
-
 
 
    const updatedSideBarFilter:any= sideBarFilter.map((data:any,index)=>{
@@ -201,36 +162,13 @@ export default function Example() {
       return data;
 
     })
-    console.log("tttttttttttttttttttttttttttttt")
-    console.log(updatedSideBarFilter)
-
-    // if(sectionName=='Agent'){
-
-    //   if(valueId=='Agent'&&isChecked==true)
-    //     res.push({ name: 'agent', options: [{ checked: true }] });
-    //   else
-    //     res.push({ name: 'agent', options: [{ checked: false}] }); 
-
-    // }
-
-    //   if(sectionName=='Agencies'){
-
-    //     if(valueId=='Agencies'&&isChecked==true){
-    //       res.push({ name: 'agencies', options: [{ checked: true }] });
-    //     }else{
-    //       res.push({ name: 'agencies', options: [{ checked: false}] });
-    //     }
-
-    //   }
-
-
-    // console.log(res)
+    
     setSideBarFilter(updatedSideBarFilter); 
 
 
 
       
-    const filteredResult = await  getChangedSideBarFilterApi(updatedSideBarFilter,{sectionName:sectionName},{value:valueId},{status:isChecked})
+    const filteredResult = await  getChangedSideBarFilterApi(updatedSideBarFilter,{sectionName:sectionName},{value:valueId},{status:isChecked},'agent')
     
     setAllFilteredProduct(filteredResult.data)
 

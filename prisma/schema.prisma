@@ -61,6 +61,8 @@ model profile {
   userId          String   @unique
   specializationId String   @unique
   cityId           String   @unique
+
+  properties property[]
 }
 
 
@@ -83,4 +85,25 @@ model specialization{
   createdAt DateTime @default(now())
   
   profiles  profile[]
+ }
+
+
+
+ model property{
+
+  id        String @id @default(uuid())
+  name      String
+  price     String
+  room      String
+  city      String
+  bathroom  String
+  sm        String
+  imageUrl  String
+
+
+  profileId    String
+  profile      profile   @relation(fields: [profileId], references: [id])
+
+ 
+
  }

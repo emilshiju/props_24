@@ -1,6 +1,55 @@
 import prisma from "../prisma_client"
 
 
+
+export async function getAllAgent(){
+
+  try{
+
+    const resAllAgent=await prisma.user.findMany({
+      where: {
+        role:'agent', // assuming you have role inside `data.value`
+      },
+      select: {
+        profile: true, // Only select the profile field, not the rest of the user data
+      },
+    });
+
+    return resAllAgent.map((user) => user.profile);
+
+
+  }catch(error){
+    console.log("error ocured in getAllAgent",error)
+  }
+
+}
+
+
+export async function getAllAgencies() {
+
+  try{
+
+
+    const resAllAgencies=await prisma.user.findMany({
+      where: {
+        role:'agencies', // assuming you have role inside `data.value`
+      },
+      select: {
+        profile: true, // Only select the profile field, not the rest of the user data
+      },
+    });
+
+    return resAllAgencies.map((user) => user.profile);
+
+
+
+
+  }catch(error){
+    console.log("error occured in getAllAgencies",error)
+  }
+  
+}
+
 export async function getFilter(){
 
     try{
@@ -20,25 +69,11 @@ export async function getFilter(){
             checked: false,
           }));
           
-        
-
-          const all=[
-            {value:"agencies",
-            label:"agencies",
-            checked:false},
-            {value:"agent",
-            label:"agent",
-            checked:false}
-          ]
+      
 
        
 
         const sideBarFilter=[
-          {
-            id:'all',
-            name:'all',
-            options:all
-          },
           
             {
                 id:'city',
@@ -64,7 +99,7 @@ export async function getFilter(){
 }
 
 
-export async function applyComplexFilters(sideBarFilteredData:any,sectionName:any,currentData:any,status:any){
+export async function applyComplexFilters(sideBarFilteredData:any,sectionName:any,currentData:any,status:any,item:any){
 
 
     try{
@@ -80,8 +115,14 @@ export async function applyComplexFilters(sideBarFilteredData:any,sectionName:an
           
               const allFilteredCity = await prisma.profile.findMany({
                 where: {
-                  cityId: { in: cityValues }, // use 'in' for multiple cityIds
+                  cityId: {
+                    in: cityValues
+                  },
+                  user: {
+                    role: item
+                  }
                 },
+                
               });
           
               return allFilteredCity;
@@ -95,33 +136,18 @@ export async function applyComplexFilters(sideBarFilteredData:any,sectionName:an
               const allFilteredSpecialization = await prisma.profile.findMany({
                 where: {
                   specializationId: { in: specializationValues }, // assuming specializationId
+                  user: {
+                    role: item
+                  }
                 },
               });
           
               return allFilteredSpecialization;
             }
           
-            if (data.name === 'all') {
-      
-              const aa=data.options
-                        .filter((option: any) => option.checked)
-                        .map((option: any) => option.value);
-              console.log("00000000000000000000")
-              console.log(aa)
-
-              const allEntities = await prisma.user.findMany({
-                where: {
-                  role:{in:aa}, // assuming you have role inside `data.value`
-                },
-                select: {
-                  profile: true, // Only select the profile field, not the rest of the user data
-                },
-              });
           
-              return allEntities.map((user) => user.profile);
-            }
           
-            return []; // default if none matched
+            return []; 
           });
           
           // Wait for all promises to resolve
@@ -171,4 +197,91 @@ export async function getAllList(){
         console.log("error occured in getAllList controler")
         return false
     }
+}
+
+
+
+
+
+export async function searchAll(data:string){
+
+  try{
+
+   const allData:any={ allAgent:[] ,allAgencies:[], allCity:[]}
+
+
+   const allAgentList=await prisma.profile.findMany({
+
+    where:{
+      AND: [
+        {
+          OR: [
+            { businessName: { contains: data, mode: 'insensitive' } },
+            { phone: { contains: data, mode: 'insensitive' } },
+            { licenseNumber: { contains: data, mode: 'insensitive' } },
+            { bio: { contains: data, mode: 'insensitive' } },
+          ],
+        },
+        {
+          user: {
+            role: 'agent', 
+          },
+        },
+      ],
+    }
+   })
+
+   allData.allAgent.push(...allAgentList)
+
+
+
+   
+   const allAgenciesList=await prisma.profile.findMany({
+
+    where:{
+      AND: [
+        {
+          OR: [
+            { businessName: { contains: data, mode: 'insensitive' } },
+            { phone: { contains: data, mode: 'insensitive' } },
+            { licenseNumber: { contains: data, mode: 'insensitive' } },
+            { bio: { contains: data, mode: 'insensitive' } },
+          ],
+        },
+        {
+          user: {
+            role: 'agencies', 
+          },
+        },
+      ],
+    }
+   })
+
+   allData.allAgencies.push(...allAgenciesList)
+
+   const allCityList = await prisma.city.findMany({
+    where: {
+      cityName: {
+        contains: data,   
+        mode: 'insensitive', 
+      },
+    },
+  });
+
+  allData.allCity.push(...allCityList)
+  
+
+   console.log("got allllllllllllllllllllllllllll")
+   console.log(allData)
+
+
+    return allData
+
+
+  }catch(error){
+    console.log("error occured in searchAll",error)
+
+    return false
+
+  }
 }
