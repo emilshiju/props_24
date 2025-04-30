@@ -5,7 +5,16 @@ import Link from 'next/link'
 import { useEffect,use, useState } from 'react'
 import { getProfileDetailsApi } from '@/src/lib/api_service_client/user_service/profile_handler'
 
+
+
+
+
+
+
+
 import Image from 'next/image'
+import FeaturedProperties from '@/src/components/user/featured_properties'
+
 const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
 
   const { id } = use(params)
@@ -204,6 +213,19 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
             <p className="text-gray-700 whitespace-pre-line">With over 15 years of experience in the luxury real estate sector, Alessandro specializes in prestigious properties in the main Italian cities</p>
           </div>
         </div>
+
+
+
+        {/* featured properties */}
+
+       <FeaturedProperties  profileId={id}  />
+
+
+
+
+
+
+
   
 
 

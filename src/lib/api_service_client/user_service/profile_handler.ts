@@ -65,3 +65,28 @@ export const getProfileDetailsApi=async(id:string)=>{
         return {status:false,message:"error" }
     }
 }
+
+
+
+
+export const getPropertyDetailsApi=async(id:string)=>{
+
+    try{
+
+       const resPropertyDetailsApi=await axiosClient.get(`/user/property/${id}`)
+
+        
+        return {
+            status:resPropertyDetailsApi.data.status,
+            data:resPropertyDetailsApi.data.message,
+            statusCode:resPropertyDetailsApi.status
+        }
+
+
+
+    }catch(error){
+        console.log("error occured in getPropertyDetailsApi")
+        
+        return {status:false,message:"error" }
+    }
+}

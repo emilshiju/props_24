@@ -220,3 +220,32 @@ export async function detailedViewProfile(userId:string){
     return false
   }
 }
+
+
+export async function getPropertyUser(profileId:string){
+
+
+  try{
+
+
+    const properties = await prisma.property.findMany({
+      where: {
+        profileId: profileId,
+      },include: {
+        city: {
+          select: {  
+            cityName: true,
+          }, 
+        },
+      },
+    });
+
+    return properties
+
+
+  }catch(error){
+    console.log("error occured in getpropertyUser")
+    return false
+  }
+
+}

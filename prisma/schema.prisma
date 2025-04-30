@@ -74,6 +74,7 @@ model city{
   createdAt DateTime @default(now())
 
   profiles  profile[] 
+  property  property[]
 }
 
 
@@ -95,7 +96,6 @@ model specialization{
   name      String
   price     String
   room      String
-  city      String
   bathroom  String
   sm        String
   imageUrl  String
@@ -103,6 +103,9 @@ model specialization{
 
   profileId    String
   profile      profile   @relation(fields: [profileId], references: [id])
+
+  cityId    String
+  city      city     @relation(fields: [cityId], references: [id])
 
  
 

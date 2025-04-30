@@ -7,11 +7,16 @@ import { useEffect, useState } from "react"
     TableCell,
     TableHeader,
     TableRow,} from "@/src/components/agent-agency/ui/table"
-import { listAllPropertyApi } from "@/src/lib/api_service_client/agent_agencies_service/property_handler"
+import { deletePropertyApi, listAllPropertyApi } from "@/src/lib/api_service_client/agent_agencies_service/property_handler"
 import { PropertyResType } from "@/src/type/api_type/common_type"
 import Image from "next/image"
+import { useRouter } from 'next/navigation';
+
 
 const PropertyList=()=>{
+
+
+  const router = useRouter();
 
     const [allProperty,setAllProperty]=useState<PropertyResType[]>([])
 
@@ -24,6 +29,26 @@ const PropertyList=()=>{
         }
 
     }
+
+    const editProperty=(id:string)=>{
+
+      router.push(`/featured/edit/${id}`)
+
+    }
+
+
+    const deleteProperty=async(id:string)=>{
+
+     const res =await  deletePropertyApi(id)
+
+     if(res.status){
+      alert("scuess")
+     }else{
+      alert("error")
+     }
+     
+    }
+
 
     useEffect(()=>{
         
@@ -112,13 +137,13 @@ const PropertyList=()=>{
                               
                               <button
           type="button"
-        // onClick={()=>editCity(city.id)}
+        onClick={()=>editProperty(data.id)}
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         >
           Edit
         </button>
         <button
-        // onClick={()=>deleteCity(city.id)}
+        onClick={()=>deleteProperty(data.id)}
           type="button"
           className="text-white bg-red-700 hover:bg-red-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         >

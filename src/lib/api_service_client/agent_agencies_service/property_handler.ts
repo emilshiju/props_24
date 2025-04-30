@@ -1,5 +1,6 @@
 import { PropertyType } from "@/src/type/validation_type/propertyType"
 import axiosClient from "../../axios_client"
+import { formPropertyType, PropertyResType } from "@/src/type/api_type/common_type"
 
 
 
@@ -63,3 +64,81 @@ export const listAllPropertyApi=async()=>{
         }
     }
 }
+
+export const findSinglePropertyAPi=async(id:string)=>{
+
+    try{
+
+        const resFindSinglePropertyApi=await axiosClient.get(`/agentAgencies/property/${id}/detailedView`)
+
+        return {
+            status:resFindSinglePropertyApi.data.status,
+            data:resFindSinglePropertyApi.data.message,
+            statusCode:resFindSinglePropertyApi.status
+        }
+
+    }catch(error){
+        console.log("error occured in findSinglePropertyApi",error)
+        return {
+            status:false,
+            data:"internal error"
+        }
+    }
+}
+
+
+
+export const editProperetyApi=async(data:formPropertyType,id:string)=>{
+
+    try{
+
+       
+        const updatedData = { ...data, id };
+        console.log('1111111111111111111111111111111111111111111111111111111')
+        console.log(updatedData)
+
+
+        const resEdited=await axiosClient.put('/agentAgencies/property/edit',updatedData)
+
+        return {
+            status:resEdited.data.status,
+            data:resEdited.data.message,
+            statusCode:resEdited.status
+        }
+
+
+    }catch(error){
+        console.log("error occured in editPropertyApi",error)
+
+        return {
+            status:false,
+            data:"internal error"
+        }
+    }
+}
+
+
+export const deletePropertyApi=async(id:string)=>{
+
+    try{
+
+        const deleted=await axiosClient.delete(`/agentAgencies/property/${id}/delete`)
+
+        return {
+            status:deleted.data.status,
+            data:deleted.data.message,
+            statusCode:deleted.status
+        }
+
+
+    }catch(error){
+        console.log("error occured in deletePropertyAPi",error)
+        return {
+            status:false,
+            data:"internal error"
+        }
+
+    }
+}
+
+
