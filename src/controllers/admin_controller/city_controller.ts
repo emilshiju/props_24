@@ -1,6 +1,7 @@
-import { cityType } from "@/src/type/components_type/all_admin_type"
+import { cityType, detailedCityReqType } from "@/src/type/components_type/all_admin_type"
 import prisma from "../prisma_client"
 import { AddCityResponse } from "@/src/type/controller_type/admin_controller";
+import { Asul } from "next/font/google";
 
 
 
@@ -45,8 +46,9 @@ export async function  listCity(){
 
     try{
 
-        const response=await prisma.city.findMany()
-
+        const response=await prisma.city.findMany({include: {
+          details: true, 
+        },})
 
         return response
 
@@ -67,6 +69,9 @@ export async function detailedView(cityId:string){
         const detailed = await prisma.city.findUnique({
             where: {
               id: cityId,
+            },
+            include: {
+              details: true,
             },
           });
 
@@ -137,4 +142,133 @@ export async function deleteCity(cityId:string){
         console.log("error occrued in datailedView",error)
         return false
     }
+}
+
+
+
+
+export  async function addDetailedCity(data:detailedCityReqType){
+
+  try{
+
+    const added = await prisma.cityDetails.create({
+      data: {
+        cityId:data.city,
+        availableProperties:data.details.availableProperties,
+        averagePrice:data.details.averagePrice,
+        description:data.details.description,
+        popularity:data.details.popularity,
+        aboutContent:data.about.content,
+        imageUrl:data.image,
+        areas:data.areas,
+        types:data.types
+      },
+    });
+
+    return added
+
+    
+  }catch(error){
+    console.log("error occured in addDetailedCity",error)
+  }
+
+}
+
+
+export async function  listDetailedCity(){
+
+  try{
+
+    const allData = await prisma.cityDetails.findMany({
+      include: {
+        city: {
+          select: {
+            cityName: true
+          }
+        }
+      }
+    });
+
+    return allData
+
+  }catch(error){
+    console.log("error occured in editDetaieldCity",error)
+  }
+}
+
+
+
+
+export async function detailedViewCity(id:string){
+
+  try{
+
+
+    const city = await prisma.cityDetails.findUnique({
+      where: {
+        id: id,
+      }, include: {
+        city: {
+          select: {
+            cityName: true
+          }
+        }
+      }
+    });
+
+    console.log("i got cityyyyyyyyy")
+    console.log(city)
+
+    if (!city) {
+      console.log(`City with ID ${id} not found.`);
+      return false
+    }
+
+    return city
+
+
+  }catch(error){
+    console.log("error occured in detailedViewCity")
+    return false
+  }
+}
+
+
+export async function editDetailedCity(id:string,data:detailedCityReqType){
+
+  try{
+    console.log("i gott iddd",id)
+
+    const cityExists = await prisma.cityDetails.findUnique({
+      where: { id: data.city }
+    });
+
+    if (!cityExists) {
+      throw new Error(`City with ID ${data.city} does not exist`);
+    }
+    
+    const updatedCity = await prisma.cityDetails.update({
+      where: { id: id },
+      data: {
+        cityId: data.city,
+        availableProperties: data.details.availableProperties,
+        averagePrice: data.details.averagePrice,
+        description: data.details.description,
+        popularity: data.details.popularity,
+        aboutContent: data.about.content,
+        imageUrl: data.image,
+        areas: data.areas,
+        types: data.types,
+      },
+    });
+
+    return updatedCity;
+
+
+  }catch(error){
+
+    console.log("error occured in edit detailed city",error)
+    return false
+
+  }
 }

@@ -1,4 +1,4 @@
-import { cityType } from "@/src/type/components_type/all_admin_type"
+import { cityType, detailedCityReqType } from "@/src/type/components_type/all_admin_type"
 import axiosClient from "../../axios_client"
 
 
@@ -129,5 +129,110 @@ export const deleteCityApi=async(cityId:string)=>{
             status:false,
             data:'error occured',
         }
+    }
+}
+
+
+
+
+
+export const cityDetailsApi=async(data:detailedCityReqType)=>{
+
+    try{
+
+        const resCityDetailsApi=await axiosClient.post('/admin/city/detailed/add',data)
+
+        return {
+            status:resCityDetailsApi.data.status,
+            data:resCityDetailsApi.data.message,
+            statusCode:resCityDetailsApi.status
+        }
+
+
+    }catch(error){
+        console.log("error occrued in cityDetailsApi",error)
+
+        return {
+            status:false,
+            data:'error occured',
+        }
+        
+    }
+}
+
+
+
+
+export const listCityDetailsApi=async()=>{
+
+    try{
+
+
+        const resListCityDetailsApi=await axiosClient.get('/admin/city/detailed/list')
+
+        return {
+            status:resListCityDetailsApi.data.status,
+            data:resListCityDetailsApi.data.message,
+            statusCode:resListCityDetailsApi.status
+        }
+
+
+    }catch(error){
+        console.log("error occured in listCityApi",error)
+
+        return {
+            status:false,
+            data:'error occured',
+        }
+    }
+}
+
+
+
+
+
+export const detailedViewCityApi=async(id:string)=>{
+    try{
+
+        const resDetailedViewCityApi=await axiosClient.get(`/admin/city/detailed/${id}/view`)
+
+        return {
+            status:resDetailedViewCityApi.data.status,
+            data:resDetailedViewCityApi.data.message,
+            statusCode:resDetailedViewCityApi.status
+        }
+
+    }catch(error){
+        console.log("error occured in getDetailedCityApi",error)
+
+
+        return {
+            status:false,
+            data:'error occured',
+        }
+    }
+}
+
+
+
+export const editDetailedCityApi=async(id:string,data:detailedCityReqType)=>{
+
+    try{
+
+        const resEditDetailedCityAPi=await axiosClient.post('/admin/city/detailed/edit',{id:id,data:data})
+
+        return {
+            status:resEditDetailedCityAPi.data.status,
+            data:resEditDetailedCityAPi.data.message,
+            statusCode:resEditDetailedCityAPi.status
+        }
+    }catch(error){
+        console.log("error occured in editDetailedCityApi")
+
+        return {
+            status:false,
+            data:'error occured',
+        }
+
     }
 }

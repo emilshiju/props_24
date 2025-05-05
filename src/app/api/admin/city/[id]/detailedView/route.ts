@@ -13,14 +13,12 @@ export async function GET(request:NextRequest,{params}:{params:{id:string}}){
 
         const resCity = await detailedView(id)
 
-        console.log("got city")
+        console.log("got cityyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
         console.log(resCity)
 
         if(!resCity){
             return NextResponse.json({status:false,message:"internal error"},{status:500})
         }
-
-
 
 
         return NextResponse.json({status:true,message:resCity},{status:200})

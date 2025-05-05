@@ -8,7 +8,7 @@ const nextConfig:NextConfig = {
     });
     return config;
   },images: {
-    domains: ['firebasestorage.googleapis.com'], 
+    domains: ['firebasestorage.googleapis.com','w0.peakpx.com'], 
     remotePatterns: [
       {
         protocol: 'https',

@@ -75,6 +75,7 @@ model city{
 
   profiles  profile[] 
   property  property[]
+  details   cityDetails?
 }
 
 
@@ -110,3 +111,29 @@ model specialization{
  
 
  }
+
+
+
+
+
+
+
+
+
+ model cityDetails {
+  id                  String   @id @default(uuid())
+  cityId              String   @unique
+  aboutContent        String
+  availableProperties String
+  averagePrice        String
+  description         String
+  popularity          String
+  imageUrl            String?
+
+  areas               Json     // [{ heading, content }]
+  types               Json     // [{ heading, content, price }]
+
+  city                city     @relation(fields: [cityId], references: [id], onDelete: Cascade)
+
+  createdAt           DateTime @default(now())
+}
