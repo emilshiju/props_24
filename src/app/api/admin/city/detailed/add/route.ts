@@ -15,16 +15,20 @@ export async function POST(request:NextRequest){
 
         console.log("got data",data)
 
-        const added=await addDetailedCity(data)
+        const result=await addDetailedCity(data)
 
-        if(!added){
-            return NextResponse.json({status:false,message:'internal error'},{status:500})
-        }
-
-        return NextResponse.json({status:true,message:data},{status:200})
-
+        if (result.status === "exists") {
+            return NextResponse.json({ status: false, message: result.message }, { status: 409 }); 
+          }
+      
+        if (result.status === "error") {
+            return NextResponse.json({ status: false, message: result.message }, { status: 500 }); 
+          }
+      
+          return NextResponse.json({ status: true, message: result.data }, { status: 200 }); 
 
     }catch(error){
+
         console.log("error occured in detaield city api",error)
 
         return NextResponse.json({status:false,message:'internal error'},{status:500})

@@ -70,7 +70,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
       return <div>Loading...</div>; // or any loading indicator you prefer
     }
 
-    const hey='Active'
+    
 
     return (
          <div>
@@ -184,7 +184,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                       specialisation
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        {userDetails.profile.specialisation}
+                        {userDetails?.profile?.specialization.title}
                       </p>
                     </div>
         
@@ -194,7 +194,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         license - Number
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        {userDetails.profile.specialisation}
+                        {userDetails.profile.licenseNumber}
                       </p>
                     </div>
 
@@ -203,8 +203,13 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         verification  Status
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                      {userDetails.profile.verified?<span className="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">
+      verified
+    </span>: <span className="bg-yellow-100 text-yellow-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-yellow-900 dark:text-yellow-300">
+      pending
+    </span>}
                         {/* {userDetails.profile.verified} */}
-                        <Badge
+                        {/* <Badge
                         size="sm"
                         color={
                           hey === "Active"
@@ -215,7 +220,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         }
                       >
                          Pending
-                      </Badge>
+                      </Badge> */}
                       </p>
                     </div>
         

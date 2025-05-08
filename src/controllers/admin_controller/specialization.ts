@@ -6,24 +6,40 @@ export async function addSpecialization(data:specialisation_Type){
 
     try{
 
+
+        const existing = await prisma.specialization.findFirst({
+            where: {
+              title: {
+                equals: data.title.trim(),
+                mode: 'insensitive' 
+              }
+            }
+          });
+      
+          if (existing) {
+            return { status: "exists", message: "City details already exist." };
+          }
+
         const added = await prisma.specialization.create({
             data:{
-                title:data.title,
+                title:data.title.trim(),
                 description:data.description
             }
         })
 
         console.log("addedd",added)
 
-        return true
-
+        return { status: "success", message:"succesfully added" };
 
 
     }catch(error){
         console.log("error occured in addSpecialization",error)
-        return false
+        
+        return { status: "error", message: "internal error" };
+
     }
 }
+
 
 export async function listSpecialization(){
 

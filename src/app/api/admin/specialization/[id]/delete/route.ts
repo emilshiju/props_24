@@ -13,7 +13,7 @@ export async function DELETE(request:NextRequest,{params}:{params:{id:string}}){
         const deleted = await deleteSpecialization(id)
 
         if(!deleted){
-            return NextResponse.json({status:false,message:"error"},{status:500})
+            return NextResponse.json({status:false,message:"internal error"},{status:500})
         }
 
         return NextResponse.json({status:true,message:"sucesfully deleted"},{status:200})
@@ -21,6 +21,6 @@ export async function DELETE(request:NextRequest,{params}:{params:{id:string}}){
     }catch(error){
         console.log("error occrued in route delete Specialization",error)
 
-        return NextResponse.json({status:false,message:"error"},{status:500})
+        return NextResponse.json({status:false,message:"internal error"},{status:500})
     }
 }

@@ -1,6 +1,6 @@
 import { addCity } from "@/src/controllers/admin_controller/city_controller";
 import { cityType } from "@/src/type/components_type/all_admin_type";
-import { AddCityResponse } from "@/src/type/controller_type/admin_controller";
+// import { AddCityResponse } from "@/src/type/controller_type/admin_controller";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -12,12 +12,17 @@ export async function POST(request:NextRequest){
 
         const data:cityType=await request.json()
 
-        const addedData:AddCityResponse = await addCity(data)
+        const addedData = await addCity(data)
        
-        if(!addedData.status){
+        if(addedData.status == "exists"){
             console.log("poyiiiiiiiiiiiiiiiiiiii 111")
             return NextResponse.json({status:false,message:addedData.message},{status:409})
         }
+
+        if(addedData.status == "error" ){
+            return NextResponse.json({status:false,message:addedData.message},{status:500})
+        }
+
 
         return NextResponse.json({status:true,message:"sucesfuly added"},{status:200})
 

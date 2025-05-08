@@ -3,61 +3,17 @@
 import React, { useState , useRef, ChangeEvent, useEffect} from 'react';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import detailedCityValidationSchema from '@/src/util/validation/cityDetailScehma';
-import ImageUploadWithPreview from './he';
 import { cityResType, detailedCityType } from '@/src/type/components_type/all_admin_type';
 import { ref, uploadBytes ,getDownloadURL } from "firebase/storage";
 import { storage } from '@/src/service/firebase/firebase_init';
 import { cityDetailsApi, listCityApi } from '@/src/lib/api_service_client/admin_service/city_handler';
 
-
-interface DetailItem {
-  averagePrice: string;
-  popularity: string;
-  availableProperties: string;
-  description: string;
-}
-
-interface AboutItem {
-  content: string;
-}
-
-interface AreaItem {
-  heading: string;
-  content: string;
-}
-
-interface TypeItem {
-  heading: string;
-  content: string;
-  price: number;
-}
+import {toast  } from 'react-hot-toast';
 
 const MultiSectionForm: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<string>('city');
-  const [details, setDetails] = useState<DetailItem>({
-    averagePrice: '',
-    popularity: '',
-    availableProperties: '',
-    description: ''
-  });
-  const [about, setAbout] = useState<AboutItem>({
-    content: ''
-  });
-  const [areas, setAreas] = useState<AreaItem[]>([
-    { heading: '', content: '' },
-    { heading: '', content: '' },
-    { heading: '', content: '' },
-    { heading: '', content: '' },
-    { heading: '', content: '' }
-  ]);
-  const [types, setTypes] = useState<TypeItem[]>([
-    { heading: '', content: '', price: 0 },
-    { heading: '', content: '', price: 0 },
-    { heading: '', content: '', price: 0 },
-    { heading: '', content: '', price: 0 },
-    { heading: '', content: '', price: 0 }
-  ]);
 
+  const [activeSection, setActiveSection] = useState<string>('city');
+  
 
   const [allCity,setAllCity]=useState<cityResType[]>([])
 
@@ -103,9 +59,7 @@ const MultiSectionForm: React.FC = () => {
 
       try{
    
-              formikHelpers.resetForm({
-                    values: getInitialValues()
-              });
+             
               
 
       
@@ -135,17 +89,22 @@ const MultiSectionForm: React.FC = () => {
               };
             setPreview(null);
 
+            formikHelpers.resetForm({
+              values: getInitialValues()
+        });
+
             const res=await cityDetailsApi(updatedValues)
  
           if(res.status){
-              alert("sucess")
+              toast.success("sucesfully added")
           }else{
-              alert("error")
+              toast.error(res.data)
           }
 
 
     }catch(error){
-
+      console.log("error occred in submit",error)
+      toast.error("errror occured while submiting")
     }
 
     

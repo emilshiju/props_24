@@ -3,6 +3,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { useRef, useState, useEffect } from "react";
 import { MagnifyingGlassIcon, StarIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
+import { getAllAgentApi } from "@/src/lib/api_service_client/user_service/filter_handler";
+import { agent_agencies } from "@/src/type/components_type/common_type";
 
 const content = [
   {
@@ -40,6 +42,20 @@ const content = [
 ]
 
 const AgentCard = () => {
+
+  const [allData,setData]=useState<agent_agencies []>([])
+
+  const fetchAllAgent=async()=>{
+    const ress=await getAllAgentApi()
+    if(ress.status){
+      setData(ress.data)
+    }
+  }
+  
+  useEffect(()=>{
+    fetchAllAgent()
+  },[])
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showArrows, setShowArrows] = useState({
     left: false,
@@ -107,6 +123,10 @@ const AgentCard = () => {
     }
   };
 
+
+
+  console.log(allData)
+
   return (
     <div className="relative p-5 max-w-7xl mx-auto">
       <h1 className='text-black text-2xl font-bold mb-6'>Top Rated Real Estate Agents in Italy</h1>
@@ -118,19 +138,20 @@ const AgentCard = () => {
         className="flex flex-nowrap gap-4 overflow-x-auto p-3 w-full hide-scrollbar"
         style={{ scrollBehavior: 'smooth', scrollSnapType: 'x mandatory' }}
       >
-        {content.map((a, b) => (
+        {allData&&allData.map((data,index) => (
           <div
-            key={b}
+            key={index}
             className="w-[280px] sm:w-[300px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
           >
             <Link href="#">
               <div className="flex justify-center pt-4">
                 <Image
                   className="rounded-t-lg"
-                  src="/images/profile.png"
+                  src={data.imageUrl}
                   alt="Technology acquisitions"
                   width={255}
                   height={235}
+                
                 />
               </div>
             </Link>
@@ -142,16 +163,18 @@ const AgentCard = () => {
               </div>
               <span className="text-black text-1 text-sm">(20 reviews)</span>
             </div>
+            
             <div className="text-start pl-6">
-              <Link href="#">
-                <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
-                  {a.name}
-                </h5>
-              </Link>
-              <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
-                {a.specialty}
-              </p>
-            </div>
+                              <div >
+                                <h5 className="text-lg font-medium text-gray-900">
+                                  {data?.businessName}
+                                </h5>
+                              </div>
+                              <p className="text-sm text-gray-500  mb-3">
+                                {data.city.cityName},ITALY
+                              </p>
+                            </div>
+                            
           </div>
         ))}
       </div>

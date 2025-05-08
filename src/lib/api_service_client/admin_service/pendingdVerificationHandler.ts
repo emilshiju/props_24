@@ -64,7 +64,7 @@ export const get_EntitiDetails_Api=async(userId:string)=>{
 
       const  res_EntitiDetails_Api = await axiosClient.get(`admin/verification/entitieDetails/${userId}`)
 
-      console.log("get get get get get get ",res_EntitiDetails_Api.data.status)
+      console.log("get get get get get get ",res_EntitiDetails_Api.data.message)
 
       return {
         status:res_EntitiDetails_Api.data.status,

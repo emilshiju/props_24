@@ -67,9 +67,6 @@ export async function listProperty(tokenData:string){
       }
     });
 
-    
-
-
     return list
 
 
@@ -146,11 +143,11 @@ export async function deleteProperty(id:string){
 
   try{
 
-    // const deleted = await prisma.property.delete({
-    //   where: { id }, 
-    // });
+    const deleted = await prisma.property.delete({
+      where: { id }, 
+    });
 
-    // return deleted;
+    
     return true
 
 

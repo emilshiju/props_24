@@ -5,16 +5,18 @@ import { cityResType, detailedCityResType, detailedCityType } from "@/src/type/c
 import {use, useEffect, useState,useRef} from "react"
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import detailedCityValidationSchema from "@/src/util/validation/cityDetailScehma";
-
+import {toast  } from 'react-hot-toast';
 import { ref, uploadBytes ,getDownloadURL } from "firebase/storage";
 import { storage } from '@/src/service/firebase/firebase_init';
 
-
+import { useRouter } from 'next/navigation';
 
 
 const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
 
     const { id } = use(params);
+
+     const router = useRouter();
 
       const [activeSection, setActiveSection] = useState<string>('city');
 
@@ -45,7 +47,7 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
 
 
      const getInitialValues = (): detailedCityType => ({
-        city:allData?.city.cityName||'',
+        city:allData?.cityId||'',
         details: {
           averagePrice:allData?.averagePrice|| '',
           popularity: allData?.popularity||'',
@@ -95,7 +97,7 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
   
 
     const handleSubmit=async(values:detailedCityType,formikHelpers:FormikHelpers<detailedCityType>)=>{
-      alert("submit")
+      
       
 
 
@@ -113,7 +115,7 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
                     imageUrl = downloadURL;
               } catch (error) {
                     console.error('Error occurred during file upload', error);
-                    alert("error")
+                    toast.error("error occured in file upload")
                     return; // Handle the error and prevent submission
               }
           } else {
@@ -130,11 +132,14 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
       // Add your API call or other submission logic here
 
       setPreview(null);
+      
+
        const ress=await  editDetailedCityApi(id,updatedValues)
        if(ress.status){
-        alert("updated")
+        toast.success("updated")
+        router.push('/admin/city/detailed/list')
        }else{
-        alert("error")
+        toast.error(ress.data)
        }
 
 

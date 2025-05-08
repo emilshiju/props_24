@@ -15,12 +15,12 @@ export const addSpecializationApi=async(data:specialisation_Type)=>{
        }
 
 
-
-    }catch(error){
+    }catch(error:any){
         console.log('errror occured in addSpecializationApi',error)
+
         return {
             status:false,
-            data:'error occured'
+            data:error.response?.data?.message 
         }
     }
 }
@@ -70,7 +70,7 @@ export const deleteSpecializationApi=async(id:string)=>{
 
         return {
             status:false,
-            data:'error occured'
+            data:'internal error'
         }
 
 

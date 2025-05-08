@@ -18,7 +18,8 @@ export interface user_type {
     phone: string;
     licenseNumber: string;
     bio: string;
-    specialisation: string;
+specialization:{title:string}
+    city:{cityName:string}
     imageUrl: string 
     verified:boolean
     createdAt: Date;

@@ -27,6 +27,7 @@ import { listSpecializationApi } from '@/src/lib/api_service_client/admin_servic
 import { cityResType, specialisation_Res_Type } from '@/src/type/components_type/all_admin_type'
 import {  getSideBarFilterAPi ,getChangedSideBarFilterApi, getAll, getAllSearchedListApi, getAllAgentApi} from '@/src/lib/api_service_client/user_service/filter_handler'
 import { string } from 'yup'
+import { agent_agencies } from '@/src/type/components_type/common_type'
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -89,7 +90,7 @@ export default function Agent() {
 
   const [sideBarFilter,setSideBarFilter]=useState<FilterSection_Type []>([])
 
-  const [listAllFilteredProduct,setAllFilteredProduct]=useState([])
+  const [listAllFilteredProduct,setAllFilteredProduct]=useState<agent_agencies []>([])
 
 
 
@@ -181,6 +182,15 @@ export default function Agent() {
   },[])
 
 
+  const router = useRouter()
+
+
+  const navigateToDetailPage=(id:string)=>{
+    router.push(`/viewDetails/${id}`) 
+  }
+
+
+
 
   return (
     <div className="bg-white">
@@ -215,7 +225,7 @@ export default function Agent() {
               {/* Filters */}
               <form className="mt-4 border-t border-gray-200">
                 <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="px-2 py-3 font-medium text-gray-900">
+                {/* <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                   {subCategories.map((category) => (
                     <li key={category.name}>
                       <div  className="block px-2 py-3">
@@ -223,9 +233,9 @@ export default function Agent() {
                       </div>
                     </li>
                   ))}
-                </ul>
+                </ul> */}
 
-                {filters.map((section) => (
+                {sideBarFilter.map((section:any) => (
                   <Disclosure key={section.id} as="div" className="border-t border-gray-200 px-4 py-6">
                     <h3 className="-mx-2 -my-3 flow-root">
                       <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
@@ -238,7 +248,7 @@ export default function Agent() {
                     </h3>
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-6">
-                        {section.options.map((option, optionIdx) => (
+                        {section.options.map((option:any, optionIdx:any) => (
                           <div key={option.value} className="flex gap-3">
                             <div className="flex h-5 shrink-0 items-center">
                               <div className="group grid size-4 grid-cols-1">
@@ -248,6 +258,7 @@ export default function Agent() {
                                   name={`${section.id}[]`}
                                   type="checkbox"
                                   className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                                  onChange={(e)=>changeSideBarFiltering(section.name,option.value, e.target.checked)}
                                 />
                                 <svg
                                   fill="none"
@@ -299,11 +310,11 @@ export default function Agent() {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900">Agent</h1>
 
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
-                <div>
+                {/* <div>
                   <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                     Sort
                     <ChevronDownIcon
@@ -311,9 +322,9 @@ export default function Agent() {
                       className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
                     />
                   </MenuButton>
-                </div>
+                </div> */}
 
-                <MenuItems
+                {/* <MenuItems
                   transition
                   className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                 >
@@ -332,13 +343,13 @@ export default function Agent() {
                       </MenuItem>
                     ))}
                   </div>
-                </MenuItems>
+                </MenuItems> */}
               </Menu>
 
-              <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
+              {/* <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon aria-hidden="true" className="size-5" />
-              </button>
+              </button> */}
               <button
                 type="button"
                 onClick={() => setMobileFiltersOpen(true)}
@@ -491,9 +502,10 @@ export default function Agent() {
                 <div className="flex flex-wrap justify-center sm:justify-start gap-4">
               {/* <div className="flex justify-center" > */}
               {/* <div className="sm:grid grid-cols-1  sm:grid-cols-1 md:grid-cols-3 gap-4"> */}
-              {listAllFilteredProduct&&listAllFilteredProduct.map((data:any,index)=>(
+              {listAllFilteredProduct&&listAllFilteredProduct.map((data,index)=>(
                 
                   <div
+                  onClick={()=>navigateToDetailPage(data.id)}
                             key={index}
                             className="w-[280px] sm:w-[285px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
                           >
@@ -517,13 +529,13 @@ export default function Agent() {
                               <span className="text-black text-1 text-sm">(20 reviews)</span>
                             </div>
                             <div className="text-start pl-6">
-                              <Link href="#">
-                                <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
+                              <div >
+                                <h5 className="text-lg font-medium text-gray-900">
                                   {data?.businessName}
                                 </h5>
-                              </Link>
-                              <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
-                                jhiuhiu
+                              </div>
+                              <p className="text-sm text-gray-500  mb-3">
+                                {data.city.cityName},ITALY
                               </p>
                             </div>
                           </div>

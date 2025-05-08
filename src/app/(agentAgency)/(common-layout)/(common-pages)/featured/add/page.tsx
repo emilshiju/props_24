@@ -14,6 +14,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import { PropertyType } from '@/src/type/validation_type/propertyType';
 import { addPropertyApi } from '@/src/lib/api_service_client/agent_agencies_service/property_handler';
+import Loader from '@/src/components/loader';
 
 
 
@@ -21,6 +22,8 @@ import { addPropertyApi } from '@/src/lib/api_service_client/agent_agencies_serv
 const AddFeaturedProperties=()=>{
 
   const [showPropertyImage,setPropertieImage]=useState(false)
+
+  const [showLoader,setLoader]=useState(false)
 
   const [allCity,setAllCity]=useState<cityResType[]>([])
 
@@ -56,6 +59,7 @@ const AddFeaturedProperties=()=>{
   const handleSubmit=async(values_data:PropertyType,formikHelpers:FormikHelpers<PropertyType>)=>{
     
     setAllDataProperty(values_data)
+    formikHelpers.resetForm()
     setPropertieImage(true)
             
   }
@@ -99,6 +103,8 @@ const AddFeaturedProperties=()=>{
           return;
         }
 
+        setLoader(true)
+
 
         const storageRef = ref(storage,file.name);
 
@@ -118,27 +124,26 @@ const AddFeaturedProperties=()=>{
                     toast.error("error occurred try again");
                   }
 
-                  alert("gott url")
+                  
                   console.log(downloadURL)
 
                   if(allDataProperty){
 
                      const response =await addPropertyApi(allDataProperty,downloadURL)
+                     setLoader(false)
+                     handleRemove()
+                     setPropertieImage(false)
+
 
                      if(response.status){
-                      alert("added")
+                      toast.success("sucessfully added")
                      }else{
-                      alert("got error")
+                      toast.error(response.data)
                      }
+                     
                      
                   }
 
-
-        
-                 
-                  
-        
-        
         
         
         
@@ -162,6 +167,7 @@ const AddFeaturedProperties=()=>{
     
         return (
           <div>
+            {showLoader&&<Loader  />}
           
           {!showPropertyImage&&<div>
             <Formik 

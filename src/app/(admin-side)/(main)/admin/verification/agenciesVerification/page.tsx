@@ -33,6 +33,11 @@ const AgenciesVerificationPage=()=>{
       }
     }
 
+
+    if (!allAgencies) {
+      return <div>Loading...</div>; // or any loading indicator you prefer
+    }
+
     useEffect(()=>{
       fetchAllAgencies()
       
@@ -121,7 +126,14 @@ const AgenciesVerificationPage=()=>{
                     </TableCell>
                    
                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                      <Badge
+
+                    {agencies.profile.verified?<span className="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">
+      verified
+    </span>: <span className="bg-yellow-100 text-yellow-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-yellow-900 dark:text-yellow-300">
+      pending
+    </span>}
+
+                      {/* <Badge
                         size="sm"
                         color={
                           hey === "Active"
@@ -132,7 +144,7 @@ const AgenciesVerificationPage=()=>{
                         }
                       >
                          Pending
-                      </Badge>
+                      </Badge> */}
                        
                     </TableCell>
                     <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">

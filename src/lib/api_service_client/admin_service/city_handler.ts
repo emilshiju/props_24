@@ -22,7 +22,7 @@ export const addCityApi=async(data:cityType)=>{
 
         return {
             status:false,
-            data:error.response?.data?.message || "Internal server error",
+            data:error.response?.data?.message || "Internal  error",
 
         }
 
@@ -100,7 +100,7 @@ export const editCityApi=async(cityId:string,data:cityType)=>{
 
         return {
             status:false,
-            data:'error occured',
+            data:'internal error',
         }
     }
 }
@@ -149,12 +149,13 @@ export const cityDetailsApi=async(data:detailedCityReqType)=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occrued in cityDetailsApi",error)
 
         return {
             status:false,
-            data:'error occured',
+            data:error.response?.data?.message 
+
         }
         
     }
@@ -231,7 +232,7 @@ export const editDetailedCityApi=async(id:string,data:detailedCityReqType)=>{
 
         return {
             status:false,
-            data:'error occured',
+            data:'internal error ',
         }
 
     }

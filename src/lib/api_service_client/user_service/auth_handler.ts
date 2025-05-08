@@ -42,3 +42,28 @@ export const loginUserApi = async(userData:LoginValues)=>{
     }
 }
 
+
+
+
+export const checkEmailApi=async(data:string)=>{
+
+    try{
+
+        const ress=await axiosClient.post('/register/email',{email:data})
+
+        return{
+            status:ress.data.status,
+            data:ress.data.message,
+            statusCode:ress.data
+        }
+
+
+    }catch(error:any){
+        console.log("error occuredin checkemail api route",error)
+
+        return {
+            status:false,
+            data:error.response?.data?.message 
+        }
+    }
+}

@@ -3,9 +3,13 @@ import { addCityApi } from '@/src/lib/api_service_client/admin_service/city_hand
 import { cityType } from '@/src/type/components_type/all_admin_type';
 import citySchema from '@/src/util/validation/cities_scehma';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
-import {toast} from 'react-hot-toast';
+import { useEffect } from 'react';
+// import 'react-hot-toast/style.css';
+import {toast ,Toaster } from 'react-hot-toast';
 
 const AddCitie=()=>{
+
+  
 
  
 
@@ -20,12 +24,10 @@ const AddCitie=()=>{
         formikHelpers.resetForm();
 
         if(response.status){
-          alert("added sucessfuly ")
-           
-            // toast.success("sucessfuly added")
+            toast.success(response.data)
         }else{
-          alert(response.data)
-            // toast.success("error occur while adding")
+          
+            toast.error(response.data)
         }
         
     }
@@ -33,6 +35,8 @@ const AddCitie=()=>{
 
     return (
       <>
+       
+    
       
         <Formik 
       initialValues={initialValues}

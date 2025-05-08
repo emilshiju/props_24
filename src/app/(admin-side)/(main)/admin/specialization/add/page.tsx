@@ -8,7 +8,7 @@ import { specialisation_Type } from '@/src/type/api_type/admin_type';
 import { cityType } from '@/src/type/components_type/all_admin_type';
 import specializationSchema from '@/src/util/validation/specialization_scehma';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
-import {toast} from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 
 const AddSpecialization=()=>{
@@ -23,10 +23,11 @@ const AddSpecialization=()=>{
        formikHelpers.resetForm()
 
        if(added.status){
-        alert("added")
+        toast.success('sucessfuly added')
        }else{
-        alert("not added")
+        toast.error(added.data)
        }
+
 
     }
 

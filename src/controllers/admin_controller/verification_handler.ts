@@ -58,8 +58,21 @@ export async  function getDetails(userId:string){
               id: userId, 
             },
             include: {
-              profile: true, 
-            },
+
+                profile: {
+                    include: {
+                      city: {
+                        select: {
+                          cityName: true,
+                        },
+                    },
+                      specialization: {
+                        select: {
+                          title: true,
+                        },
+                      },
+                    },
+            },}
           });
 
           return res_Details

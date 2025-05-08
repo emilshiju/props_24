@@ -8,6 +8,8 @@ import { StarIcon, MapPinIcon } from '@heroicons/react/24/solid'
 import { MagnifyingGlassIcon, HomeIcon, BuildingOfficeIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import { getAllAgentApi, getAllDataApi, getAllSearchedListApi } from '@/src/lib/api_service_client/user_service/filter_handler'
 import Image from 'next/image'
+import { listAllCityApi } from '@/src/lib/api_service_client/user_service/area_handler'
+import { cityAndDetaield } from '@/src/type/components_type/all_admin_type'
 
 
 
@@ -17,11 +19,30 @@ export default function SearchPage() {
 
   const searchParams = useSearchParams()
   const searchQuery = searchParams.get("search")
+  const router = useRouter()
+
+
+
+  const [allCity,setAllCity]=useState<cityAndDetaield []>([])
+
+
+  const fetchAllCity=async()=>{
+  
+          const ress=await listAllCityApi()
+  
+          if(ress.status){
+              setAllCity(ress.data)
+          }
+  
+      }
+
+
+      useEffect(()=>{
+              fetchAllCity()
+      
+          },[])
   
   
-
-
-
 
 
  interface Results {
@@ -73,6 +94,11 @@ const [results, setResults] = useState<Results>({
   const totalResults = 1+3
     console.log("gotalllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
     console.log(results)
+
+
+    const navigateDetailedPage=(id:string)=>{
+      router.push(`/area/${id}`)
+    }
 
  
   return (
@@ -232,6 +258,48 @@ const [results, setResults] = useState<Results>({
               </div>
 }
       
+
+
+
+
+
+           
+{activeTab=='locations'&&   
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+{results.locations.map((data,index) => (
+
+      <div key={index}  onClick={()=>navigateDetailedPage(data.id)} className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm ">
+      
+      <Image
+      src={data?.details?.imageUrl||'https://w0.peakpx.com/wallpaper/773/949/HD-wallpaper-italy-village-town-boats-cute-houses-city.jpg'}
+      alt={`${data.cityName} banner`}
+      width={400}
+      height={200}
+      
+    />
+      
+      <div className="p-5">
+        {/* <a href="#"> */}
+          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
+            {data.cityName}
+          </h5>
+        {/* </a> */}
+        <p className="mb-3 font-normal text-gray-7 line-clamp-2">
+          {data?.details?.aboutContent}
+        </p>
+        <div className="text-accent group-hover:underline text-sm font-medium">
+  View details &rarr;
+</div>
+        
+      </div>
+    </div>
+ ))}
+</div>
+
+}
+      
+
+
 
 
 

@@ -31,7 +31,7 @@ const ListCitie=()=>{
         if(response.status){
             setCitie(response.data)
         }else{
-            alert("error occured")
+          toast.error(response.data)
         }
 
     
@@ -66,12 +66,11 @@ const ListCitie=()=>{
         if(deleted.status){
           
           fetchCities()
-          alert("sucessfuly deleted")
 
           toast.success("sucessfuly deleted")
         }else{
-          alert("error occured")
-          toast.error("error occur ")
+          
+          toast.error(deleted.data)
         }
 
 

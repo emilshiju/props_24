@@ -5,7 +5,7 @@ import { useSidebar } from "@/src/context/admin_context/sidebar_context";
 import AppHeader from "@/src/components/admin/AppHeader";
 import AppSidebar from "@/src/components/admin/AppSidebar";
 import Backdrop from "@/src/components/admin/Backdrop";
-
+import {toast ,Toaster } from 'react-hot-toast';
 
 const AdminLayout=({ children }: { children: React.ReactNode })=>{
 
@@ -35,6 +35,16 @@ const AdminLayout=({ children }: { children: React.ReactNode })=>{
         {/* Header */}
         <AppHeader />
         {/* Page Content */}
+        <Toaster
+                position="top-center"
+                toastOptions={{
+                  style: {
+                    zIndex: 9999, // Ensuring the toast appears above everything
+                    padding: '12px 20px', // Add custom padding inside the toaster
+                    marginTop: '80px', // Adjust the margin-top if your header is fixed
+                  },
+                }}
+              />
         <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">{children}</div>
       </div>
     </div>

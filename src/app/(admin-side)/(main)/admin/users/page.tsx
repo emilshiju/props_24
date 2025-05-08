@@ -172,7 +172,7 @@ const ListUsers=()=>{
 
 
     const handleUnBlock=async(userId:string)=>{
-      alert(userId)
+      
 
      const unBlocked=await unblockUserApi(userId)
      if(unBlocked.status){

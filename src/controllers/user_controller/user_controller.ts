@@ -116,7 +116,7 @@ export async function createProfile(userId:string,profileDetails:profileType){
     console.log(userId,profileDetails)
 
 
-    const created = await prisma.profile.create({data:{userId:userId,businessName:profileDetails.businessName,phone:profileDetails.phone,licenseNumber:profileDetails.licenseNumber, bio:profileDetails.bio,specializationId:profileDetails.specialization,cityId:profileDetails.city}})
+    const created = await prisma.profile.create({data:{userId:userId,businessName:profileDetails.businessName,phone:profileDetails.phone,licenseNumber:profileDetails.licenseNumber, bio:profileDetails.bio,specializationId:profileDetails.specialization,cityId:profileDetails.city,imageUrl:profileDetails.imageUrl}})
 
     console.log("created")
     console.log(created)
@@ -202,13 +202,29 @@ export async function detailedViewProfile(userId:string){
 
   try{
 
+    
     const findProfile = await prisma.profile.findFirst({
       where: {
         id: userId,  
-      }, include: {
-        user: true,  
       },
-    })
+      include: {
+        user: true,  
+        city: {
+          select: {
+            cityName: true
+          }
+        },
+        specialization: {
+          select: {
+            title: true
+          }
+        }
+      }
+    });
+    
+
+    console.log("got profileeeee")
+    console.log(findProfile)
 
     return findProfile
 
@@ -248,4 +264,28 @@ export async function getPropertyUser(profileId:string){
     return false
   }
 
+}
+
+
+
+export async function checkEmail(data:string){
+
+  try{
+
+    const user = await prisma.user.findUnique({
+      where: { email:data },
+    });
+
+    if(user){
+      return {status:"exists"}
+    }
+    
+    return {status:"not_exists"}
+
+    
+  }catch(error){
+    console.log("error occured in checkEmail")
+
+    return {status:"error"}
+  }
 }

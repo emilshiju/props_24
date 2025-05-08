@@ -11,8 +11,13 @@ export async function getAllAgent(){
         role:'agent', // assuming you have role inside `data.value`
       },
       select: {
-        profile: true, // Only select the profile field, not the rest of the user data
-      },
+        profile: {
+          include: {
+            city: true,
+            specialization: true,
+          },
+        },
+      }
     });
 
     return resAllAgent.map((user) => user.profile);
@@ -32,12 +37,20 @@ export async function getAllAgencies() {
 
     const resAllAgencies=await prisma.user.findMany({
       where: {
-        role:'agencies', // assuming you have role inside `data.value`
+        role:'agencies', 
       },
       select: {
-        profile: true, // Only select the profile field, not the rest of the user data
-      },
+        profile: {
+          include: {
+            city: true,
+            specialization: true,
+          },
+        },
+      }
     });
+
+    console.log("got all agenciess")
+    console.log(resAllAgencies)
 
     return resAllAgencies.map((user) => user.profile);
 
@@ -121,7 +134,19 @@ export async function applyComplexFilters(sideBarFilteredData:any,sectionName:an
                   user: {
                     role: item
                   }
-                },
+                },  
+                include: {
+                  city: {
+                    select: {
+                      cityName: true
+                    }
+                  },
+                  specialization: {
+                    select: {
+                      title: true
+                    }
+                  }
+                }
                 
               });
           
@@ -140,6 +165,20 @@ export async function applyComplexFilters(sideBarFilteredData:any,sectionName:an
                     role: item
                   }
                 },
+                include: {
+                  city: {
+                    select: {
+                      cityName: true
+                    }
+                  },
+                  specialization: {
+                    select: {
+                      title: true
+                    }
+                  }
+                }
+
+                
               });
           
               return allFilteredSpecialization;

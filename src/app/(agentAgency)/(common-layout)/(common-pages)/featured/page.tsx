@@ -11,6 +11,7 @@ import { deletePropertyApi, listAllPropertyApi } from "@/src/lib/api_service_cli
 import { PropertyResType } from "@/src/type/api_type/common_type"
 import Image from "next/image"
 import { useRouter } from 'next/navigation';
+import toast from "react-hot-toast"
 
 
 const PropertyList=()=>{
@@ -38,13 +39,14 @@ const PropertyList=()=>{
 
 
     const deleteProperty=async(id:string)=>{
-
+      
      const res =await  deletePropertyApi(id)
 
      if(res.status){
-      alert("scuess")
+      toast.success("sucessfuly deleted")
+      fetchAllProperty()
      }else{
-      alert("error")
+      toast.error(res.data)
      }
      
     }
@@ -98,9 +100,8 @@ const PropertyList=()=>{
                       <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
                         
                           {allProperty&&allProperty.map((data,index)=>(
-                            <TableRow  key='iuhiuh'>
 
-                      
+                            <TableRow  key={index}>
 <TableCell className="px-5 py-4 sm:px-6 text-start">
   <div className="flex items-center gap-3">
     <div className="w-26 h-26 rounded-full overflow-hidden">

@@ -9,6 +9,9 @@ export async function GET(request:NextRequest){
 
         const allAgent=await getAllAgent()
 
+        console.log("got all agenttttttttttt")
+        console.log(allAgent)
+
         if(allAgent?.length==0){
             return NextResponse.json({status:true,message:allAgent},{status:200})
         }

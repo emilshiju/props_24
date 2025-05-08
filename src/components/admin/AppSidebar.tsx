@@ -46,15 +46,17 @@ const navItems: NavItem[] = [
   },
 
   {
-    name: "Cities",
+    name: "City",
     icon: <CalenderIcon />,
     
-    subItems: [{ name: "Add Cities", path: "/admin/city/addCity", pro: false },{ name: "List Cities", path: "/admin/city/listCity", pro: false }],
+    subItems: [{ name: "Add City", path: "/admin/city/addCity", pro: false },{ name: "List Cities", path: "/admin/city/listCity", pro: false },
+      { name: "Add Details", path: "/admin/city/detailed/add", pro: false } , { name: "List Details", path: "/admin/city/detailed/list", pro: false }
+    ],
   },
   {
     name: "Specialization",
     icon: <TableIcon />,
-    subItems: [{ name: "Add Specialization", path: "/basic-tables", pro: false },{ name: "List Specialization", path: "/basic-tables", pro: false }],
+    subItems: [{ name: "Add Specialization", path: "/admin/specialization/add", pro: false },{ name: "List Specialization", path: "/admin/specialization", pro: false }],
   },{
     name: "Reviews",
     icon: <TableIcon />,

@@ -13,17 +13,20 @@ export async function POST(request:NextRequest){
 
         const added = await addSpecialization(data)
 
-        if(!added){
-            return NextResponse.json({status:false,message:'error occrued'},{status:500})
+        if(added.status == "exists"){
+            return NextResponse.json({status:false,message:added.message},{status:409})
         }
 
+        if(added.status == "error" ){
+            return NextResponse.json({status:false,message:added.message},{status:500})
+        }
 
-        return NextResponse.json({status:true,message:"succesfully added"},{status:200})
+        return NextResponse.json({status:true,message:added.message},{status:200})
 
 
     }catch(error){
         console.log("error occured in route add specialization",error)
 
-        return NextResponse.json({status:false,message:'error occrued'},{status:500})
+        return NextResponse.json({status:false,message:'internal error'},{status:500})
     }
 }

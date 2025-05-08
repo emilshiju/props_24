@@ -4,11 +4,16 @@ import { createProfileRes } from "@/src/type/api_type/user_type"
 
 
 
-export const createProfileApi=async(data:ProfileData)=>{
+export const createProfileApi=async(data:ProfileData,imageUrl:string)=>{
 
     try{
 
-        const resCreateProfileApi =await axiosClient.post('/profile',data)
+        const updatedValue={
+            ...data,
+            imageUrl
+        }
+
+        const resCreateProfileApi =await axiosClient.post('/profile',updatedValue)
 
         return {status:resCreateProfileApi.data.status,
                 message:resCreateProfileApi.data.message,
@@ -20,9 +25,11 @@ export const createProfileApi=async(data:ProfileData)=>{
 
         console.log("error occured in createProfileApi",error)
 
-        return {status:false,message:"error " }
+        return {status:false,message:"internal error" }
     }
 }
+
+
 
 
 export const uploadProfileImageAPi=async(imageUrl:string)=>{

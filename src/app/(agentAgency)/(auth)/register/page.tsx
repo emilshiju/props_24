@@ -10,7 +10,7 @@ import registerSchema from '@/src/util/validation/register_schema';
 import axiosClient from '@/src/lib/axios_client';
 import { requestOtpApi, verifyOtpApi } from '@/src/lib/api_service_client/user_service/otp_handler';
 import { toast } from 'react-hot-toast';
-import { registerUserApi } from '@/src/lib/api_service_client/user_service/auth_handler';
+import { checkEmailApi, registerUserApi } from '@/src/lib/api_service_client/user_service/auth_handler';
 
 import { useRouter } from 'next/navigation';
 
@@ -59,7 +59,12 @@ const Register = ()=>{
 
       const handleSubmit = async(values_data:FormValues,formikHelpers: FormikHelpers<FormValues>) =>{
 
-        console.log("all dataaaaaaaaaaaaaa")
+
+        const ress=await checkEmailApi(values_data.email)
+        
+        if(ress.status){
+
+        
         setAllFormData({userName:values_data.userName,email:values_data.email,password:values_data.password,confirmPassword:values_data.confirmPassword,role:values_data.role})
 
        
@@ -68,6 +73,10 @@ const Register = ()=>{
 
 
         formikHelpers.resetForm();
+
+        }else{
+          toast.error(ress.data)
+        }
 
     
 

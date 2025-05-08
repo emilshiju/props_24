@@ -98,27 +98,6 @@ const  ImageUploader=()=>{
           toast.error("error occurred");
         }
 
-        
-        // getDownloadURL(snapshot.ref).then((downloadURL) => {
-
-        //   try{
-
-        //     const ress =await uploadProfileImageAPi(downloadURL)
-
-        //     if(!ress){
-        //       alert("noo")
-        //     }
-
-            
-
-        //   }catch(error){
-        //     console.log("error occrung in upload to firebase",error)
-        //     handleRemove()
-        //     toast.error("error occured")
-        //   }
-
-
-        // })
 
     
 
@@ -155,10 +134,7 @@ const  ImageUploader=()=>{
     <i className="pi pi-cloud-upload text-xl" />
   </button>}
 
-  {/* Cancel Button */}
-  {/* <button className="border-2 border-red-400 text-red-400 w-12 h-12 rounded-full flex items-center justify-center hover:bg-red-50">
-    <i className="pi pi-times text-xl" />
-  </button> */}
+  
 </div>
 
     

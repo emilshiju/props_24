@@ -38,7 +38,7 @@ const navItems: NavItem[] = [
   {
     icon: <UserCircleIcon />,
     name: "Featured Properties",
-    subItems: [{ name: "Add", path: "/admin/users", pro: false },{ name: "List", path: "/admin/users", pro: false },{ name: "Edit", path: "/admin/users", pro: false }],
+    subItems: [{ name: "Add", path: "/featured/add", pro: false },{ name: "List", path: "/featured", pro: false },],
   },
   {
     icon:<ListIcon /> ,

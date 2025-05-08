@@ -63,8 +63,7 @@ const  detailedCityValidationSchema = Yup.object().shape({
         .required('Type content is required')
         .min(10, 'Type content must be at least 20 characters'),
       price: Yup.string()
-        .required('Price is required')
-        .matches(/^\d+$/, ' price must be a number'),
+        .required('Price is required'),
           })
   )
 });

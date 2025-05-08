@@ -46,7 +46,7 @@ const Home = ()=>{
     {/* Navigation Links */}
     <div className="flex space-x-16 mb-0">
       <Link 
-        href="/agents" 
+        href="/agent" 
         className="inline-flex items-center px-3 py-2 font-trip text-[18px] font-bold  text-gray-900 hover:text-primary-light"
       >
        
@@ -70,12 +70,12 @@ const Home = ()=>{
     className="w-8 h-6 object-contain pr-1"
   />
  
-  <span className='pt-1'> Find Agent</span>
+  <span className='pt-1'> Find Agency</span>
      
         {/* Find Agencies */}
       </Link>
       <Link 
-        href="/locations" 
+        href="/area" 
         className="inline-flex items-center px-3 py-2 font-trip text-[18px] font-bold text-gray-900 hover:text-primary-light"
       >
 

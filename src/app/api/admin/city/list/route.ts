@@ -12,7 +12,7 @@ export async function GET(request:NextRequest){
         const allCitie=await listCity()
 
         if(!allCitie){
-            return NextResponse.json({status:false,message:'error ocrrued'},{status:500})
+            return NextResponse.json({status:false,message:'internal error'},{status:500})
         }
         console.log("all citieee")
         console.log(allCitie)

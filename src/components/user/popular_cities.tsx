@@ -3,6 +3,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { useRef, useState, useEffect } from "react";
 import { MagnifyingGlassIcon, StarIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
+import { listCityApi } from "@/src/lib/api_service_client/admin_service/city_handler";
+import { cityResType } from "@/src/type/components_type/all_admin_type";
 
 const content = [
   {
@@ -40,6 +42,24 @@ const content = [
 ]
 
 const Popular_Cities = () => {
+
+  const [allData,setData]=useState<cityResType []>([])
+
+  const fetchAllCity=async()=>{
+  
+    const response =await listCityApi()
+    
+        if(response.status){
+            setData(response.data)
+          }
+  }
+
+  useEffect(()=>{
+    fetchAllCity()
+  },[])
+
+
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showArrows, setShowArrows] = useState({
     left: false,
@@ -118,14 +138,14 @@ const Popular_Cities = () => {
         className="flex flex-nowrap gap-4 overflow-x-auto p-3 w-full hide-scrollbar"
         style={{ scrollBehavior: 'smooth', scrollSnapType: 'x mandatory' }}
       >
-        {content.map((a, b) => (
+        {allData.map((data,index) => (
           <div
-            key={b}
+            key={index}
             className="w-[280px] sm:w-[350px] h-[200px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
           >
          
               <div className="flex items-center justify-center h-full w-full ">
-                <h1 className="text-black">{a.name}</h1>
+                <h1 className="text-black">{data?.cityName}</h1>
               
               </div>
       

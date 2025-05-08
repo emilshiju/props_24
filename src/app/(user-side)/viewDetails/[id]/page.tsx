@@ -14,12 +14,14 @@ import { getProfileDetailsApi } from '@/src/lib/api_service_client/user_service/
 
 import Image from 'next/image'
 import FeaturedProperties from '@/src/components/user/featured_properties'
+import { UserProfileType } from '@/src/type/components_type/listUsers'
+import { detailed_profile_type } from '@/src/type/components_type/common_type'
 
 const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
 
   const { id } = use(params)
 
-  const [allData,setAllData]=useState()
+  const [allData,setAllData]=useState<detailed_profile_type|null>()
 
 
   const fetchProfileData=async(id:string)=>{
@@ -56,6 +58,10 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
     'Luxury Homes','Historic Properties'
   ]
 
+  if(!allData){
+    return <div>loading...</div>
+  }
+
 
     return (
 
@@ -71,7 +77,7 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
             <div className="relative flex flex-col md:flex-row items-center">
               <div className="h-42 w-42 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white text-4xl font-bold">
               <Image 
-    src="/images/banner.png"
+    src={allData?.imageUrl}
     alt="Profile"
     fill
     className="object-cover rounded-full"
@@ -79,17 +85,17 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
               </div>
               <div className="mt-4 md:mt-0 md:ml-6 text-center md:text-left">
                 <div className="flex items-center space-x-2">
-                  <h1 className="text-3xl font-bold text-white">uyguyg8yhiuhiu</h1>
+                  <h1 className="text-3xl font-bold text-white">{allData.businessName}</h1>
                   
                     <CheckBadgeIcon className="h-6 w-6 text-accent" title="Agente verificato" />
                   
                 </div>
                 <div className="flex items-center justify-center md:justify-start mt-1 text-white/80">
                   <MapPinIcon className="h-5 w-5 mr-1" />
-                  <span>uyguguigu</span>
+                  <span>{allData.city.cityName}</span>
                   <span className="mx-2">•</span>
                   <BuildingOfficeIcon className="h-5 w-5 mr-1" />
-                  <span>agent</span>
+                  <span>{allData.user.role}</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start mt-2">
                   <div className="flex text-yellow-300">
@@ -159,22 +165,22 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
                 <dt className="text-sm font-medium text-gray-500">Email</dt>
                 <dd className="mt-1 text-sm text-gray-900 flex items-center">
                   <EnvelopeIcon className="h-4 w-4 text-gray-400 mr-1" />
-                  <a href={`mailto:emilshiju10@gmail.com`} className="hover:text-accent">emilshiju10@gmail.com`</a>
+                  <a href={`mailto:emilshiju10@gmail.com`} className="hover:text-accent">{allData.user.email}</a>
                 </dd>
               </div>
               <div className="sm:col-span-1">
                 <dt className="text-sm font-medium text-gray-500">Telefono</dt>
                 <dd className="mt-1 text-sm text-gray-900 flex items-center">
                   <PhoneIcon className="h-4 w-4 text-gray-400 mr-1" />
-                  <a href={`tel:8086780430`} className="hover:text-accent">8086780430</a>
+                  <a href={`tel:8086780430`} className="hover:text-accent">{allData.phone}</a>
                 </dd>
               </div>
               <div className="sm:col-span-1">
-                <dt className="text-sm font-medium text-gray-500">Agency</dt>
+                <dt className="text-sm font-medium text-gray-500">{allData.user.role}</dt>
                 <dd className="mt-1 text-sm text-gray-900 flex items-center">
                   <BuildingOfficeIcon className="h-4 w-4 text-gray-400 mr-1" />
                   <Link href={`/agencies`} className="hover:text-accent">
-                    dsofjsojif
+                    {allData.businessName}
                   </Link>
                 </dd>
               </div>

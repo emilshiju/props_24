@@ -1,18 +1,21 @@
 import { cityType, detailedCityReqType } from "@/src/type/components_type/all_admin_type"
 import prisma from "../prisma_client"
-import { AddCityResponse } from "@/src/type/controller_type/admin_controller";
+// import { AddCityResponse } from "@/src/type/controller_type/admin_controller";
 import { Asul } from "next/font/google";
 
 
 
-export async function addCity(data:cityType):Promise<AddCityResponse>{
+export async function addCity(data:cityType){
 
     try{
-
+      
 
       const existingCity = await prisma.city.findFirst({
         where: {
-          cityName: data.city,
+          cityName: {
+            equals: data.city.trim(),
+            mode: 'insensitive',
+          },
         },
       });
 
@@ -20,24 +23,25 @@ export async function addCity(data:cityType):Promise<AddCityResponse>{
 
         console.log("city already exists ")
         console.log(existingCity)
-        return {status:false,message:"already exists"}
+        return {status: "exists",message:"already exists"}
       }
 
         const response= await prisma.city.create({
             data: {
-                cityName: data.city,
+                cityName: data.city.trim(),
                 country: data.country,
               },
         })
 
-        return {status:true,message:"sucessfuy added"}
+        return {status: "success",message:"sucessfully added"}
 
 
 
     }catch(error){
+
         console.log("error ocured in addCitie",error)
 
-       return  {status:false,message:"internal error"}
+       return  {status: "error",message:"internal error"}
     }
 }
 
@@ -134,6 +138,7 @@ export async function deleteCity(cityId:string){
               id: cityId,
             },
           });
+          
           return true
 
         // const detailed= await prisma.city.find()
@@ -151,6 +156,16 @@ export  async function addDetailedCity(data:detailedCityReqType){
 
   try{
 
+    const existing = await prisma.cityDetails.findUnique({
+      where: {
+        cityId: data.city,
+      },
+    });
+
+    if(existing){
+      return { status: "exists", message: "City details already exist." };
+    }
+
     const added = await prisma.cityDetails.create({
       data: {
         cityId:data.city,
@@ -165,11 +180,15 @@ export  async function addDetailedCity(data:detailedCityReqType){
       },
     });
 
-    return added
+    return { status: "success", data: added };
 
     
   }catch(error){
     console.log("error occured in addDetailedCity",error)
+    
+    return { status: "error", message: "internal error" };
+
+
   }
 
 }
@@ -238,9 +257,10 @@ export async function editDetailedCity(id:string,data:detailedCityReqType){
 
   try{
     console.log("i gott iddd",id)
+    console.log("alldataa",data)
 
     const cityExists = await prisma.cityDetails.findUnique({
-      where: { id: data.city }
+      where: { id: id }
     });
 
     if (!cityExists) {

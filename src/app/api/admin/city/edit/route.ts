@@ -14,7 +14,7 @@ export async function POST(request:NextRequest){
         const updated =await  editCity(id,data)
 
         if(!updated){
-            return NextResponse.json({status:false,message:'error ocrrued'},{status:500})
+            return NextResponse.json({status:false,message:'internal error'},{status:500})
         }
 
         return NextResponse.json({status:true,message:updated},{status:200})
@@ -24,6 +24,6 @@ export async function POST(request:NextRequest){
     }catch(error){
         console.log("error ocrrued in route editCitie",error)
         
-        return NextResponse.json({status:false,message:'error ocrrued'},{status:500})
+        return NextResponse.json({status:false,message:'internal error'},{status:500})
     }
 }

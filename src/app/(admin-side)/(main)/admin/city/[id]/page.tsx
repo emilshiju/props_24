@@ -5,7 +5,7 @@ import { editCityApi, singleCityDisplayApi } from '@/src/lib/api_service_client/
 import { cityResType, cityType } from '@/src/type/components_type/all_admin_type';
 import citySchema from '@/src/util/validation/cities_scehma';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
-
+import {toast} from 'react-hot-toast';
 import {use, useEffect, useState} from "react"
 
 
@@ -56,14 +56,12 @@ const EditCitie=({params}:{ params: Promise<{ id: string }> })=>{
       formikHelpers.resetForm();
 
         if(updated.data){
-          alert("sucesfuly")
+          toast.success('sucessfully updated')
         }else{
-          alert("oops")
+          toast.error(updated.data)
         }
 
 
-
-        
         
     }
 

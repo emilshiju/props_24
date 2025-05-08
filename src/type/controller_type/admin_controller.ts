@@ -1,4 +1,4 @@
 
 
-export interface  AddCityResponse  { status: boolean;message: string};
+// export interface  AddCityResponse  { status: boolean;message: string};
   

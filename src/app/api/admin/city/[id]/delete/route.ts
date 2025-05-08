@@ -13,7 +13,7 @@ export async function DELETE(request:NextRequest,{params}:{params:{id:string}}){
         const ress = await deleteCity(id)
 
         if(!ress){
-            return NextResponse.json({status:false,message:"not found"},{status:500})
+            return NextResponse.json({status:false,message:"internal error"},{status:500})
         }
 
         return NextResponse.json({status:true,message:"sucesfuly deleted"},{status:200})
