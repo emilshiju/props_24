@@ -13,6 +13,7 @@ import { toast } from 'react-hot-toast';
 import { checkEmailApi, registerUserApi } from '@/src/lib/api_service_client/user_service/auth_handler';
 
 import { useRouter } from 'next/navigation';
+import Loader from '@/src/components/loader';
 
 
 const Register = ()=>{
@@ -26,6 +27,9 @@ const Register = ()=>{
       const [resendOtp, setResendOtp] = useState(false);
       const [timeLeft, setTimeLeft] = useState<number>(0);
       const timeRef = useRef<NodeJS.Timeout | null>(null);
+
+
+      const [showLoader,setLoader]=useState(false)
        
 
 
@@ -136,7 +140,11 @@ const Register = ()=>{
         if(otp.length == 0){
           toast.error('ENTER THE OTP');
         }else{
+            setLoader(true)
+
           const verified = await verifyOtpApi(otp,allFormData.email) 
+
+            setLoader(false)
 
           if(!verified.status){
             const errorMessage = verified.data?.message || 'Failed to verify OTP';
@@ -145,7 +153,7 @@ const Register = ()=>{
 
             const registered = await registerUserApi(allFormData)
             if(!registered.status){
-              const errorMessage = registered.data?.message || 'Failed to register';
+              const errorMessage = registered.data?.message 
               toast.error(errorMessage);
             }else{
 
@@ -179,6 +187,7 @@ const Register = ()=>{
 
     return (
       <>
+      {showLoader&&<Loader />}
         {!otpVerification ?<div className="min-h-[80vh] flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8 bg-gray-50">
         <div className="w-full max-w-md bg-white rounded-lg shadow-sm p-8"> 
   <div className="sm:mx-auto sm:w-full sm:max-w-md">

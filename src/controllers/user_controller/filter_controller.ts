@@ -138,7 +138,7 @@ export async function applyComplexFilters(sideBarFilteredData:any,sectionName:an
                 include: {
                   city: {
                     select: {
-                      cityName: true
+                      cityName: true,
                     }
                   },
                   specialization: {
@@ -178,7 +178,7 @@ export async function applyComplexFilters(sideBarFilteredData:any,sectionName:an
                   }
                 }
 
-                
+
               });
           
               return allFilteredSpecialization;
@@ -304,7 +304,9 @@ export async function searchAll(data:string){
         contains: data,   
         mode: 'insensitive', 
       },
-    },
+    },include:{
+      details:true
+    }
   });
 
   allData.allCity.push(...allCityList)

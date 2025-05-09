@@ -144,10 +144,10 @@ const CreateProfile = ()=>{
     
 
               const ress = await createProfileApi(allData,downloadURL)
-              
+              setLoader(false)
 
               if(ress.status){
-                setLoader(false)
+                
                 router.push('/verification')
               
               }else{
