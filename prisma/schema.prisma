@@ -63,6 +63,7 @@ model profile {
   cityId           String   @unique
 
   properties property[]
+  reviews    review[]
 }
 
 
@@ -136,4 +137,19 @@ model specialization{
   city                city     @relation(fields: [cityId], references: [id], onDelete: Cascade)
 
   createdAt           DateTime @default(now())
+}
+
+
+
+
+model review {
+  id        String   @id @default(uuid())
+  rating    Int      @default(0)
+  profileId String
+  name      String
+  content   String
+
+  createdAt DateTime @default(now())
+
+  profile   profile  @relation(fields: [profileId], references: [id])
 }

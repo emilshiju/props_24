@@ -65,10 +65,10 @@ const navItems: NavItem[] = [
   {
     name: "Banners",
     icon: <PageIcon />,
-    // subItems: [
-    //   { name: "Blank Page", path: "/blank", pro: false },
-    //   { name: "404 Error", path: "/error-404", pro: false },
-    // ],
+    subItems: [
+      { name: "Add Banner", path: "/blank", pro: false },
+      { name: "Edit Banner", path: "/error-404", pro: false },
+    ],
   },
 ];
 

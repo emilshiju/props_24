@@ -4,22 +4,18 @@ import { HeartIcon, CalendarIcon, DocumentTextIcon } from '@heroicons/react/24/o
 import Link from 'next/link'
 import { useEffect,use, useState } from 'react'
 import { getProfileDetailsApi } from '@/src/lib/api_service_client/user_service/profile_handler'
-
-
-
-
-
-
-
-
+import { useSearchParams,useRouter,usePathname } from 'next/navigation'
 import Image from 'next/image'
 import FeaturedProperties from '@/src/components/user/featured_properties'
 import { UserProfileType } from '@/src/type/components_type/listUsers'
 import { detailed_profile_type } from '@/src/type/components_type/common_type'
+import ListReview from '@/src/components/user/review'
 
 const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
 
   const { id } = use(params)
+
+  const router = useRouter()
 
   const [allData,setAllData]=useState<detailed_profile_type|null>()
 
@@ -60,6 +56,13 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
 
   if(!allData){
     return <div>loading...</div>
+  }
+
+  
+
+
+  const navigateToWriteReview=(profileId:string)=>{
+    router.push(`/review/add/${profileId}`) 
   }
 
 
@@ -119,12 +122,14 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
                   <EnvelopeIcon className="h-5 w-5 mr-2" />
                   Send Email
                 </a>
-                <a href={`tel:12345678`} className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-secondary hover:bg-secondary/90">
+                <div  onClick={()=>navigateToWriteReview(allData.id)} className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-secondary hover:bg-secondary/90">
                   <PhoneIcon className="h-5 w-5 mr-2" />
-                  Call
-                </a>
+                  write review
+                </div>
               </div>
+              
             </div>
+            
           </div>
 
 
@@ -227,11 +232,7 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
        <FeaturedProperties  profileId={id}  />
 
 
-
-
-
-
-
+<ListReview  profileId={id} />
   
 
 

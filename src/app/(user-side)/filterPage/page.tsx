@@ -227,8 +227,6 @@ export default function Example() {
     // console.log(res)
     setSideBarFilter(updatedSideBarFilter); 
 
-
-
       
     const filteredResult = await  getChangedSideBarFilterApi(updatedSideBarFilter,{sectionName:sectionName},{value:valueId},{status:isChecked})
     
