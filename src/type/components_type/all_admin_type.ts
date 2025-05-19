@@ -97,3 +97,15 @@ export interface detailedCityType {
     createdAt: Date;
     details: detailedCityResType | null
   }
+
+
+  export interface reviewType{
+    name: string;
+    content: string;
+    profileId:string;
+    rating:number
+
+}
+
+
+

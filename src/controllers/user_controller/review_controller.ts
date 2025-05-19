@@ -28,7 +28,7 @@ export async function addReviewDetails(data:reviewReqType){
 }
 
 
-export async function getAllReview(id:string){
+export async function getSeparatedReview(id:string){
 
     try{
 
@@ -42,7 +42,57 @@ export async function getAllReview(id:string){
 
 
     }catch(error){
+        console.log("error occured in the getSeparatedReview",error)
+        return false
+    }
+}
+
+
+
+export async function getAllReview(){
+
+
+    try{
+
+        const allReviews = await prisma.review.findMany({});
+
+        return allReviews
+
+
+
+    }catch(error){
         console.log("error occured in the getAllReview",error)
+        return false
+    }
+
+}
+
+export async function deleteReview(id:string){
+
+    try{
+
+         const reviewExists = await prisma.review.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if(!reviewExists){
+        return false
+    }
+
+
+         const deletedReview = await prisma.review.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return deletedReview
+
+
+    }catch(error){
+        console.log("error occured in the deleteReview",error)
         return false
     }
 }
