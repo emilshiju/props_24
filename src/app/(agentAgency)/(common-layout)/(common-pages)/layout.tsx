@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect ,useState} from "react";
 import { Outfit } from 'next/font/google';
 
 import AppHeader from "@/src/components/agent-agency/AppHeader";
@@ -7,11 +7,17 @@ import AppSidebar from "@/src/components/agent-agency/AppSidebar";
 import Backdrop from "@/src/components/agent-agency/Backdrop";
 import { useSidebar } from "@/src/context/agentAgency/sidebar_context";
 import {toast ,Toaster } from 'react-hot-toast';
+import { profileExistsApi } from "@/src/lib/api_service_client/agent_agencies_service/protected_handler";
+import { useRouter } from 'next/navigation';
+
 
 
 const CommonPageSideBar=({children}:{children:React.ReactNode})=>{
 
     const { isExpanded, isHovered, isMobileOpen } = useSidebar();
+
+
+    const router = useRouter();
     
     
   // Dynamic class for main content margin based on sidebar state
@@ -20,6 +26,43 @@ const CommonPageSideBar=({children}:{children:React.ReactNode})=>{
   : isExpanded || isHovered
   ? "lg:ml-[290px]"
   : "lg:ml-[90px]";
+
+   const [loading, setLoading] = useState(false);
+
+  const checkProfileExists=async()=>{
+
+    const ress=await profileExistsApi()
+    setLoading(true)
+
+    console.log("got resssssponseeeeeeeeeeeeeeeeeeeee")
+    console.log(ress.data)
+    if(!ress.status){
+      
+
+      if(ress.statusCode==200){
+      
+        router.push('/createProfile')
+      }else{
+        alert("error")
+      }
+    
+    }
+
+    
+
+  }
+
+  useEffect(()=>{
+
+    checkProfileExists()
+
+  },[])
+
+
+  if (!loading) {
+    // Show loading spinner or blank while waiting for API
+    return <div>Loading...</div>;
+  }
 
 
 

@@ -31,6 +31,14 @@ const  ImageUploader=()=>{
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const selectedFile = event.target.files?.[0];
       if (selectedFile) {
+        const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+    if (!validImageTypes.includes(selectedFile.type)) {
+      alert('Please select a valid image file (jpg, png, gif, webp)');
+      return;
+    }
+    
+    
         setFile(selectedFile);
         setPreviewURL(URL.createObjectURL(selectedFile));
       }

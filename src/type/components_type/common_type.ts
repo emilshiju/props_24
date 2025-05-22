@@ -71,5 +71,8 @@ export interface property_type {
         verified:boolean
         createdAt: Date;
         userId: string;
-        user:user_type
+        user:user_type;
+          _count: {
+    reviews: number;
+  };
   }

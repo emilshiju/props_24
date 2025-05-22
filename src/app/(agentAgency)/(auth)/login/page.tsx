@@ -32,10 +32,10 @@ const LoginPage =()=>{
        
       if(!response.status){
         
-        toast.error(response.message)
+        toast.error(response.data)
       }else{
         // router.push('/')
-        toast.success(response.message)
+        toast.success(response.data)
       }
 
 

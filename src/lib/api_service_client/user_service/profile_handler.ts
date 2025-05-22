@@ -97,3 +97,5 @@ export const getPropertyDetailsApi=async(id:string)=>{
         return {status:false,message:"error" }
     }
 }
+
+

@@ -6,10 +6,12 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { listSeparatedReviewApi } from '@/src/lib/api_service_client/user_service/review_handler'
 import { reviewResType } from '@/src/type/components_type/all_users_type'
-
+import { useSearchParams,useRouter,usePathname } from 'next/navigation'
 
 
 const ListReview=({ profileId }: { profileId: string })=>{
+
+  const router = useRouter()
 
 
     const [allData, setData] = useState<reviewResType[]>([]);
@@ -33,49 +35,14 @@ const ListReview=({ profileId }: { profileId: string })=>{
     },[])
 
 
-
-      const agent = {
-    id: '1',
-    name: 'Alessandro Conti',
-    email: 'alessandro.conti@gabetti.it',
-    phone: '+39 123 456 7890',
-    bio: 'Con oltre 15 anni di esperienza nel settore immobiliare di lusso, Alessandro è specializzato in proprietà di prestigio nelle principali città italiane.',
-    agencyId: '1',
-    agency: 'Gabetti Milano Centro',
-    location: 'Milano',
-    specialties: ['Case di Lusso', 'Proprietà Storiche'],
-    createdAt: new Date('2022-01-15'),
-    updatedAt: new Date('2023-12-10'),
-    rating: 4.9,
-    verified: true,
-    reviews: 48,
-    bgColor: 'bg-gradient-to-br from-primary to-primary-light',
-    recentReviews: [
-      {
-        id: '101',
-        rating: 5,
-        comment: 'Alessandro è stato incredibile. Ci ha aiutato a trovare il nostro appartamento dei sogni nel cuore di Milano.',
-        userId: '201',
-        agentId: '1',
-        createdAt: new Date('2024-02-15'),
-        updatedAt: new Date('2024-02-15'),
-        author: 'Marco B.'
-      },
-      {
-        id: '102',
-        rating: 5,
-        comment: 'Ottima esperienza lavorando con Alessandro. Molto professionale e con una grande conoscenza della zona.',
-        userId: '202',
-        agentId: '1',
-        createdAt: new Date('2024-01-20'),
-        updatedAt: new Date('2024-01-20'),
-        author: 'Sofia P.'
-      }
-    ]
-  };
+     const navigateToWriteReview=(profileId:string)=>{
+    router.push(`/review/add/${profileId}`) 
+  }
 
 
 
+
+    
    
 
 
@@ -129,11 +96,11 @@ const ListReview=({ profileId }: { profileId: string })=>{
           )} */}
         </div>
         <div className="px-4 py-4 sm:px-6 bg-gray-50">
-          <Link href=''>
+          <div onClick={()=>navigateToWriteReview(profileId)}>
             <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-accent hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">
               Write a Review
             </button>
-          </Link>
+          </div>
         </div>
       </div>
 

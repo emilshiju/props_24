@@ -27,17 +27,17 @@ export const loginUserApi = async(userData:LoginValues)=>{
        const loginUserAPi = await axiosClient.post('/login',{userData})
      
        return {status:loginUserAPi.data.status,
-               message:loginUserAPi.data.message,
+               data:loginUserAPi.data.message,
                statusCode:loginUserAPi.status
        }
 
        
 
-    }catch(error){
+    }catch(error:any){
 
-        console.log("error occured in loginUserApi",error)
+        console.log("error occured in loginUserApi",error.response.data.message)
 
-        return {status:false,message:"error occured"}
+        return {status:false,data:error.response.data.message }
 
     }
 }

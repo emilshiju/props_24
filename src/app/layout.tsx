@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
+import  "./globals.css"
 // import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast';
+import ErrorBoundary from "../components/errorBoundary";
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -29,10 +31,12 @@ export default function RootLayout({
       <body
         // className={inter.className}
       >
+        <ErrorBoundary>
         <div className="min-h-screen bg-gray-50">
         <div><Toaster /></div>
         {children}
         </div>
+        </ErrorBoundary>
       </body>
     </html>
   );

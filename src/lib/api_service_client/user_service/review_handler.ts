@@ -48,3 +48,24 @@ export const listSeparatedReviewApi=async(id:string)=>{
         return {status:false,data:"error occured" }
     }
 }
+
+
+
+export const findAverageReviewApi=async(id:string)=>{
+
+    try{
+
+        const averageValue=await axiosClient.get(`/user/review/${id}/average`)
+
+        return {
+            status:averageValue.data.status,
+            data:averageValue.data.message,
+            statusCode:averageValue.status
+        }
+
+
+    }catch(error){
+        console.log("error occured in the findAverageReviewApi",error)
+        return {status:false,data:"error occured" }
+    }
+}

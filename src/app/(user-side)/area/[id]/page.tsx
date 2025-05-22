@@ -9,6 +9,8 @@ import Link from 'next/link'
 
 const DetailsCity=async({ params }: { params: { id: string } })=>{
 
+  throw new Error("This is a test error from TestCrash component!");
+
 
     const { id } = await Promise.resolve(params);
 

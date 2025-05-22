@@ -6,16 +6,19 @@ export const adminLoginApi =async(data:AdminLoginValues)=>{
 
     try{
 
-        const resAdminLoginApi = await axiosClient.post('/adminLogin',data)
+        const resAdminLoginApi = await axiosClient.post('/login',{userData:data})
 
-        return 
+         return {status:resAdminLoginApi.data.status,
+               data:resAdminLoginApi.data.message,
+               statusCode:resAdminLoginApi.status
+       }
 
 
 
-    }catch(error){
+    }catch(error:any){
 
         console.log("admin login api error",error)
 
-        return 
+          return {status:false,data:error.response.data.message }
     }
 }

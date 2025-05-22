@@ -49,12 +49,17 @@ export async function getSeparatedReview(id:string){
 
 
 
-export async function getAllReview(){
+export async function getAllReview(id:string){
 
 
     try{
 
-        const allReviews = await prisma.review.findMany({});
+         const allReviews = await prisma.review.findMany({
+      where: {
+        profileId:id, 
+      },
+    });
+
 
         return allReviews
 
@@ -93,6 +98,46 @@ export async function deleteReview(id:string){
 
     }catch(error){
         console.log("error occured in the deleteReview",error)
+        return false
+    }
+}
+
+
+
+
+
+export async function  findAverage(id:string){
+
+    try{
+
+
+
+         const reviews = await prisma.review.findMany({
+      where: { profileId:id },
+      select: { rating: true },  // only fetch rating to reduce payload
+    });
+
+    if (!reviews) {
+      return false  // or 0 if you prefer when no reviews exist
+    }
+
+    // Calculate sum of ratings
+    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+
+    // Calculate average
+    const average = sum / reviews.length;
+
+ 
+    const averageValue=average
+
+    console.log("average valueeeeeeeeeeeee")
+    console.log(averageValue)
+    return averageValue
+
+
+    }catch(error){
+        console.log("error occured in the findaverage",error)
+
         return false
     }
 }

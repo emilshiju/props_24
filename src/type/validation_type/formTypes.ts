@@ -15,6 +15,7 @@ export interface LoginValues {
 }
 
 export interface AdminLoginValues {
+  role:string;
   email:string;
   password:string
 }

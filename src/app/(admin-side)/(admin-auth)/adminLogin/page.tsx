@@ -9,13 +9,20 @@ import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 const AdminLogin=()=>{
 
 
-    const initialValues = { email:'',password:'' };
+    const initialValues = {role:'admin', email:'',password:'' };
 
 
-    const handleSubmit=async(values_data:AdminLoginValues)=>{
+    const handleSubmit=async(values_data:AdminLoginValues,formikHelpers:FormikHelpers<AdminLoginValues>)=>{
       console.log("admin loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
       console.log(values_data)
-      adminLoginApi(values_data)
+      formikHelpers.resetForm()
+      const ress=await adminLoginApi(values_data)
+
+      if(ress.status){
+        alert(ress.data)
+      }else{
+        alert(ress.data)
+      }
 
 
     }
@@ -48,34 +55,6 @@ const AdminLogin=()=>{
 
       <Form className="space-y-6" >
 
-{/*       
-    <div>
-      <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
-        Choose your role
-      </label>
-      <div className="relative">
-        <Field
-          as="select"
-          id="role"
-          name="role"
-          onChange={handleChange}
-          className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md text-gray-700 bg-white appearance-none"
-        >
-           <option value="" disabled hidden></option>
-           <option value="agent">I am an Agent</option>
-           <option value="agencies">I represent an Agency</option>
-
-        </Field>
-        <div className="h-1">
-            {errors.role&&touched.role?<div className="text-red-500 text-xs mt-1 ">{errors.role}</div>:null}
-        </div>
-        <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-          <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </div>
-    </div> */}
 
 
         <div>
@@ -83,7 +62,7 @@ const AdminLogin=()=>{
           E-mail address
           </label>
           <div className="mt-1">
-            <input
+            <Field
               id="email"
               name="email"
               type="email"
@@ -103,7 +82,7 @@ const AdminLogin=()=>{
           Password
           </label>
           <div className="mt-1">
-            <input
+            <Field
               id="password"
               name="password"
               type="password"
@@ -120,11 +99,7 @@ const AdminLogin=()=>{
         <div className="flex justify-end">
          
 
-          <div className="text-sm">
-            {/* <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-            Forgot your password?
-            </a> */}
-          </div>
+         
         </div>
 
         <div>
@@ -138,18 +113,7 @@ const AdminLogin=()=>{
         </div>
       </Form>
 
-      {/* <div className="mt-6">
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300" />
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="bg-white px-2 text-gray-500">Don't have an account?</span>
-          </div>
-        </div>
-
-      </div> */}
-
+   
 
 
     </div>

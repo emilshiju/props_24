@@ -183,7 +183,10 @@ export async function  loginUser(loginDetails:LoginType){
       return {status:false,message:"credentails not found"}
     }
 
-    return {status:true,message:"sucess"}
+    return {status:true,message: "Login successful",data: {
+          ...user,
+          id: user.id.toString()  
+        }}
 
 
   }catch(error){
@@ -218,7 +221,11 @@ export async function detailedViewProfile(userId:string){
           select: {
             title: true
           }
+        }, _count: {
+          select: {
+          reviews: true
         }
+    }
       }
     });
     
@@ -288,4 +295,30 @@ export async function checkEmail(data:string){
 
     return {status:"error"}
   }
+}
+
+
+
+
+
+export const checkPorfileExists=async(id:string)=>{
+
+    try{
+
+         const userWithProfile = await prisma.user.findUnique({
+              where: { id },
+              select: { profile: true },
+          });
+
+          if(!userWithProfile||!userWithProfile.profile){
+             return { status: 'not_found', message: 'User not found' };
+          }
+
+          return { status: 'found', message:'sucess' };
+
+
+    }catch(error){
+        console.log("error occured in teh checkProfileExists",error)
+        return { status: 'error', message:"error" };
+    }
 }

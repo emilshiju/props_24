@@ -10,6 +10,7 @@ import FeaturedProperties from '@/src/components/user/featured_properties'
 import { UserProfileType } from '@/src/type/components_type/listUsers'
 import { detailed_profile_type } from '@/src/type/components_type/common_type'
 import ListReview from '@/src/components/user/review'
+import { findAverageReviewApi } from '@/src/lib/api_service_client/user_service/review_handler'
 
 const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
 
@@ -18,6 +19,10 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
   const router = useRouter()
 
   const [allData,setAllData]=useState<detailed_profile_type|null>()
+
+  const [averageValue,setAverageValue]=useState(Number)
+
+  
 
 
   const fetchProfileData=async(id:string)=>{
@@ -35,11 +40,24 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
   }
 
 
+
+  const fetchReviewAverage=async(id:string)=>{
+
+    const ress=await findAverageReviewApi(id)
+
+    if(ress.status){
+      setAverageValue(ress.data)
+    }
+
+  }
+
+
   useEffect(()=>{
 
   
 
       fetchProfileData(id)
+      fetchReviewAverage(id)
 
     
 
@@ -101,20 +119,16 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
                   <span>{allData.user.role}</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start mt-2">
-                  <div className="flex text-yellow-300">
-                    {/* {[...Array(5)].map((_, i) => (
+                
+                    <div className="flex text-yellow-400">
+                    {[...Array(5)].map((_, i) => (
                       <StarIcon 
                         key={i} 
-                        className={`h-6 w-6 ${i < Math.floor(agentWithDefaults.rating) ? '' : 'opacity-30'}`} 
+                        className={`h-5 w-5 ${i < Math.round(averageValue) ? '' : 'opacity-30'}`} 
                       />
-                    ))} */}
-                     <StarIcon className="h-6 w-6" />
-  <StarIcon className="h-6 w-6" />
-  <StarIcon className="h-6 w-6" />
-  <StarIcon className="h-6 w-6 opacity-30" />
-  <StarIcon className="h-6 w-6 opacity-30" />
+                    ))}
                   </div>
-                  <p className="ml-2 text-white"> 4.9 ( 48 reviews)</p>
+                  <p className="ml-2 text-white"> {averageValue} ( {allData._count.reviews} reviews)</p>
                 </div>
               </div>
               <div className="md:ml-auto mt-6 md:mt-0 flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-3">
@@ -139,24 +153,24 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
           <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
               <div className="p-3">
-                <div className="text-2xl font-bold text-primary">48</div>
+                <div className="text-2xl font-bold text-primary">{allData._count.reviews}</div>
                 <div className="text-sm text-gray-500">Reviews</div>
               </div>
               <div className="p-3">
                 <div className="text-2xl font-bold text-primary">
-                  20
+                  0
                 </div>
                 <div className="text-sm text-gray-500">Properties Sold</div>
               </div>
               <div className="p-3">
                 <div className="text-2xl font-bold text-primary">
-                  7
+                  0
                 </div>
                 <div className="text-sm text-gray-500">Years of Experience</div>
               </div>
               <div className="p-3">
                 <div className="text-2xl font-bold text-primary">
-                124 %
+                0%
                 </div>
                 <div className="text-sm text-gray-500">sucess rate</div>
               </div>
@@ -205,11 +219,11 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
               <h3 className="text-lg font-medium text-gray-900">Specializations</h3>
             </div>
             <div className="flex flex-wrap gap-2">
-              {specialties.map((specialty: string) => (
-                <span key={specialty} className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                  {specialty}
+              {/* {specialties.map((specialty: string) => ( */}
+                <span  className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                  {allData.specialization.title}
                 </span>
-              ))}
+              {/* ))} */}
             </div>
           </div>
         </div>
@@ -218,10 +232,10 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
         <div className="mt-8 bg-white overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:px-6 flex items-center">
             <DocumentTextIcon className="h-6 w-6 text-primary mr-2" />
-            <h2 className="text-xl font-semibold text-gray-900">Su About Alessandro Conti</h2>
+            <h2 className="text-xl font-semibold text-gray-900"> About {allData.businessName}</h2>
           </div>
           <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-            <p className="text-gray-700 whitespace-pre-line">With over 15 years of experience in the luxury real estate sector, Alessandro specializes in prestigious properties in the main Italian cities</p>
+            <p className="text-gray-700 whitespace-pre-line">With over of years of experience in the {allData.specialization.title} real estate sector, {allData.businessName} in prestigious properties in the main Italian cities</p>
           </div>
         </div>
 
@@ -242,17 +256,17 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
           <div className="px-4 py-8 sm:px-6 text-center text-white">
             <h2 className="text-2xl font-bold mb-4">Are you looking for a house in Milan ?</h2>
             <p className="text-primary-light mb-6 max-w-3xl mx-auto">
-            Alessandro Conti is here to help you find the perfect property.
+            {allData.businessName} is here to help you find the perfect property.
             </p>
             <div className="flex justify-center space-x-4">
               <Link href='/contact'>
                 <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-primary bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
-                  Contatta Alesndario
+                  Contact {allData.businessName}
                 </button>
               </Link>
               <Link href="/search">
                 <button className="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md shadow-sm text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
-                  Cerca Proprietà
+                  Search Property
                 </button>
               </Link>
             </div>
