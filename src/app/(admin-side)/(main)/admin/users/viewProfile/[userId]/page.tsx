@@ -129,7 +129,7 @@ const ViewProfile=({params}:{ params: Promise<{ userId: string }> })=>{
                 Bio
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                {userDetails?.specialisation}
+                {userDetails?.specialization.title}
               </p>
             </div>
 

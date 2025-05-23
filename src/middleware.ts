@@ -1,40 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { jwtDecode } from 'jwt-decode'
 import { extracted_token } from './type/controller_type/token_type';
-import { decode } from 'punycode';
+
 
 
 const ENTITY_PATHS = ['/featured', '/featured/add', '/featured/list','/createProfile'];
 
 const ADMIN_PATHS=['/admin/']
 
-const PUBLIC_PATHS = ['/'];
 
 const AUTH_PATHS=['/login', '/adminLogin','/register']
 
-const ADMIN_AUTH=['/adminLogin']
-
-const ENTITY_AUTH=['/login','/register']
 
 
 export function middleware(request: NextRequest) {
 
-    // console.log("hyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-
-
+    
     const { pathname } = request.nextUrl;
-    console.log("got pathname")
-    // console.log(pathname)
+    
 
-    const token = request.cookies.get('auth_token')?.value; // 'token' = cookie name
+    const token = request.cookies.get('auth_token')?.value; 
 
 
-        // Skip middleware for public paths
-    if (PUBLIC_PATHS.includes(pathname)) {
-
-      
-
-    }
 
 
 

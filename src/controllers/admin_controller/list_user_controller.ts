@@ -49,8 +49,12 @@ export async function getUserDetails(userId:string){
             },
             include: {
               user: true, 
+              specialization:true
             },
           });
+
+          console.log(details)
+          console.log("got detialssssssssssssss")
           
           return details
 

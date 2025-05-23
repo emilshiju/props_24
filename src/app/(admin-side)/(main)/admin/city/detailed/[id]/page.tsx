@@ -10,6 +10,7 @@ import { ref, uploadBytes ,getDownloadURL } from "firebase/storage";
 import { storage } from '@/src/service/firebase/firebase_init';
 
 import { useRouter } from 'next/navigation';
+import Loader from "@/src/components/loader";
 
 
 const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
@@ -21,15 +22,14 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
       const [activeSection, setActiveSection] = useState<string>('city');
 
     const [allData,setData]=useState<detailedCityResType|null>(null)
-     const [allCity,setAllCity]=useState<cityResType[]>([])
-    
-    
-    console.log("got all dataaaaaaaaaaaaaaaaaaaaaaaaaa")
-    console.log(allData)
+    const [allCity,setAllCity]=useState<cityResType[]>([])
 
+     const [showLoader,setLoader]=useState(false)
+    
+    
 
     const [isDragging, setIsDragging] = useState(false);
-          const fileInputRef = useRef<HTMLInputElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
         
          
         
@@ -60,8 +60,7 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
         image: allData?.imageUrl||null,
         areas: allData?.areas?.length ? allData.areas : Array(5).fill({ heading: '', content: '' }),
         types: allData?.types?.length? allData.types : Array(4).fill({ heading: '', content: '', price: '' })
-        // areas: Array(5).fill({ heading: '', content: '' }),
-        // types: Array(4).fill({ heading: '', content: '', price: '' })
+       
       });
       
       const initialValues = getInitialValues();
@@ -132,9 +131,12 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
       // Add your API call or other submission logic here
 
       setPreview(null);
-      
+
+      setLoader(true)
 
        const ress=await  editDetailedCityApi(id,updatedValues)
+
+       setLoader(false)
        if(ress.status){
         toast.success("updated")
         router.push('/admin/city/detailed/list')
@@ -179,6 +181,9 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
 
 
     return (
+
+      <>
+      {showLoader&&<Loader  />}
 
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">Property Information Form</h1>
@@ -616,6 +621,8 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
         </Form>)}
         </Formik>
       </div>
+
+      </>
     )
 }
 

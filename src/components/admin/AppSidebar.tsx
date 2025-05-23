@@ -49,7 +49,7 @@ const navItems: NavItem[] = [
     name: "City",
     icon: <CalenderIcon />,
     
-    subItems: [{ name: "Add City", path: "/admin/city/addCity", pro: false },{ name: "List Cities", path: "/admin/city/listCity", pro: false },
+    subItems: [{ name: "Add City", path: "/admin/city/add", pro: false },{ name: "List Cities", path: "/admin/city/list", pro: false },
       { name: "Add Details", path: "/admin/city/detailed/add", pro: false } , { name: "List Details", path: "/admin/city/detailed/list", pro: false }
     ],
   },

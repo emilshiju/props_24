@@ -36,6 +36,7 @@ const CommonPageSideBar=({children}:{children:React.ReactNode})=>{
 
     console.log("got resssssponseeeeeeeeeeeeeeeeeeeee")
     console.log(ress.data)
+    
     if(!ress.status){
       
 

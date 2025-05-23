@@ -4,24 +4,31 @@ import { adminLoginApi } from '@/src/lib/api_service_client/admin_service/admin_
 import { AdminLoginValues } from '@/src/type/validation_type/formTypes';
 import adminLoginSchema from '@/src/util/validation/adminLogin';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
+import { useRouter } from 'next/navigation';
+import {toast} from 'react-hot-toast';
 
 
 const AdminLogin=()=>{
+
+    const router = useRouter();
 
 
     const initialValues = {role:'admin', email:'',password:'' };
 
 
     const handleSubmit=async(values_data:AdminLoginValues,formikHelpers:FormikHelpers<AdminLoginValues>)=>{
-      console.log("admin loginnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
-      console.log(values_data)
+      
       formikHelpers.resetForm()
+
       const ress=await adminLoginApi(values_data)
 
       if(ress.status){
-        alert(ress.data)
+        
+        router.push('/admin/dashboard')
+        
       }else{
-        alert(ress.data)
+        
+        toast.success(ress.data)
       }
 
 

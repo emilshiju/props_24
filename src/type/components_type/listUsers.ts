@@ -9,6 +9,9 @@
     createdAt: string;
     
   }
+
+
+type specialisation ={id: string; title: string; description: string; createdAt: Date;}
   
 
 export interface UserProfileType {
@@ -17,7 +20,7 @@ export interface UserProfileType {
     phone: string;
     licenseNumber: string;
     bio: string;
-    specialisation: string;
+    specialization:specialisation;
     imageUrl: string 
     verified:boolean
     createdAt: Date;

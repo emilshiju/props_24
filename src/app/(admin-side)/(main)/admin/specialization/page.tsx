@@ -1,9 +1,4 @@
 
-
-
-
-
-
 "use client"
 import React, { useEffect, useState }  from "react";
 import { useRouter } from 'next/navigation';
@@ -19,6 +14,7 @@ import { toast } from 'react-hot-toast';
 
 import { specialisation_Res_Type } from "@/src/type/components_type/all_admin_type";
 import { deleteSpecializationApi ,listSpecializationApi} from "@/src/lib/api_service_client/admin_service/specialization_handler";
+import Loader from "@/src/components/loader";
 
 
 
@@ -27,12 +23,20 @@ import { deleteSpecializationApi ,listSpecializationApi} from "@/src/lib/api_ser
 const Specialization=()=>{
 
 
+    const [showLoader,setLoader]=useState(false)
+
     const [allSpecialization,setSpecialization]=useState<specialisation_Res_Type[]>([]);
 
 
     const fetchAllSpecialization=async()=>{
 
+       setLoader(true)
+
         const ress =await listSpecializationApi()
+
+
+         setLoader(false)
+         
 
         if(ress.status){
             console.log("got all data",ress.data)
@@ -52,7 +56,11 @@ const Specialization=()=>{
 
     const handleDelete=async(id:string)=>{
 
-        const deleted =await deleteSpecializationApi(id)
+       
+
+        const deleted = await deleteSpecializationApi(id)
+
+       
 
         if(deleted.status){
             toast.success('sucessfully deleted')
@@ -66,6 +74,9 @@ const Specialization=()=>{
 
 
     return (
+
+      <>
+      {showLoader&&<Loader  />}
 
         <div className="overflow-hidden rounded-xl  border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
@@ -146,6 +157,7 @@ onClick={()=>handleDelete(list.id)}
           </div>
         </div>
       </div>
+      </>
     )
 }
 

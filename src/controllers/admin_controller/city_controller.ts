@@ -54,6 +54,8 @@ export async function  listCity(){
           details: true, 
         },})
 
+        const filtered = response.filter(city => city.details)
+
         return response
 
 

@@ -1,9 +1,10 @@
 "use client"
+import Loader from '@/src/components/loader';
 import { addCityApi } from '@/src/lib/api_service_client/admin_service/city_handler';
 import { cityType } from '@/src/type/components_type/all_admin_type';
 import citySchema from '@/src/util/validation/cities_scehma';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 // import 'react-hot-toast/style.css';
 import {toast ,Toaster } from 'react-hot-toast';
 
@@ -11,7 +12,7 @@ const AddCitie=()=>{
 
   
 
- 
+ const [showLoader,setLoader]=useState(false)
 
     
 
@@ -19,9 +20,15 @@ const AddCitie=()=>{
 
     const handleSubmit=async(values_data:cityType,formikHelpers:FormikHelpers<cityType>)=>{
 
+       setLoader(true)
+
        const response = await addCityApi(values_data)
 
+       setLoader(false)
+
+       
         formikHelpers.resetForm();
+        
 
         if(response.status){
             toast.success(response.data)
@@ -35,7 +42,7 @@ const AddCitie=()=>{
 
     return (
       <>
-       
+       {showLoader&&<Loader />}
     
       
         <Formik 

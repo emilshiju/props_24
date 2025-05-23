@@ -9,10 +9,15 @@ import { storage } from '@/src/service/firebase/firebase_init';
 import { cityDetailsApi, listCityApi } from '@/src/lib/api_service_client/admin_service/city_handler';
 
 import {toast  } from 'react-hot-toast';
+import Loader from '@/src/components/loader';
 
 const MultiSectionForm: React.FC = () => {
 
   const [activeSection, setActiveSection] = useState<string>('city');
+
+
+  const [showLoader,setLoader]=useState(false)
+
   
 
   const [allCity,setAllCity]=useState<cityResType[]>([])
@@ -52,16 +57,10 @@ const MultiSectionForm: React.FC = () => {
   const initialValues = getInitialValues();
 
 
-    const handleSubmit=async(values:detailedCityType,formikHelpers:FormikHelpers<detailedCityType>)=>{
-
-
+  const handleSubmit=async(values:detailedCityType,formikHelpers:FormikHelpers<detailedCityType>)=>{
 
 
       try{
-   
-             
-              
-
       
               let imageUrl: string | null = null;
         
@@ -74,7 +73,7 @@ const MultiSectionForm: React.FC = () => {
                       imageUrl = downloadURL;
                   } catch (error) {
                       console.error('Error occurred during file upload', error);
-                      alert("error")
+                      toast.error("error occurred during file upload")
                         return; // Handle the error and prevent submission
                     }
               } else {
@@ -87,13 +86,16 @@ const MultiSectionForm: React.FC = () => {
                   ...values,
                   image: imageUrl,
               };
+
             setPreview(null);
 
             formikHelpers.resetForm({
               values: getInitialValues()
         });
 
+            setLoader(true)
             const res=await cityDetailsApi(updatedValues)
+            setLoader(false)
  
           if(res.status){
               toast.success("sucesfully added")
@@ -118,8 +120,7 @@ const MultiSectionForm: React.FC = () => {
       const fileInputRef = useRef<HTMLInputElement>(null);
     
      
-    
-      
+  
     
       const triggerFileInput = () => {
         fileInputRef.current?.click();
@@ -133,6 +134,10 @@ const MultiSectionForm: React.FC = () => {
 
 
   return (
+
+    <>
+     {showLoader&&<Loader />}
+   
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Property Information Form</h1>
       
@@ -569,6 +574,7 @@ const MultiSectionForm: React.FC = () => {
       </Form>)}
       </Formik>
     </div>
+     </>
   );
 };
 

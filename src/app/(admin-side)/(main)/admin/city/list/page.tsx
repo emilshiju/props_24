@@ -15,11 +15,14 @@ import {
 import { deleteCityApi,  listCityApi } from "@/src/lib/api_service_client/admin_service/city_handler";
 import { cityResType } from "@/src/type/components_type/all_admin_type";
 import { toast } from 'react-hot-toast';
+import Loader from "@/src/components/loader";
 
 
 const ListCitie=()=>{
 
     const [allCitie,setCitie]=useState<cityResType []>([])
+
+    const [showLoader,setLoader]=useState(false)
 
 
     const router = useRouter();
@@ -59,9 +62,10 @@ const ListCitie=()=>{
 
     const deleteCity=async(id:string)=>{
 
-     
+        setLoader(true)
 
         const deleted = await deleteCityApi(id)
+        setLoader(false)
 
         if(deleted.status){
           
@@ -78,9 +82,13 @@ const ListCitie=()=>{
 
 
 
-       const hey='Active'
+       
 
     return (
+
+      <>
+      {showLoader&&<Loader />}
+     
 <div className="overflow-hidden rounded-xl  border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
           <div className="min-w-[1102px]">
@@ -101,12 +109,7 @@ const ListCitie=()=>{
                   >
                     Country
                   </TableCell>
-                  {/* <TableCell
-                    isHeader
-                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                  >
-                    Status
-                  </TableCell> */}
+                  
                   <TableCell
                     isHeader
                     className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
@@ -161,7 +164,7 @@ onClick={()=>deleteCity(city.id)}
           </div>
         </div>
       </div>
-
+ </>
     )
 }
 

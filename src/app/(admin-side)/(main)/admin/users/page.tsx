@@ -14,98 +14,9 @@ import Badge from "@/src/components/admin/ui/badge/badge"
 import Image from "next/image";
 import { blockUserApi, listAllUsersApi, unblockUserApi } from "@/src/lib/api_service_client/admin_service/listAllUsersHandler";
 import { resListUsers, user_type } from "@/src/type/api_type/admin_type";
+import { toast } from 'react-hot-toast';
 
 
-
-interface Order {
-    id: number;
-    user: {
-      image: string;
-      name: string;
-      role: string;
-    };
-    projectName: string;
-    team: {
-      images: string[];
-    };
-    status: string;
-    budget: string;
-  }
-  
-
-// Define the table data using the interface
-const tableData: Order[] = [
-    {
-      id: 1,
-      user: {
-        image: "/images/user/user-17.jpg",
-        name: "Lindsey Curtis",
-        role: "Web Designer",
-      },
-      projectName: "Agency Website",
-      team: {
-        images: ["emilshiu10@gmialcomsfs"]
-      },
-      budget: "3.9K",
-      status: "Active",
-    },
-    {
-      id: 2,
-      user: {
-        image: "/images/user/user-18.jpg",
-        name: "Kaiya George",
-        role: "Project Manager",
-      },
-      projectName: "Technology",
-      team: {
-        images:["emilshiu10@gmialcomsfs"],
-      },
-      budget: "24.9K",
-      status: "Pending",
-    },
-    {
-      id: 3,
-      user: {
-        image: "/images/user/user-17.jpg",
-        name: "Zain Geidt",
-        role: "Content Writing",
-      },
-      projectName: "Blog Writing",
-      team: {
-        images: ["emilshiu10@gmialcomsfs"],
-      },
-      budget: "12.7K",
-      status: "Active",
-    },
-    {
-      id: 4,
-      user: {
-        image: "/images/user/user-20.jpg",
-        name: "Abram Schleifer",
-        role: "Digital Marketer",
-      },
-      projectName: "Social Media",
-      team: {
-        images: ["emilshiu10@gmialcomsfs"],
-      },
-      budget: "2.8K",
-      status: "Cancel",
-    },
-    {
-      id: 5,
-      user: {
-        image: "/images/user/user-21.jpg",
-        name: "Carla George",
-        role: "Front-end Developer",
-      },
-      projectName: "Website",
-      team: {
-        images: ["emilshiu10@gmialcomsfs"],
-      },
-      budget: "4.5K",
-      status: "Active",
-    },
-  ];
 
 
 
@@ -122,7 +33,7 @@ const ListUsers=()=>{
       setAllUsers(res_all_users.data)
 
       }else{
-        alert("occured error")
+        toast.error("occured error")
       }
 
     } catch (error) {
@@ -259,18 +170,15 @@ const ListUsers=()=>{
                       </div>
                     </TableCell>
                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                      <Badge
-                        size="sm"
-                        color={
-                          hey === "Active"
-                            ? "success"
-                            : hey === "Pending"
-                            ? "warning"
-                            : "error"
-                        }
-                      >
-                        {hey}
-                      </Badge>
+                    
+
+                       {!user.status?<span className="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">
+      Active
+    </span>: <span className="bg-yellow-100 text-yellow-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-yellow-900 dark:text-yellow-300">
+      
+      block
+    </span>}
+
                     
                        
                     </TableCell>

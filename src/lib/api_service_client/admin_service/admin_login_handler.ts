@@ -19,6 +19,6 @@ export const adminLoginApi =async(data:AdminLoginValues)=>{
 
         console.log("admin login api error",error)
 
-          return {status:false,data:error.response.data.message }
+          return {status:false,data:error.response.data.message?? "error occured try again later" }
     }
 }

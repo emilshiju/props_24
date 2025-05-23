@@ -13,8 +13,13 @@ import { useEffect, useState } from "react"
 import { listCityDetailsApi } from "@/src/lib/api_service_client/admin_service/city_handler"
 import {  detailedCityResType } from "@/src/type/components_type/all_admin_type"
 import { useRouter } from 'next/navigation';
+import Loader from "@/src/components/loader"
 
 const DetailedCityList=()=>{
+
+
+
+  const [showLoader,setLoader]=useState(false)
 
 
   const [allData,setData]=useState<detailedCityResType []>([])
@@ -26,10 +31,12 @@ const DetailedCityList=()=>{
   console.log(allData)
 
   const fetchAllDetailedCity=async()=>{
+  
     const ress=await  listCityDetailsApi()
     if(ress.status){
       setData(ress.data)
     }
+
   }
 
   useEffect(()=>{
@@ -40,9 +47,18 @@ const DetailedCityList=()=>{
     router.push(`/admin/city/detailed/${id}`)
   }
 
+  if(!allData.length){
+    return <Loader />
+  }
+
 
     return (
 
+
+      <>
+      {/* {showLoader&&<Loader  />} */}
+      
+     
 
         <div className="overflow-hidden rounded-xl  border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
@@ -125,7 +141,7 @@ onClick={()=>editDetailsCity(data.id)}
           </div>
         </div>
       </div>
-
+ </>
     )
     
 }
