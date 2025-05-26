@@ -9,6 +9,7 @@ import { useSidebar } from "@/src/context/agentAgency/sidebar_context";
 import {toast ,Toaster } from 'react-hot-toast';
 import { profileExistsApi } from "@/src/lib/api_service_client/agent_agencies_service/protected_handler";
 import { useRouter } from 'next/navigation';
+import Loader from "@/src/components/loader";
 
 
 
@@ -44,7 +45,7 @@ const CommonPageSideBar=({children}:{children:React.ReactNode})=>{
       
         router.push('/createProfile')
       }else{
-        alert("error")
+        toast.error(ress.data)
       }
     
     }
@@ -62,7 +63,7 @@ const CommonPageSideBar=({children}:{children:React.ReactNode})=>{
 
   if (!loading) {
     // Show loading spinner or blank while waiting for API
-    return <div>Loading...</div>;
+    return <div><Loader /></div>;
   }
 
 

@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 const DetailsCity=async({ params }: { params: { id: string } })=>{
 
-  throw new Error("This is a test error from TestCrash component!");
+  // throw new Error("This is a test error from TestCrash component!");
 
 
     const { id } = await Promise.resolve(params);
@@ -18,9 +18,9 @@ const DetailsCity=async({ params }: { params: { id: string } })=>{
 
           
 
-          if (!ress.status) {
-            return <div>Error fetching city details.</div>;
-          }
+          // if (!ress.status) {
+          //   return <div>Error fetching city details.</div>;
+          // }
 
             const alldata:cityAndDetaield=ress.data
 

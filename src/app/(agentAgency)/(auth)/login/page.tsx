@@ -10,32 +10,36 @@ import { LoginValues } from '@/src/type/validation_type/formTypes';
 import { loginUserApi } from '@/src/lib/api_service_client/user_service/auth_handler';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import Loader from '@/src/components/loader';
 
 
 const LoginPage =()=>{
 
 
+
     const router = useRouter();
 
-
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
+    const [showLoader,setLoader]=useState(false)
+  
 
     const initialValues = {role:'', email:'',password:'' };
 
     const handleSubmit = async(values_data:LoginValues,formikHelpers:FormikHelpers<LoginValues>)=>{
 
-     
+      setLoader(true)
+
       const response = await loginUserApi(values_data)
+      
       formikHelpers.resetForm()
+      setLoader(false)
        
       if(!response.status){
         
         toast.error(response.data)
       }else{
-        // router.push('/')
-        toast.success(response.data)
+        
+        router.push('/featured/add')
+        // toast.success(response.data)
       }
 
 
@@ -46,7 +50,8 @@ const LoginPage =()=>{
 
 
     return (
-
+<>
+{showLoader&&<Loader />}
         <div className="min-h-[80vh] flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8 bg-gray-50">
             <div className="w-full max-w-md bg-white rounded-lg shadow-sm p-8"> 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -184,7 +189,7 @@ const LoginPage =()=>{
 
         </div>
       </div>
-    
+    </>
     )
 }
 

@@ -136,7 +136,7 @@ const AddFeaturedProperties=()=>{
 
 
                      if(response.status){
-                      toast.success("sucessfully added")
+                      toast.success(response.data)
                      }else{
                       toast.error(response.data)
                      }
@@ -150,6 +150,7 @@ const AddFeaturedProperties=()=>{
                 } catch (error) {
                   console.log("error occurring in upload to firebase", error);
                   handleRemove();
+                  setLoader(false)
                   toast.error("error occurred");
                 }
         

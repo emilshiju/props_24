@@ -5,6 +5,8 @@ import  "../../globals.css"
 import { Inter } from 'next/font/google'
 import React, { useEffect ,useState} from "react"
 import { useRouter } from 'next/navigation';
+import Loader from "@/src/components/loader"
+import toast from "react-hot-toast"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,18 +22,21 @@ const Agent_side_layout=({children}:{children:React.ReactNode})=>{
       const checkProfileExists=async()=>{
     
         const ress=await profileExistsApi()
-        
-    
-        console.log("got resssssponseeeeeeeeeeeeeeeeeeeee")
-        console.log(ress.data)
+      
+
         if(ress.status){
           
-          
             router.push('/featured/add')
-          
         
         }else{
-alert("error")
+          
+          if(ress.statusCode==200){
+            router.push('/createProfile')
+          }
+          // else{
+          //   toast.error(ress.data)
+          // }
+          
         }
 
         setLoading(true)
@@ -42,15 +47,15 @@ alert("error")
     
       useEffect(()=>{
     
-        // checkProfileExists()
+        checkProfileExists()
     
       },[])
     
     
-    //   if (!loading) {
-    //     // Show loading spinner or blank while waiting for API
-    //     return <div>Loading...</div>;
-    //   }
+      if (!loading) {
+     
+        return <div><Loader/></div>;
+      }
 
 
    

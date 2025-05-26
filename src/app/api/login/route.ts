@@ -9,6 +9,7 @@ import { NextRequest ,NextResponse } from "next/server";
 export async function POST(request:NextRequest){
 
     try{
+        
 
         const {userData} = await request.json()
 
@@ -27,7 +28,7 @@ export async function POST(request:NextRequest){
             const token=createJwtToken({id:resloginOrNot.data.id,email:resloginOrNot.data?.email,role:resloginOrNot.data?.role})
 
             if(!token){
-            return NextResponse.json({status:false,message:"error occured"},{status:500})
+            return NextResponse.json({status:false,message:"internal error"},{status:500})
             }
 
             const cookieStore = await cookies()
@@ -38,7 +39,7 @@ export async function POST(request:NextRequest){
                         httpOnly: true,
                         secure: process.env.NODE_ENV === 'production',
                         sameSite: 'strict',
-                        maxAge: 60 * 60 * 24 * 7 // 7 days
+                        maxAge: 60 * 60 * 24 * 30 
                     });
             
 
@@ -51,7 +52,7 @@ export async function POST(request:NextRequest){
 
     }catch(error){
         console.log("error ocuured in route login",error)
-        return NextResponse.json({status:false, message: 'internal error' },{status:500});
+        return NextResponse.json({status:false, message: 'internal server  error' },{status:500});
     }
 
 

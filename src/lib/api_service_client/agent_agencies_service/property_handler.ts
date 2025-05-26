@@ -30,13 +30,14 @@ export const addPropertyApi=async(data:PropertyType,imageUrl:string)=>{
 
 
 
-    }catch(error){
-        console.log("error occured in addProperty",error)
-        
-        return {
-            status:false,
-            data:"internal error"
-        }
+    }catch (error: any) {
+        console.log("error occurred in addPropertyApi:", error);
+
+        const errorMessage = error.response?.data?.message 
+            || error.message 
+            || "Something went wrong. Please try again.";
+
+        return { status: false, data: errorMessage };
     }
 }
 

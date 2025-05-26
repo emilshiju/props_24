@@ -9,8 +9,6 @@ export async function GET(request:NextRequest){
     try{
 
 
-        console.log("111111111111111111111111111111")
-
           const cookieStore = await cookies();
           const token = cookieStore.get('auth_token')?.value;
 
@@ -21,9 +19,7 @@ export async function GET(request:NextRequest){
           
         console.log("decoded tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
         console.log(tokenData)
-        // const decodedToken = request.headers.get('decoded-token');
-        // const tokenData:extracted_token = decodedToken ? JSON.parse(decodedToken) : null;
-                
+       
         console.log("Decoded token data:", tokenData);
         
         if(!tokenData){
@@ -41,10 +37,10 @@ export async function GET(request:NextRequest){
         }
 
 
-        return NextResponse.json({status:true,messaeg:ress.message},{status:200})
+        return NextResponse.json({status:true,message:ress.message},{status:200})
     
     }catch(error){
         console.log("error occured in the route profile exists")
-        return  NextResponse.json({status:false,message:"error occured"},{status:500})
+        return  NextResponse.json({status:false,message:"internal error occured"},{status:500})
     }
 }

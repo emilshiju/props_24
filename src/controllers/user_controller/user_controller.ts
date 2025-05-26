@@ -192,7 +192,7 @@ export async function  loginUser(loginDetails:LoginType){
   }catch(error){
     console.log("error occured in the loginUser",error)
 
-    return {status:false,message:"occured error"}
+    return {status:false,message:"internal server  error"}
   }
 }
 
@@ -318,7 +318,7 @@ export const checkPorfileExists=async(id:string)=>{
 
 
     }catch(error){
-        console.log("error occured in teh checkProfileExists",error)
-        return { status: 'error', message:"error" };
+        console.log("error occured in the  checkProfileExists",error)
+        return { status: 'error', message:"internal server error" };
     }
 }

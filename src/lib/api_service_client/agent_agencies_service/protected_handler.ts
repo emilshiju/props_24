@@ -18,8 +18,8 @@ export const profileExistsApi=async()=>{
     }catch(error:any){
         console.log("error occured in the profileExistsApi",error)
         return {
-            status:error?.response?.data?.status ?? false,
-            data: error?.response?.data?.message ?? "internal  error",
+            status:false,
+            data: error?.response?.data?.message ?? "something went wrong ",
             statusCode:error?.response?.status ?? 500
         }
     }

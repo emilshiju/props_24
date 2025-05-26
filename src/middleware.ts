@@ -4,7 +4,7 @@ import { extracted_token } from './type/controller_type/token_type';
 
 
 
-const ENTITY_PATHS = ['/featured', '/featured/add', '/featured/list','/createProfile'];
+const ENTITY_PATHS = ['/featured', '/featured/add', '/featured/list','/createProfile','/afterRegister']
 
 const ADMIN_PATHS=['/admin/']
 

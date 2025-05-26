@@ -39,6 +39,7 @@ export async function addProperty(allData:PropertyReqType,tokenData:string){
 
     }catch(error){
         console.log("error occur in addProperty Controller",error)
+        
         return false
     }
 

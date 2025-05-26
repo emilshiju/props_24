@@ -33,11 +33,15 @@ export const loginUserApi = async(userData:LoginValues)=>{
 
        
 
-    }catch(error:any){
+    }catch (error: any) {
+        
+        console.log("error occurred in loginUserApi:", error);
 
-        console.log("error occured in loginUserApi",error.response.data.message)
+        const errorMessage = error.response?.data?.message 
+            || error.message 
+            || "Something went wrong. Please try again.";
 
-        return {status:false,data:error.response.data.message }
+        return { status: false, data: errorMessage };
 
     }
 }
@@ -65,5 +69,31 @@ export const checkEmailApi=async(data:string)=>{
             status:false,
             data:error.response?.data?.message 
         }
+    }
+}
+
+
+
+export const logoutApi=async()=>{
+
+    try{
+
+
+        const ress=await axiosClient.get('/logout')
+
+       return {
+        status:ress.data.status,
+        data:ress.data.message,
+        statusCode:ress.status
+       }
+
+
+    }catch(error:any){
+        console.log("error occured in the logoutApi",error)
+         return {
+            status:false,
+            data:error.response?.data?.message || "internal server error"
+        }
+
     }
 }
