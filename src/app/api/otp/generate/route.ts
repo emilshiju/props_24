@@ -13,8 +13,7 @@ export async function POST(request:Request) {
     try{
 
         const data:{email:string}= await request.json();
-        console.log("on server")
-        console.log(data);
+       
 
         function generateOTP() {
             return randomstring.generate({

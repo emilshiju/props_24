@@ -29,13 +29,15 @@ const ListCitie=()=>{
 
     const fetchCities=async()=>{
 
-        const response =await listCityApi()
+      setLoader(true)
+      const response =await listCityApi()
+      setLoader(false)
 
-        if(response.status){
-            setCitie(response.data)
-        }else{
-          toast.error(response.data)
-        }
+      if(response.status){
+        setCitie(response.data)
+      }else{
+        toast.error(response.data)
+      }
 
     
     }

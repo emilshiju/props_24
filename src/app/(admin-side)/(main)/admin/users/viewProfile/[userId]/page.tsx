@@ -1,25 +1,33 @@
 "use client"
 
+import Loader from "@/src/components/loader"
 import { getSingleUserDetailsApi } from "@/src/lib/api_service_client/admin_service/listAllUsersHandler"
 import { UserProfileType } from "@/src/type/components_type/listUsers"
 import Image from "next/image"
 import { useEffect, useId, useState } from "react"
 import {use} from "react"
+import toast from "react-hot-toast"
 const ViewProfile=({params}:{ params: Promise<{ userId: string }> })=>{
 
   console.log("view profileeeeeeeeeeeeeeeeeeeeeeeeeee")
   const { userId } = use(params); 
+
+  const [showLoader,setLoader]=useState(false)
 
    
   const [userDetails,setUserDetails]=useState<UserProfileType|null>(null)
 
 
   const fetchUserDetails=async()=>{
-
+    
+    setLoader(true)
     const resUserDetails = await getSingleUserDetailsApi(userId)
+    setLoader(false)
 
     if(resUserDetails.status){
         setUserDetails(resUserDetails.data)
+    }else{
+      toast.error(resUserDetails.data)
     }
 
   }
@@ -33,6 +41,8 @@ const ViewProfile=({params}:{ params: Promise<{ userId: string }> })=>{
 
     return (
         <div>
+          {showLoader&&<Loader  />}
+
 
           <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">

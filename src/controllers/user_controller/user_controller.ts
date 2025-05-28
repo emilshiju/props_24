@@ -314,7 +314,11 @@ export const checkPorfileExists=async(id:string)=>{
              return { status: 'not_found', message: 'User not found' };
           }
 
-          return { status: 'found', message:'sucess' };
+          if(!userWithProfile.profile.verified){
+            return {status:"not_verified",message:"user not verified"}
+          }
+
+          return { status:'success', message:'success' };
 
 
     }catch(error){

@@ -12,6 +12,7 @@ import { PropertyResType } from "@/src/type/api_type/common_type"
 import Image from "next/image"
 import { useRouter } from 'next/navigation';
 import toast from "react-hot-toast"
+import Loader from "@/src/components/loader"
 
 
 const PropertyList=()=>{
@@ -19,11 +20,17 @@ const PropertyList=()=>{
 
   const router = useRouter();
 
+   const [showLoader,setLoader]=useState(false)
+
+
+
     const [allProperty,setAllProperty]=useState<PropertyResType[]>([])
 
     const fetchAllProperty=async()=>{
 
+        setLoader(true)
         const res=await listAllPropertyApi()
+        setLoader(false)
 
         if(res.status){
             setAllProperty(res.data)
@@ -39,15 +46,17 @@ const PropertyList=()=>{
 
 
     const deleteProperty=async(id:string)=>{
-      
-     const res =await  deletePropertyApi(id)
 
-     if(res.status){
-      toast.success("sucessfuly deleted")
-      fetchAllProperty()
-     }else{
-      toast.error(res.data)
-     }
+        setLoader(true)
+        const res = await  deletePropertyApi(id)
+        setLoader(false)
+
+        if(res.status){
+            toast.success(res.data)
+            fetchAllProperty()
+        }else{
+            toast.error(res.data)
+        }
      
     }
 
@@ -59,6 +68,9 @@ const PropertyList=()=>{
     },[])
 
     return (
+      <>
+      {showLoader&&<Loader  />}
+    
         <div className="overflow-hidden rounded-xl  border-gray-100 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
                 <div className="max-w-full overflow-x-auto">
                   <div className="min-w-[1102px]">
@@ -160,6 +172,7 @@ const PropertyList=()=>{
                   </div>
                 </div>
               </div>
+                </>
     )
 }
 

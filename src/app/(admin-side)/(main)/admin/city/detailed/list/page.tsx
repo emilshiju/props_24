@@ -14,6 +14,7 @@ import { listCityDetailsApi } from "@/src/lib/api_service_client/admin_service/c
 import {  detailedCityResType } from "@/src/type/components_type/all_admin_type"
 import { useRouter } from 'next/navigation';
 import Loader from "@/src/components/loader"
+import toast from "react-hot-toast"
 
 const DetailedCityList=()=>{
 
@@ -31,12 +32,16 @@ const DetailedCityList=()=>{
   console.log(allData)
 
   const fetchAllDetailedCity=async()=>{
-  
+    setLoader(true)
     const ress=await  listCityDetailsApi()
+    setLoader(false)
+
     if(ress.status){
       setData(ress.data)
+    }else{
+      toast.error(ress.data)
     }
-
+    
   }
 
   useEffect(()=>{
@@ -47,18 +52,13 @@ const DetailedCityList=()=>{
     router.push(`/admin/city/detailed/${id}`)
   }
 
-  if(!allData.length){
-    return <Loader />
-  }
-
+ 
 
     return (
 
 
       <>
-      {/* {showLoader&&<Loader  />} */}
-      
-     
+      {showLoader&&<Loader  />}
 
         <div className="overflow-hidden rounded-xl  border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">

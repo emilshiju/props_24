@@ -20,7 +20,9 @@ export async function getAllAgent(){
       }
     });
 
-    return resAllAgent.map((user) => user.profile);
+    return resAllAgent
+      .map((user) => user.profile)
+      .filter((profile) => profile !== null);
 
 
   }catch(error){

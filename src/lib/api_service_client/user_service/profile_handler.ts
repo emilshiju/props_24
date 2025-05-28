@@ -21,11 +21,14 @@ export const createProfileApi=async(data:ProfileData,imageUrl:string)=>{
 
 
 
-    }catch(error){
+    }catch(error:any){
 
         console.log("error occured in createProfileApi",error)
 
-        return {status:false,message:"internal error" }
+        return {
+            status:false,
+            data: error?.response?.data?.message ?? "something went wrong ",
+        }
     }
 }
 

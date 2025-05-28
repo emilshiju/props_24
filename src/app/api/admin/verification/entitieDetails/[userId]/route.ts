@@ -10,8 +10,7 @@ export async function GET(request:NextRequest,{params}:{params:{userId:string}})
         const { userId } = await Promise.resolve(params);
 
         const resEntitieDetails = await getDetails(userId)
-        console.log("got deteailsss",resEntitieDetails)
-
+        
 
         if(!resEntitieDetails){
              return NextResponse.json({status:false, message: 'internal error'},{status:500});

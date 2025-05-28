@@ -11,32 +11,34 @@ import {
     TableRow,
   } from "@/src/components/admin/ui/table"
 
-    import Badge from "@/src/components/admin/ui/badge/badge"
-    import Image from "next/image"
+    
+import Image from "next/image"
 import { get_AllPending_Verification_AgentApi } from "@/src/lib/api_service_client/admin_service/pendingdVerificationHandler";
 import { user_type } from "@/src/type/components_type/verification_type";
+import Loader from "@/src/components/loader";
 
 
 
 const AgentVerificationPage=()=>{
 
-    const hey='Active'
-
+  
 
     const [allAgent,setAllAgent]=useState<user_type[]>([])
 
+    const [showLoader,setLoader]=useState(false)
+
     const fetchAllAgent=async()=>{
+      setLoader(true)
       const resAllAgent =await get_AllPending_Verification_AgentApi()
+      setLoader(false)
+
       if(resAllAgent.status){
-        console.log("got alll agent")
-        console.log(resAllAgent.data)
         setAllAgent(resAllAgent.data)
       }
+      
      }
 
-     if (!allAgent) {
-      return <div>Loading...</div>; // or any loading indicator you prefer
-    }
+   
 
 
     useEffect(()=>{
@@ -54,6 +56,8 @@ const AgentVerificationPage=()=>{
     
 
     return (
+<>
+{showLoader&&<Loader  />}
 
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
@@ -155,6 +159,7 @@ const AgentVerificationPage=()=>{
           </div>
         </div>
       </div>
+      </>
     )
 }
 

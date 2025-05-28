@@ -15,33 +15,35 @@ import Badge from "@/src/components/admin/ui/badge/badge"
 import Image from "next/image";
 import { get_AllPending_Verification_AgenciesApi } from "@/src/lib/api_service_client/admin_service/pendingdVerificationHandler";
 import { user_type } from "@/src/type/components_type/verification_type";
+import Loader from "@/src/components/loader";
+import toast from "react-hot-toast";
+
 
 
 const AgenciesVerificationPage=()=>{
 
 
-    const hey='Active'
+    
 
     const [allAgencies,setAllAgencies]=useState<user_type[]>([])
 
+    const [showLoader,setLoader]=useState(false)
+
     const fetchAllAgencies=async()=>{
+
+      setLoader(true)
       const allAgencies = await  get_AllPending_Verification_AgenciesApi()
+      setLoader(false)
+      
       if(allAgencies.status){
         setAllAgencies(allAgencies.data)
       }else{
-        alert("ereror")
+        toast.error(allAgencies.data)
       }
-    }
-
-
-    if (!allAgencies) {
-      return <div>Loading...</div>; // or any loading indicator you prefer
     }
 
     useEffect(()=>{
       fetchAllAgencies()
-      
-      
     },[])
 
 
@@ -58,7 +60,8 @@ const AgenciesVerificationPage=()=>{
     
 
     return (
-
+      <>
+      {showLoader&&<Loader  />}
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
           <div className="min-w-[1102px]">
@@ -166,6 +169,8 @@ const AgenciesVerificationPage=()=>{
           </div>
         </div>
       </div>
+      </>
+
     )
 
 

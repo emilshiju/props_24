@@ -28,43 +28,44 @@ const CommonPageSideBar=({children}:{children:React.ReactNode})=>{
   ? "lg:ml-[290px]"
   : "lg:ml-[90px]";
 
-   const [loading, setLoading] = useState(false);
+  //  const [loading, setLoading] = useState(false);
 
-  const checkProfileExists=async()=>{
 
-    const ress=await profileExistsApi()
-    setLoading(true)
+  // const checkProfileExists=async()=>{
 
-    console.log("got resssssponseeeeeeeeeeeeeeeeeeeee")
-    console.log(ress.data)
+  //   const ress=await profileExistsApi()
+
+  //   setLoading(true)
     
-    if(!ress.status){
+  //    if(ress.status=='not_found'){
+              
+  //         router.push('/createProfile')
+              
+  //     }else if(ress.status=='not_verified'){
+
+  //           router.push('/verification')
+            
+  //     }else if(ress.status=='error') {
+  //                 toast.error(ress.data)
+  //             }
       
-
-      if(ress.statusCode==200){
-      
-        router.push('/createProfile')
-      }else{
-        toast.error(ress.data)
-      }
     
-    }
 
     
 
-  }
+  // }
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    checkProfileExists()
+  //   checkProfileExists()
 
-  },[])
+  // },[])
 
 
-  if (!loading) {
-    // Show loading spinner or blank while waiting for API
-    return <div><Loader /></div>;
-  }
+  // if (!loading) {
+  
+  //   return <><Loader /></>;
+  // }
 
 
 

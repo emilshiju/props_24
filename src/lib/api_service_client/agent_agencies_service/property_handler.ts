@@ -95,8 +95,6 @@ export const editProperetyApi=async(data:formPropertyType,id:string)=>{
 
        
         const updatedData = { ...data, id };
-        console.log('1111111111111111111111111111111111111111111111111111111')
-        console.log(updatedData)
 
 
         const resEdited=await axiosClient.put('/agentAgencies/property/edit',updatedData)
@@ -108,12 +106,12 @@ export const editProperetyApi=async(data:formPropertyType,id:string)=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in editPropertyApi",error)
 
         return {
             status:false,
-            data:"internal error"
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -132,11 +130,11 @@ export const deletePropertyApi=async(id:string)=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in deletePropertyAPi",error)
         return {
             status:false,
-            data:"internal error"
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
 
     }

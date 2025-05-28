@@ -15,6 +15,7 @@ import Image from "next/image";
 import { blockUserApi, listAllUsersApi, unblockUserApi } from "@/src/lib/api_service_client/admin_service/listAllUsersHandler";
 import { resListUsers, user_type } from "@/src/type/api_type/admin_type";
 import { toast } from 'react-hot-toast';
+import Loader from "@/src/components/loader";
 
 
 
@@ -24,16 +25,23 @@ const ListUsers=()=>{
 
   const [allUsers,setAllUsers]=useState<user_type[]>([]);
 
+  const [showLoader,setLoader]=useState(false)
+
 
   const fetchUsers = async (): Promise<void> => {
+    
     try {
+
+      setLoader(true)
       const res_all_users:resListUsers = await listAllUsersApi();
+      setLoader(false)
+
       if(res_all_users.status){
       
       setAllUsers(res_all_users.data)
 
       }else{
-        toast.error("occured error")
+        toast.error(res_all_users.data)
       }
 
     } catch (error) {
@@ -58,7 +66,7 @@ const ListUsers=()=>{
 
         const router = useRouter();
 
-    const hey='Active'
+    
 
     const handleViewProfileDetails=(userId:string)=>{
 
@@ -67,7 +75,7 @@ const ListUsers=()=>{
     }
 
     const showNotVerified=()=>{
-      alert("user not submited Profile")
+      toast.error("user not submited Profile")
     }
 
 
@@ -78,6 +86,8 @@ const ListUsers=()=>{
         if(blocked.status){
           
           fetchUsers()
+        }else{
+          toast.error(blocked.data)
         }
     }
 
@@ -89,11 +99,16 @@ const ListUsers=()=>{
      if(unBlocked.status){
     
       fetchUsers()
+     }else{
+      toast.error(unBlocked.data)
      }
 
     }
 
     return (
+
+      <>
+      {showLoader&&<Loader  />}
 
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
@@ -221,6 +236,7 @@ const ListUsers=()=>{
           </div>
         </div>
       </div>
+      </>
     )
 }
 

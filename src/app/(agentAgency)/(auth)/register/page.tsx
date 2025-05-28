@@ -33,22 +33,23 @@ const Register = ()=>{
        
 
 
-      const sendOtp=(email:string)=>{
-        console.log("sendotp ")
-        console.log(email)
+      const sendOtp=async(email:string)=>{
+       
 
-        requestOtpApi(email)
+        const ressOtp=await requestOtpApi(email)
+
+        if(ressOtp.status){
+          toast.success(ressOtp.data)
+        }else{
+          toast.error(ressOtp.data)
+        }
          
       }
      
 
       const handleResendOtp = (email: string = allFormData.email) => {
-        // Logic to resend OTP
-        console.log(timeLeft)
-        console.log("Resending OTP...");
-        console.log("client first")
-        console.log(email)
-        setTimeLeft(10);
+        
+        setTimeLeft(60);
         setResendOtp(false);
         sendOtp(email)
       };
@@ -105,7 +106,7 @@ const Register = ()=>{
     
 
       useEffect(() => {
-        console.log("inside ")
+        
        
         
         if (timeLeft > 0) {
@@ -118,7 +119,7 @@ const Register = ()=>{
     
         return () => {
           if (timeRef.current) {
-            console.log("here cleaned up")
+          
             clearInterval(timeRef.current);
           }
         };

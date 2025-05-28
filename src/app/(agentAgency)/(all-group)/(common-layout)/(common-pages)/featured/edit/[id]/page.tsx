@@ -7,16 +7,22 @@ import { editProperetyApi, findSinglePropertyAPi } from '@/src/lib/api_service_c
 import { cityResType } from '@/src/type/components_type/all_admin_type';
 import { formPropertyType, PropertyResType } from '@/src/type/api_type/common_type';
 import { listCityApi } from '@/src/lib/api_service_client/admin_service/city_handler';
+import Loader from '@/src/components/loader';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const EditFeaturedProperty=({params}:{ params: Promise<{ id: string }> })=>{
 
     const { id } = use(params); 
+    const router = useRouter();
 
     
     
     const [allData,setAllData]=useState<PropertyResType|null>(null)
 
     const [allCity,setAllCity]=useState<cityResType[]>([])
+
+    const [showLoader,setLoader]=useState(false)
 
 
 
@@ -51,7 +57,7 @@ const EditFeaturedProperty=({params}:{ params: Promise<{ id: string }> })=>{
     },[])
 
     if (!allData||!allCity) {
-      return <div>Loading...</div>; // or any loading indicator you prefer
+      return <><Loader /></>; // or any loading indicator you prefer
     }
 
 
@@ -61,19 +67,18 @@ const EditFeaturedProperty=({params}:{ params: Promise<{ id: string }> })=>{
 
 
     const handleSubmit=async(values_data:formPropertyType,formikHelpers:FormikHelpers<formPropertyType>)=>{
-
-      const edited =await editProperetyApi(values_data,id)
+      setLoader(true)
+      const edited = await editProperetyApi(values_data,id)
+      setLoader(false)
 
       if(edited.status){
-        alert("scuess")
+        toast.success(edited.data)
+        router.push('/featured')
       }else{
-        alert("error")
+        toast.error(edited.data)
       }
     }
 
-
-
-   
 
 
     const filteredCityList = allCity.filter(city => city.id !== allData.city.id);
@@ -85,6 +90,7 @@ const EditFeaturedProperty=({params}:{ params: Promise<{ id: string }> })=>{
 
 
 <div >
+  {showLoader&&<Loader  />}
             <Formik 
           initialValues={initialValues}
           validationSchema={featurePropertieSchema}

@@ -19,13 +19,12 @@ export const listAllUsersApi=async()=>{
         
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occur in list  listAllUsersAPi ",error)
 
-        return {
+         return {
             status:false,
-            data:"error occured ",
-            
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -39,9 +38,7 @@ export const getSingleUserDetailsApi=async(userId:string)=>{
 
         const resgetSingleUserDetailsApi = await axiosClient.get(`admin/users/userDetails/${userId}`)
 
-        console.log("in herer responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-        const daata=resgetSingleUserDetailsApi.data.message
-        console.log(daata)
+      
 
         return {
             status:resgetSingleUserDetailsApi.data.status,
@@ -50,11 +47,12 @@ export const getSingleUserDetailsApi=async(userId:string)=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occur in the api getsingle userdetails api",error)
+        
         return {
             status:false,
-            data:'error occured'
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -78,13 +76,13 @@ export const blockUserApi=async(userId:string)=>{
 
 
 
-    }catch(error){
+    }catch(error:any){
 
         console.log("error occur in blockUserApi",error)
 
         return {
             status:false,
-            data:'error occured'
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -103,13 +101,13 @@ export const unblockUserApi=async(userId:string)=>{
 
 
 
-    }catch(error){
+    }catch(error:any){
 
         console.log("error occurin unblockUserAPi",error)
         
-        return {
+         return {
             status:false,
-            data:'error occured'
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
         
     }

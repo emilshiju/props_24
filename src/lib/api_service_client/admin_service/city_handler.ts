@@ -42,12 +42,12 @@ export const listCityApi=async()=>{
             statusCode:resListCitieApi.status
         }
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in listCitie",error)
 
         return {
             status:false,
-            data:'error occured',
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -69,12 +69,12 @@ export const singleCityDisplayApi=async(cityId:string)=>{
 
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("erro roccur in the singleCityDisplayAPi",error)
 
-        return {
+       return {
             status:false,
-            data:'error occured',
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -95,12 +95,12 @@ export const editCityApi=async(cityId:string,data:cityType)=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error ocured in editCitieApi",error)
 
-        return {
+       return {
             status:false,
-            data:'internal error',
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -122,12 +122,12 @@ export const deleteCityApi=async(cityId:string)=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error ocrrued in delteCitieApi",error)
 
-        return {
+       return {
             status:false,
-            data:'error occured',
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -152,10 +152,9 @@ export const cityDetailsApi=async(data:detailedCityReqType)=>{
     }catch(error:any){
         console.log("error occrued in cityDetailsApi",error)
 
-        return {
+       return {
             status:false,
-            data:error.response?.data?.message 
-
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
         
     }
@@ -178,12 +177,12 @@ export const listCityDetailsApi=async()=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in listCityApi",error)
 
-        return {
+       return {
             status:false,
-            data:'error occured',
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -203,13 +202,13 @@ export const detailedViewCityApi=async(id:string)=>{
             statusCode:resDetailedViewCityApi.status
         }
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in getDetailedCityApi",error)
 
 
         return {
             status:false,
-            data:'error occured',
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -227,12 +226,12 @@ export const editDetailedCityApi=async(id:string,data:detailedCityReqType)=>{
             data:resEditDetailedCityAPi.data.message,
             statusCode:resEditDetailedCityAPi.status
         }
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in editDetailedCityApi")
 
         return {
             status:false,
-            data:'internal error ',
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
 
     }

@@ -18,14 +18,14 @@ export async function POST(request:NextRequest){
         const result=await addDetailedCity(data)
 
         if (result.status === "exists") {
-            return NextResponse.json({ status: false, message: result.message }, { status: 409 }); 
+            return NextResponse.json({ status: false, message: result.message }, { status: 200 }); 
           }
       
         if (result.status === "error") {
             return NextResponse.json({ status: false, message: result.message }, { status: 500 }); 
           }
       
-          return NextResponse.json({ status: true, message: result.data }, { status: 200 }); 
+          return NextResponse.json({ status: true, message: result.message }, { status: 200 }); 
 
     }catch(error){
 

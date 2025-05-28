@@ -22,6 +22,8 @@ import Loader from '@/src/components/loader';
 
 const CreateProfile = ()=>{
 
+  
+
   const router = useRouter();
 
   const [allCity,setAllCity]=useState<cityResType[]>([])
@@ -89,19 +91,42 @@ const CreateProfile = ()=>{
                 fileInputRef.current.click();
             }
         };
+        
     
         const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
           const selectedFile = event.target.files?.[0];
+
+
           if (selectedFile) {
             const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
-    if (!validImageTypes.includes(selectedFile.type)) {
-      alert('Please select a valid image file (jpg, png, gif, webp)');
-      return;
-    }
-    
+          if (!validImageTypes.includes(selectedFile.type)) {
+                toast.error('Please select a valid image file (jpg, png, gif, webp)');
+                return;
+            }
+
+             // Create a new image object to check dimensions
+            const img = new Image();
+            img.src = URL.createObjectURL(selectedFile);
+
+            img.onload = () => {
+              // Check if image dimensions match requirements
+            if (img.width !== 215 || img.height !== 215) {
+                  toast.error('Image dimensions must be 215 x 215 pixels');
+                  return;
+            }
+
+          // If dimensions are correct, proceed with setting the file and preview
             setFile(selectedFile);
             setPreviewURL(URL.createObjectURL(selectedFile));
+
+            };
+
+            img.onerror = () => {
+                toast.error('Error loading image');
+            };
+
           }
         };
     
@@ -145,10 +170,11 @@ const CreateProfile = ()=>{
               if (!downloadURL) {
                 handleRemove();
                 toast.error("error occurred try again");
+                setLoader(false)
               }
 
+
               if(allData){
-    
 
               const ress = await createProfileApi(allData,downloadURL)
               setLoader(false)
@@ -174,23 +200,20 @@ const CreateProfile = ()=>{
               handleRemove();
               toast.error("error occurred");
             }
-    
-    
-        
+  
     
           });
+
     
         }catch(error){
           console.log("error occrung in upload to firebase",error)
           handleRemove()
           toast.error("error occured")
-          
-        }
-    
+          setLoader(false)
         }
     
 
-
+        }
 
     
     

@@ -6,40 +6,7 @@ import { MagnifyingGlassIcon, StarIcon, ArrowLeftIcon, ArrowRightIcon } from '@h
 import { getAllAgentApi } from "@/src/lib/api_service_client/user_service/filter_handler";
 import { agent_agencies } from "@/src/type/components_type/common_type";
 
-const content = [
-  {
-    name: 'Marco Rossi 1',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 2',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 3',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 4',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 5',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 6',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 7',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 8',
-    specialty: 'Proprietà di Investimento',
-  },
-]
+
 
 const AgentCard = () => {
 
@@ -124,7 +91,7 @@ const AgentCard = () => {
   };
 
 
-
+ console.log("got all data list of agent")
   console.log(allData)
 
   return (
@@ -147,7 +114,7 @@ const AgentCard = () => {
               <div className="flex justify-center pt-4">
                 <Image
                   className="rounded-t-lg"
-                  src={data.imageUrl}
+                  src={data?.imageUrl}
                   alt="Technology acquisitions"
                   width={255}
                   height={235}
@@ -171,7 +138,7 @@ const AgentCard = () => {
                                 </h5>
                               </div>
                               <p className="text-sm text-gray-500  mb-3">
-                                {data.city.cityName},ITALY
+                                {data?.city.cityName},ITALY
                               </p>
                             </div>
                             

@@ -8,6 +8,8 @@ import { user_type } from "@/src/type/components_type/verification_type";
 import {use, useEffect} from "react"
 import Image from "next/image";
 import Badge from "@/src/components/admin/ui/badge/badge";
+import Loader from "@/src/components/loader";
+import toast from "react-hot-toast";
 
 
 const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })=>{
@@ -18,22 +20,20 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
 
     const [userDetails,setUserDetails]=useState<user_type|null>(null)
 
+    const [showLoader,setLoader]=useState(false)
+  
 
-
-    console.log("got user detailss",userDetails?.userName)
-    console.log(userDetails?.email)
-
-    
 
 
     const fetchEntitieDetails=async()=>{
-
+        setLoader(true)
         const resDetails = await get_EntitiDetails_Api(userId)
+        setLoader(false)
 
         if(resDetails.status){
-
-          console.log("got user details")
             setUserDetails(resDetails.data)
+        }else{
+          toast.error(resDetails.data)
         }
 
     }
@@ -51,32 +51,25 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
 
 
     const handleVerify=async(profileId:string)=>{
-
+      setLoader(true)
       const verified = await verifyEntitieApi(profileId)
+      setLoader(false)
 
       if(verified.status){
         fetchEntitieDetails()
       }else{
-        alert("error")
+        toast.error(verified.data)
       }
 
     }
 
 
 
-
-
-    if (!userDetails) {
-      return <div>Loading...</div>; // or any loading indicator you prefer
-    }
-
     
 
     return (
-         <div>
-        
-                  
-        
+         <>
+          {showLoader&&<Loader  />}
                   <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
                 <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
                   <div className="flex flex-col items-center w-full gap-6 xl:flex-row">
@@ -147,7 +140,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         Role
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        {userDetails.role}
+                        {userDetails?.role}
                       </p>
                     </div>
         
@@ -156,7 +149,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         Email
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        {userDetails.email}
+                        {userDetails?.email}
                       </p>
                     </div>
         
@@ -165,7 +158,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         Phone
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                      {userDetails.profile.phone}
+                      {userDetails?.profile.phone}
                       </p>
                     </div>
         
@@ -174,7 +167,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         Bio
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                     {userDetails.profile.bio}
+                     {userDetails?.profile.bio}
                       </p>
                     </div>
         
@@ -194,7 +187,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         license - Number
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                        {userDetails.profile.licenseNumber}
+                        {userDetails?.profile.licenseNumber}
                       </p>
                     </div>
 
@@ -203,24 +196,12 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                         verification  Status
                       </p>
                       <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                      {userDetails.profile.verified?<span className="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">
+                      {userDetails?.profile.verified?<span className="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">
       verified
     </span>: <span className="bg-yellow-100 text-yellow-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-yellow-900 dark:text-yellow-300">
       pending
     </span>}
-                        {/* {userDetails.profile.verified} */}
-                        {/* <Badge
-                        size="sm"
-                        color={
-                          hey === "Active"
-                            ? "success"
-                            : hey === "Pending"
-                            ? "warning"
-                            : "error"
-                        }
-                      >
-                         Pending
-                      </Badge> */}
+                      
                       </p>
                     </div>
         
@@ -229,9 +210,9 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
                     
                   </div>
                   <br />
-                  {userDetails.profile.verified==false&&<button onClick={()=>handleVerify(userDetails.profile.id)} className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 w-full focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                  {userDetails?.profile.verified==false&&<button onClick={()=>handleVerify(userDetails.profile.id)} className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 w-full focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     verify </button>}
-                   {userDetails.profile.verified==true&&<button  className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 w-full focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                   {userDetails?.profile.verified==true&&<button  className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 w-full focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     verified </button>
                     }
                 </div>
@@ -266,7 +247,7 @@ const EntitiesDetailedProfile=({params}:{ params: Promise<{ userId: string }> })
         
         
             </div>
-                </div>
+                </>
     )
 }
 

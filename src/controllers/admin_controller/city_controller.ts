@@ -182,7 +182,7 @@ export  async function addDetailedCity(data:detailedCityReqType){
       },
     });
 
-    return { status: "success", data: added };
+    return { status: "success",message:"sucessfully added" };
 
     
   }catch(error){

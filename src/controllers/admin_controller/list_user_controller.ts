@@ -53,8 +53,6 @@ export async function getUserDetails(userId:string){
             },
           });
 
-          console.log(details)
-          console.log("got detialssssssssssssss")
           
           return details
 

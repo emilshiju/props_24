@@ -12,12 +12,15 @@ export const registerUserApi=async(userDetails:FormValues)=>{
         return {status:responseRegisterUsrApi.data.status,data:responseRegisterUsrApi.data,statusCode:responseRegisterUsrApi.status}
 
 
-    }catch(error){
+    }catch(error:any){
 
-        console.log("error occur in registerUserApi",error)
-        return {status:false,data:{message:"error occur in registration"}}
+        return {
+            status:false,
+            data: error?.response?.data?.message ?? "something went wrong ",
+        }
     }
 }
+
 
 
 export const loginUserApi = async(userData:LoginValues)=>{
@@ -67,7 +70,7 @@ export const checkEmailApi=async(data:string)=>{
 
         return {
             status:false,
-            data:error.response?.data?.message 
+            data:error.response?.data?.message || "something went wrong"
         }
     }
 }

@@ -24,9 +24,14 @@ const MultiSectionForm: React.FC = () => {
 
   const fetchAllCity=async()=>{
 
+    setLoader(true)
     const resAllCity=await listCityApi()
+    setLoader(false)
+
     if(resAllCity.status){
       setAllCity(resAllCity.data)
+    }else{
+      toast.error(resAllCity.data)
     }
   }
 
@@ -91,14 +96,14 @@ const MultiSectionForm: React.FC = () => {
 
             formikHelpers.resetForm({
               values: getInitialValues()
-        });
+            });
 
             setLoader(true)
             const res=await cityDetailsApi(updatedValues)
             setLoader(false)
  
           if(res.status){
-              toast.success("sucesfully added")
+              toast.success(res.data)
           }else{
               toast.error(res.data)
           }

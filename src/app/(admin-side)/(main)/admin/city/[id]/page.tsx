@@ -7,6 +7,7 @@ import citySchema from '@/src/util/validation/cities_scehma';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import {toast} from 'react-hot-toast';
 import {use, useEffect, useState} from "react"
+import Loader from '@/src/components/loader';
 
 
 
@@ -19,15 +20,21 @@ const EditCitie=({params}:{ params: Promise<{ id: string }> })=>{
 
   const [allData,setAllData]=useState<cityResType|null>(null)
 
+  const [showLoader,setLoader]=useState(false)
+
+
   const fetchDetails=async()=>{
 
+    setLoader(true)
     const res =await singleCityDisplayApi(id)
-
+   
     if(res.status){
-      console.log("cityyyyyyyyyyyyyyyyyyyyyy")
-      console.log(res.data)
       setAllData(res.data)
+    }else{
+      toast.error(res.data)
     }
+
+     setLoader(false)
 
   }
 
@@ -42,16 +49,15 @@ const EditCitie=({params}:{ params: Promise<{ id: string }> })=>{
   },[])
 
 
-   console.log("form valuee")
-   console.log(allData)
     const initialValues={city:allData?.cityName||'',country:allData?.country||''}
 
 
 
     const handleSubmit=async(values_data:cityType,formikHelpers:FormikHelpers<cityType>)=>{
 
-
+      setLoader(true)
       const updated = await editCityApi(id,values_data)
+      setLoader(false)
           
       formikHelpers.resetForm();
 
@@ -65,22 +71,22 @@ const EditCitie=({params}:{ params: Promise<{ id: string }> })=>{
         
     }
 
-
-
-
-    if (!allData) {
-      return <div>Loading...</div>; // or any loading indicator you prefer
-    }
     
 
 
 
+
+
     return (
+      <>
+
+       {showLoader&&<Loader />}
 
          <Formik 
               initialValues={initialValues}
               validationSchema={citySchema}
               onSubmit={handleSubmit}
+              enableReinitialize={true}
               >
                  {({ values, handleChange, errors, touched }) => (
                 <Form>
@@ -126,6 +132,7 @@ const EditCitie=({params}:{ params: Promise<{ id: string }> })=>{
             </div>
             </Form>)}
             </Formik>
+            </>
     )
 }
 

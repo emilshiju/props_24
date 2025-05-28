@@ -4,14 +4,24 @@ import axiosClient from "../../axios_client"
 
 
 
-export const requestOtpApi=(data:string)=>{
+export const requestOtpApi=async(data:string)=>{
 
     try{
 
-        axiosClient.post('/otp/generate',{email:data})
-        
+        const ress=await axiosClient.post('/otp/generate',{email:data})
 
-    }catch(error){
+        return {
+            status:ress.data.status,
+            data:ress.data.message,
+            statusCode:ress.status
+        }
+
+    }catch(error:any){
+
+        return {
+            status:false,
+            data: error?.response?.data?.message ?? "something went wrong ",
+        }
 
     }
 
@@ -29,13 +39,13 @@ export const verifyOtpApi=async(otp:string,email:string)=>{
         statusCode:resposneVerityOtpApi.status
       }
 
-    }catch(error){
+    }catch(error:any){
 
         console.log("error in verifyOTPAPI",error)
 
         return {
-                status:false,
-            data:{message:"Failed to verify OTP"}
+            status:false,
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
 
     }

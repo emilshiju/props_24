@@ -14,9 +14,8 @@ export async function POST(request:NextRequest){
         const token = cookieStore.get('auth_token')?.value;
         
         
-        
         if(!token){
-            return  NextResponse.json({status:false,message:"error occured"},{status:500})
+            return  NextResponse.json({ status: false, message: "Unauthorized: Token missing" }, { status: 401 })
         }
         
         const tokenData: extracted_token = jwtDecode(token);

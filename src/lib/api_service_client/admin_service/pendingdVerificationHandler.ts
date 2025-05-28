@@ -15,13 +15,13 @@ export const get_AllPending_Verification_AgentApi=async()=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
 
         console.log("error occured in getAllPendingVerificationAgent",error)
 
         return {
             status:false,
-            data:'error occured'
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 
@@ -43,13 +43,13 @@ export const get_AllPending_Verification_AgenciesApi=async()=>{
 
 
 
-    }catch(error){
+    }catch(error:any){
 
         console.log("error occrued in getAllPedingVericationAgencies ",error)
 
-        return {
+         return {
             status:false,
-            data:'error occured'
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 
@@ -64,8 +64,7 @@ export const get_EntitiDetails_Api=async(userId:string)=>{
 
       const  res_EntitiDetails_Api = await axiosClient.get(`admin/verification/entitieDetails/${userId}`)
 
-      console.log("get get get get get get ",res_EntitiDetails_Api.data.message)
-
+      
       return {
         status:res_EntitiDetails_Api.data.status,
         data:res_EntitiDetails_Api.data.message,
@@ -73,13 +72,13 @@ export const get_EntitiDetails_Api=async(userId:string)=>{
       }
 
 
-    }catch(error){
+    }catch(error:any){
 
         console.log("error occrued in getEntitieDetails",error)
 
-        return {
+         return {
             status:false,
-            data:'error occured'
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -100,12 +99,12 @@ export const verifyEntitieApi=async(profileId:string)=>{
         }
 
         
-    }catch(error){
+    }catch(error:any){
         console.log("error occred in verifyEntitie",error)
         
-        return {
+         return {
             status:false,
-            data:'error occured'
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
 
     }

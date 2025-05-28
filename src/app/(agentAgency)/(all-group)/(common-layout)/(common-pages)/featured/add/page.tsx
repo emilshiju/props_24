@@ -76,9 +76,39 @@ const AddFeaturedProperties=()=>{
 
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
+
         if (selectedFile) {
-          setFile(selectedFile);
-          setPreviewURL(URL.createObjectURL(selectedFile));
+
+          const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+          if (!validImageTypes.includes(selectedFile.type)) {
+              toast.error('Please select a valid image file (jpg, png, gif, webp)');
+              return;
+          }
+
+
+           // Create a new image object to check dimensions
+            const img = new Image();
+            img.src = URL.createObjectURL(selectedFile);
+
+            img.onload = () => {
+              // Check if image dimensions match requirements
+            if (img.width !== 600 || img.height !== 400) {
+                  toast.error('Image dimensions must be 600x400 pixels');
+                  return;
+            }
+
+          // If dimensions are correct, proceed with setting the file and preview
+            setFile(selectedFile);
+            setPreviewURL(URL.createObjectURL(selectedFile));
+
+            };
+
+            img.onerror = () => {
+                toast.error('Error loading image');
+            };
+
+
         }
       };
 

@@ -12,8 +12,7 @@ export async function GET(request:NextRequest){
 
        const allUsers = await getAllUsersList()
 
-       console.log("ivideeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-       console.log(allUsers)
+       
 
        if(!allUsers){
         return NextResponse.json({status:false, message: 'internal error' },{status:500});

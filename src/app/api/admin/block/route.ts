@@ -13,9 +13,6 @@ export async function PATCH(request:NextRequest){
     try{
 
 
-        // const decodedToken = request.headers.get('decoded-token')
-        // const tokenData:extracted_token = decodedToken ? JSON.parse(decodedToken) : null;
-
         const data:{userId:string}=await request.json()
 
         console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrId",data)

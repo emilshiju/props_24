@@ -54,7 +54,7 @@ const Home = ()=>{
         className="inline-flex items-center px-3 py-2 font-trip text-[18px] font-bold  text-gray-900 hover:text-primary-light"
       >
        
-        {/* Find Agent */}
+      
         <img 
     src="icons/agent.png"
     alt="Agent Icon" 
@@ -76,8 +76,9 @@ const Home = ()=>{
  
   <span className='pt-1'> Find Agency</span>
      
-        {/* Find Agencies */}
+      
       </Link>
+
       <Link 
         href="/area" 
         className="inline-flex items-center px-3 py-2 font-trip text-[18px] font-bold text-gray-900 hover:text-primary-light"

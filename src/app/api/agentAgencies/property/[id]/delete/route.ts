@@ -14,7 +14,7 @@ export async function DELETE(request:NextRequest,{params}:{params:{id:string}}){
         if(!deleted){
             return NextResponse.json({status:false,message:'internal error'},{status:500})
         }
-        return NextResponse.json({status:true,message:deleted},{status:200})
+        return NextResponse.json({status:true,message:'successfully deleted'},{status:200})
 
 
     }catch(error){

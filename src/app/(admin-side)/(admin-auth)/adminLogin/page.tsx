@@ -5,12 +5,15 @@ import { AdminLoginValues } from '@/src/type/validation_type/formTypes';
 import adminLoginSchema from '@/src/util/validation/adminLogin';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useRouter } from 'next/navigation';
+import { Toaster } from 'react-hot-toast';
 import {toast} from 'react-hot-toast';
 
 
 const AdminLogin=()=>{
 
     const router = useRouter();
+    
+    
 
 
     const initialValues = {role:'admin', email:'',password:'' };
@@ -28,7 +31,7 @@ const AdminLogin=()=>{
         
       }else{
         
-        toast.success(ress.data)
+        toast.error(ress.data)
       }
 
 
@@ -37,6 +40,8 @@ const AdminLogin=()=>{
 
 
     return (
+      <><Toaster />
+
 
         <div className="min-h-[80vh] flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8 bg-gray-50">
         <div className="w-full max-w-md bg-white rounded-lg shadow-sm p-8"> 
@@ -133,7 +138,7 @@ const AdminLogin=()=>{
 
     </div>
   </div>
-
+</>
     )
 
 }

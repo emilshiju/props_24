@@ -12,30 +12,30 @@ const AddCitie=()=>{
 
   
 
- const [showLoader,setLoader]=useState(false)
+    const [showLoader,setLoader]=useState(false)
 
     
 
     const initialValues={city:"",country:""}
+    
 
     const handleSubmit=async(values_data:cityType,formikHelpers:FormikHelpers<cityType>)=>{
 
-       setLoader(true)
+      setLoader(true)
 
-       const response = await addCityApi(values_data)
+      const response = await addCityApi(values_data)
 
-       setLoader(false)
+      setLoader(false)
 
        
-        formikHelpers.resetForm();
+      formikHelpers.resetForm();
         
+      if(response.status){
+          toast.success(response.data)
+      }else{  
+          toast.error(response.data)
+      }
 
-        if(response.status){
-            toast.success(response.data)
-        }else{
-          
-            toast.error(response.data)
-        }
         
     }
 

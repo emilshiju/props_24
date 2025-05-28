@@ -97,8 +97,7 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
 
     const handleSubmit=async(values:detailedCityType,formikHelpers:FormikHelpers<detailedCityType>)=>{
       
-      
-
+       
 
       try{
 
@@ -120,7 +119,7 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
           } else {
                 imageUrl = values.image as string; // URL case
           }
-  
+   
       // Proceed with the updated values including the image URL
       const updatedValues = {
         ...values,
@@ -134,11 +133,15 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
 
       setLoader(true)
 
+      
+
        const ress=await  editDetailedCityApi(id,updatedValues)
+      
 
        setLoader(false)
+
        if(ress.status){
-        toast.success("updated")
+        // toast.success(ress.data)
         router.push('/admin/city/detailed/list')
        }else{
         toast.error(ress.data)
@@ -169,7 +172,7 @@ const EditDetailedCity=({params}:{ params: Promise<{ id: string }> })=>{
 
 
     if (!allData||!allCity) {
-      return <div>Loading...</div>; // or any loading indicator you prefer
+      return <div><Loader /></div>; // or any loading indicator you prefer
     }
 
     

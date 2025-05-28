@@ -59,8 +59,8 @@ model profile {
   verified        Boolean @default(false)
   createdAt       DateTime @default(now())    
   userId          String   @unique
-  specializationId String   @unique
-  cityId           String   @unique
+  specializationId String  
+  cityId           String  
 
   properties property[]
   reviews    review[]

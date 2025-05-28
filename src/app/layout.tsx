@@ -1,6 +1,3 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-
 import  "./globals.css"
 // import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast';
@@ -20,11 +17,13 @@ export const metadata = {
 
 
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
+
   return (
     // <html lang="en"suppressHydrationWarning>
     <html lang="en" className="translated-ltr">
@@ -33,7 +32,7 @@ export default function RootLayout({
       >
         <ErrorBoundary>
         <div className="min-h-screen bg-gray-50">
-        <div><Toaster /></div>
+        {/* <div><Toaster /></div> */}
         {children}
         </div>
         </ErrorBoundary>
