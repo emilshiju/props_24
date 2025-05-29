@@ -28,6 +28,14 @@ export interface property_type {
     createdAt: Date;
   };
 
+  interface Review {
+  id: string;
+  rating: number;
+  profileId: string;
+  name: string;
+  content: string;
+  createdAt: string; 
+}
   
 
   export interface agent_agencies {
@@ -44,6 +52,7 @@ export interface property_type {
   cityId: string;
   city: City;
   specialization: Specialization;
+  reviews: Review[];
   }
 
 

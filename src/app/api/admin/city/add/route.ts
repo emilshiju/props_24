@@ -15,8 +15,8 @@ export async function POST(request:NextRequest){
         const addedData = await addCity(data)
        
         if(addedData.status == "exists"){
-            console.log("poyiiiiiiiiiiiiiiiiiiii 111")
-            return NextResponse.json({status:false,message:addedData.message},{status:409})
+            
+            return NextResponse.json({status:false,message:addedData.message},{status:200})
         }
 
         if(addedData.status == "error" ){

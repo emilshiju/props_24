@@ -4,53 +4,24 @@ import Image from "next/image"
 import { useRef, useState, useEffect } from "react";
 import { MagnifyingGlassIcon, StarIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import { listCityApi } from "@/src/lib/api_service_client/admin_service/city_handler";
-import { cityResType } from "@/src/type/components_type/all_admin_type";
+import { cityAndDetaield, cityResType } from "@/src/type/components_type/all_admin_type";
+import { useRouter } from 'next/navigation'
 
-const content = [
-  {
-    name: 'Turin',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Venince',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 3',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 4',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 5',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 6',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 7',
-    specialty: 'Proprietà di Investimento',
-  },
-  {
-    name: 'Marco Rossi 8',
-    specialty: 'Proprietà di Investimento',
-  },
-]
 
 const Popular_Cities = () => {
 
-  const [allData,setData]=useState<cityResType []>([])
+  const [allData,setData]=useState<cityAndDetaield []>([])
+
+  const router = useRouter()
+
 
   const fetchAllCity=async()=>{
   
     const response =await listCityApi()
     
         if(response.status){
-            setData(response.data)
+            const filtered = response.data.filter((city:cityAndDetaield)=> city.details)
+            setData(filtered)
           }
   }
 
@@ -127,6 +98,10 @@ const Popular_Cities = () => {
     }
   };
 
+  const navigateDetailedPage=(id:string)=>{
+      router.push(`/area/${id}`)
+    }
+
   return (
     <div className="relative p-5 max-w-7xl mx-auto">
       <h1 className='text-black text-2xl font-bold mb-6'>Popular Cities </h1>
@@ -138,19 +113,63 @@ const Popular_Cities = () => {
         className="flex flex-nowrap gap-4 overflow-x-auto p-3 w-full hide-scrollbar"
         style={{ scrollBehavior: 'smooth', scrollSnapType: 'x mandatory' }}
       >
-        {allData.map((data,index) => (
-          <div
-            key={index}
-            className="w-[280px] sm:w-[350px] h-[200px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
-          >
-         
-              <div className="flex items-center justify-center h-full w-full ">
-                <h1 className="text-black">{data?.cityName}</h1>
-              
-              </div>
+
+        
+        {allData.length === 0 && (
+  <>
+    {Array.from({ length: 3 }).map((_, index) => (
+      <div 
+        key={index} 
+        className="flex flex-col items-center mb-6"
+      >
+        {/* Skeleton Card Container */}
+        <div className="w-[280px] sm:w-[340px] h-[200px] flex-shrink-0 bg-gray-200 rounded-lg overflow-hidden animate-pulse">
+          {/* Skeleton Image */}
+          <div className="w-full h-full bg-gray-300"></div>
+        </div>
+        
+        {/* Skeleton City Name */}
+        <div className="p-4 w-full">
+          <div className="h-6 w-32 bg-gray-200 rounded mx-auto animate-pulse"></div>
+        </div>
+      </div>
+    ))}
+  </>
+)}
+
+
+        
+{allData.map((data, index) => (
+  <div 
+    key={index} 
+    className="flex flex-col items-center mb-6 cursor-pointer"
+    onClick={() => navigateDetailedPage(data.id)}
+  >
+    {/* Card Container */}
+    
+    <div className="w-[280px] sm:w-[340px] h-[200px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+      {/* Image */}
+      <div className="w-full h-[200px] overflow-hidden">
+        <Image
+          src={data?.details?.imageUrl || 'https://w0.peakpx.com/wallpaper/773/949/HD-wallpaper-italy-village-town-boats-cute-houses-city.jpg'}
+          alt={`${data.cityName} banner`}
+          width={400}
+          height={200}
+          className="w-full h-full object-cover"
+        />
+      </div>
       
-          </div>
-        ))}
+     
+    </div>
+     {/* City Name */}
+      <div className="p-4">
+        <h3 className="text-xl font-bold text-gray-900 text-center">
+          {data.cityName}
+        </h3>
+      </div>
+  </div>
+))}
+
       </div>
 
       {/* Left and Right Arrows */}

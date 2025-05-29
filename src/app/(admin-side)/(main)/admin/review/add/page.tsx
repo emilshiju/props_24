@@ -129,9 +129,17 @@ const ReviewManagement = () => {
     console.log("got alllll")
     console.log(values_data)
 
-    const ress=await addReviewAdminApi(values_data)
+  const payload = {
+    ...values_data,
+    rating: Number(values_data.rating),
+  };
+
+  
+
+    const ress=await addReviewAdminApi(payload)
 
     if(ress.status){
+      formikHelpers.resetForm()
         alert("sucess")
     }else{
         alert("error")
@@ -245,7 +253,7 @@ const ReviewManagement = () => {
          
             as="select"
             name='rating'
-              onChange={handleChange}
+            onChange={handleChange}
               
             >
               {[5, 4, 3, 2, 1].map((num) => (
@@ -253,6 +261,7 @@ const ReviewManagement = () => {
                   {num} {num === 1 ? 'star' : 'stars'}
                 </option>
               ))}
+
             </Field>
            
           </div>

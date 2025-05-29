@@ -42,7 +42,22 @@ const  detailedCityValidationSchema = Yup.object().shape({
     if (!value) return true; // Skip if no file
     const file = value as File;
     return ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'].includes(file.type);
-  }),
+  })
+  .test('dimensions', 'Image dimensions must be 728x455',(value) => {
+      if (typeof value === 'string') return true;
+      if (!value) return true; // Skip if no file
+      
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          const width = img.width;
+          const height = img.height;
+          resolve(width === 728 && height === 455);
+        };
+        img.onerror = () => resolve(false);
+        img.src = URL.createObjectURL(value as File);
+      });
+    }),
 
   areas: Yup.array().of(
     Yup.object().shape({

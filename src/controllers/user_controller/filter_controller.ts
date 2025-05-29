@@ -8,13 +8,14 @@ export async function getAllAgent(){
 
     const resAllAgent=await prisma.user.findMany({
       where: {
-        role:'agent', // assuming you have role inside `data.value`
+        role:'agent', 
       },
       select: {
         profile: {
           include: {
             city: true,
             specialization: true,
+            reviews:true
           },
         },
       }
@@ -27,6 +28,7 @@ export async function getAllAgent(){
 
   }catch(error){
     console.log("error ocured in getAllAgent",error)
+    return false
   }
 
 }
@@ -46,15 +48,17 @@ export async function getAllAgencies() {
           include: {
             city: true,
             specialization: true,
+            reviews:true
           },
         },
       }
     });
 
-    console.log("got all agenciess")
-    console.log(resAllAgencies)
+    
 
-    return resAllAgencies.map((user) => user.profile);
+    return resAllAgencies
+        .map((user) => user.profile)
+        .filter((profile) => profile !== null);
 
 
 

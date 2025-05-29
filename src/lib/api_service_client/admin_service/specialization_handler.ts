@@ -20,7 +20,7 @@ export const addSpecializationApi=async(data:specialisation_Type)=>{
 
         return {
             status:false,
-            data:error.response?.data?.message 
+            data:error.response?.data?.message ||"something went wrong try again later"
         }
     }
 }
@@ -40,13 +40,14 @@ export const listSpecializationApi=async()=>{
             statusCode:ress.status
         }
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occrued in listSpecializationApi",error)
 
-        return {
+         return {
             status:false,
-            data:'error occured'
+            data:error.response?.data?.message ||"something went wrong try again later"
         }
+
     }
 }
 
@@ -65,12 +66,12 @@ export const deleteSpecializationApi=async(id:string)=>{
             statusCode:deleted.status
         }
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in deleteSpecialization",error)
 
-        return {
+          return {
             status:false,
-            data:'internal error'
+            data:error.response?.data?.message ||"something went wrong try again later"
         }
 
 

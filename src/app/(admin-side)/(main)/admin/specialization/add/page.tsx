@@ -1,7 +1,5 @@
-
-
-
 "use client"
+import React, { useEffect, useState }  from "react";
 import { addCityApi } from '@/src/lib/api_service_client/admin_service/city_handler';
 import { addSpecializationApi } from '@/src/lib/api_service_client/admin_service/specialization_handler';
 import { specialisation_Type } from '@/src/type/api_type/admin_type';
@@ -9,21 +7,25 @@ import { cityType } from '@/src/type/components_type/all_admin_type';
 import specializationSchema from '@/src/util/validation/specialization_scehma';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { toast } from 'react-hot-toast';
+import Loader from "@/src/components/loader";
 
 
 const AddSpecialization=()=>{
 
     const initialValues={title:"",description:""}
 
+    const [showLoader,setLoader]=useState(false)
+
 
     const handleSubmit=async(values_data:specialisation_Type,formikHelpers:FormikHelpers<specialisation_Type>)=>{
+      setLoader(true)
+      const added = await  addSpecializationApi(values_data)
+      setLoader(false)
 
-       const added = await  addSpecializationApi(values_data)
-       
-       formikHelpers.resetForm()
-
+      formikHelpers.resetForm()
+      
        if(added.status){
-        toast.success('sucessfuly added')
+        toast.success(added.data)
        }else{
         toast.error(added.data)
        }
@@ -36,7 +38,7 @@ const AddSpecialization=()=>{
     return (
 
  <>
-      
+ {showLoader&&<Loader  />}
         <Formik 
       initialValues={initialValues}
       validationSchema={specializationSchema}

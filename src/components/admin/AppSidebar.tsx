@@ -60,15 +60,15 @@ const navItems: NavItem[] = [
   },{
     name: "Reviews",
     icon: <TableIcon />,
-    // subItems: [{ name: "Add Reviews", path: "/basic-tables", pro: false },{ name: "List Reviews", path: "/basic-tables", pro: false }],
+    subItems: [{ name: "Add Reviews", path: "/admin/review/add", pro: false },{ name: "List Reviews", path: "/admin/review", pro: false }],
   },
   {
     name: "Banners",
     icon: <PageIcon />,
-    subItems: [
-      { name: "Add Banner", path: "/blank", pro: false },
-      { name: "Edit Banner", path: "/error-404", pro: false },
-    ],
+    // subItems: [
+    //   { name: "Add Banner", path: "/blank", pro: false },
+    //   { name: "Edit Banner", path: "/error-404", pro: false },
+    // ],
   },
 ];
 

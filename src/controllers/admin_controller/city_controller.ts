@@ -21,8 +21,7 @@ export async function addCity(data:cityType){
 
       if(existingCity){
 
-        console.log("city already exists ")
-        console.log(existingCity)
+        
         return {status: "exists",message:"already exists"}
       }
 

@@ -7,10 +7,12 @@ import { DropdownItem } from "../dropdown/DropdownItem";
 import { logoutApi } from "@/src/lib/api_service_client/user_service/auth_handler";
 import toast from "react-hot-toast";
 import { useRouter } from 'next/navigation';
+import Loader from "@/src/components/loader";
 
 
 export default function UserDropdown() {
 
+  const [showLoader,setLoader]=useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -25,22 +27,28 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 
   const handleLogout=async()=>{
     
+  setLoader(true)
+  const ress=await  logoutApi()
+  setLoader(false)
 
-   const ress=await  logoutApi()
 
-   if(ress.status){
+  if(ress.status){
     
     router.push('/adminLogin')
-    
-    // toast.success(ress.data)
-   }else{
+  
+  }else{
+
     toast.error(ress.data)
+
    }
+
 
 
   }
 
   return (
+    <>
+    {showLoader&&<Loader />}
     <div className="relative">
       <button
         onClick={toggleDropdown} 
@@ -104,5 +112,6 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
      
       </Dropdown>
     </div>
+    </>
   );
 }

@@ -30,18 +30,19 @@ const Specialization=()=>{
 
     const fetchAllSpecialization=async()=>{
 
-       setLoader(true)
+      setLoader(true)
 
-        const ress =await listSpecializationApi()
-
-
-         setLoader(false)
+      const ress = await listSpecializationApi()
+      
+      setLoader(false)
          
 
-        if(ress.status){
-            console.log("got all data",ress.data)
-            setSpecialization(ress.data)
-        }
+      if(ress.status){  
+          setSpecialization(ress.data)
+      }else{
+        toast.error(ress.data)
+      }
+
 
     }
 
@@ -56,19 +57,18 @@ const Specialization=()=>{
 
     const handleDelete=async(id:string)=>{
 
+      setLoader(true)
+      const deleted = await deleteSpecializationApi(id)
+      setLoader(false)
        
 
-        const deleted = await deleteSpecializationApi(id)
+      if(deleted.status){
+          toast.success(deleted.data)
+          fetchAllSpecialization()
+      }else{
+          toast.error(deleted.data)
+      }
 
-       
-
-        if(deleted.status){
-            toast.success('sucessfully deleted')
-            fetchAllSpecialization()
-
-        }else{
-            toast.error(deleted.data)
-        }
 
     }
 

@@ -68,9 +68,7 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
 
   
 
-  const specialties =[
-    'Luxury Homes','Historic Properties'
-  ]
+  
 
   if(!allData){
     return <div>loading...</div>

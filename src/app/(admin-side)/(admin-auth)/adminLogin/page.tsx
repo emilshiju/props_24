@@ -1,5 +1,6 @@
 'use client'
-
+import { useState } from 'react';
+import Loader from '@/src/components/loader';
 import { adminLoginApi } from '@/src/lib/api_service_client/admin_service/admin_login_handler';
 import { AdminLoginValues } from '@/src/type/validation_type/formTypes';
 import adminLoginSchema from '@/src/util/validation/adminLogin';
@@ -13,7 +14,7 @@ const AdminLogin=()=>{
 
     const router = useRouter();
     
-    
+    const [showLoader,setLoader]=useState(false)
 
 
     const initialValues = {role:'admin', email:'',password:'' };
@@ -23,10 +24,12 @@ const AdminLogin=()=>{
       
       formikHelpers.resetForm()
 
+      setLoader(true)
       const ress=await adminLoginApi(values_data)
+      setLoader(false)
 
       if(ress.status){
-        
+       
         router.push('/admin/dashboard')
         
       }else{
@@ -40,7 +43,9 @@ const AdminLogin=()=>{
 
 
     return (
-      <><Toaster />
+      <>
+      {showLoader&&<Loader />}
+      <Toaster />
 
 
         <div className="min-h-[80vh] flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8 bg-gray-50">

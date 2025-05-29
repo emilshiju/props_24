@@ -5,16 +5,22 @@ import { useRef, useState, useEffect } from "react";
 import { MagnifyingGlassIcon, StarIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import { getAllAgentApi } from "@/src/lib/api_service_client/user_service/filter_handler";
 import { agent_agencies } from "@/src/type/components_type/common_type";
-
+import { useRouter } from "next/navigation";
+import ReviewStars from "./reviewStars";
+import SkeletonList from "./skeleton_agent";
 
 
 const AgentCard = () => {
+
+  const router = useRouter()
 
   const [allData,setData]=useState<agent_agencies []>([])
 
   const fetchAllAgent=async()=>{
     const ress=await getAllAgentApi()
     if(ress.status){
+      console.log("got all")
+      console.log(ress.data)
       setData(ress.data)
     }
   }
@@ -91,8 +97,11 @@ const AgentCard = () => {
   };
 
 
- console.log("got all data list of agent")
-  console.log(allData)
+   const navigateToDetailPage=(id:string)=>{
+    router.push(`/viewDetails/${id}`) 
+  }
+
+ 
 
   return (
     <div className="relative p-5 max-w-7xl mx-auto">
@@ -105,9 +114,18 @@ const AgentCard = () => {
         className="flex flex-nowrap gap-4 overflow-x-auto p-3 w-full hide-scrollbar"
         style={{ scrollBehavior: 'smooth', scrollSnapType: 'x mandatory' }}
       >
+
+
+        {/* Show skeleton loaders when data is loading */}
+        {allData.length==0 && <SkeletonList />}
+
+
+
+
         {allData&&allData.map((data,index) => (
           <div
             key={index}
+            onClick={()=>navigateToDetailPage(data.id)}
             className="w-[280px] sm:w-[300px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
           >
             <Link href="#">
@@ -118,19 +136,14 @@ const AgentCard = () => {
                   alt="Technology acquisitions"
                   width={255}
                   height={235}
-                
                 />
               </div>
             </Link>
-            <div className="flex items-center p-3 pl-6">
-              <div className="flex text-yellow-400">
-                <StarIcon key={1} className="h-5 w-5" />
-                <StarIcon key={2} className="h-5 w-5" />
-                <StarIcon key={3} className="h-5 w-5" />
-              </div>
-              <span className="text-black text-1 text-sm">(20 reviews)</span>
-            </div>
+
+            {/* review section */}
+             <ReviewStars reviews={data.reviews || []} />
             
+
             <div className="text-start pl-6">
                               <div >
                                 <h5 className="text-lg font-medium text-gray-900">
@@ -143,6 +156,7 @@ const AgentCard = () => {
                             </div>
                             
           </div>
+
         ))}
       </div>
 
@@ -165,15 +179,7 @@ const AgentCard = () => {
         </button>
       )}
 
-      {/* <style jsx global>{`
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style> */}
+     
 
     </div>
   );

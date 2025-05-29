@@ -22,7 +22,7 @@ export const getAllAgentApi=async()=>{
 
         return {
             status:false,
-            data:"error occured"
+            data:"something went wrong"
         }
     }
 }

@@ -9,12 +9,10 @@ export async function POST(request:NextRequest){
 
         const data = await request.json()
 
-        console.log("got dataaaaaaaaaaa",data)
-
         const added = await addSpecialization(data)
 
         if(added.status == "exists"){
-            return NextResponse.json({status:false,message:added.message},{status:409})
+            return NextResponse.json({status:false,message:added.message},{status:200})
         }
 
         if(added.status == "error" ){

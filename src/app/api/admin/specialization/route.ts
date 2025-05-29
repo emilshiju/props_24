@@ -10,10 +10,10 @@ export async function GET(request:NextRequest){
 
     try{
 
-        console.log("come hereeeeeeeeeeeeeeeeeeeee")
+        
 
         const allSpecialization = await listSpecialization()
-        console.log(allSpecialization)
+        
 
         if(!allSpecialization){
             return  NextResponse.json({status:false,message:"error occured"},{status:500})
