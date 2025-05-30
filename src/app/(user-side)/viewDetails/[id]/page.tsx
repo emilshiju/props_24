@@ -11,6 +11,9 @@ import { UserProfileType } from '@/src/type/components_type/listUsers'
 import { detailed_profile_type } from '@/src/type/components_type/common_type'
 import ListReview from '@/src/components/user/review'
 import { findAverageReviewApi } from '@/src/lib/api_service_client/user_service/review_handler'
+import toast from 'react-hot-toast'
+import Loader from '@/src/components/loader'
+import ProfileViewSkeleton from '@/src/components/user/viewProfile_skeleton'
 
 const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
 
@@ -20,7 +23,9 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
 
   const [allData,setAllData]=useState<detailed_profile_type|null>()
 
-  const [averageValue,setAverageValue]=useState(Number)
+  const [averageValue,setAverageValue]=useState(Number||0)
+
+  const [showLoader,setLoader]=useState(false)
 
   
 
@@ -29,13 +34,10 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
 
         const response = await getProfileDetailsApi(id)
 
-        console.log("got profileeeeeeeeeeee detailssssssssssssssssssssssssssssssssssssssss")
-        console.log(response.data)
-
         if(response.status){
           setAllData(response.data)
         }else{
-          alert("internal server error")
+          toast.error(response.data)
         }
   }
 
@@ -71,7 +73,7 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
   
 
   if(!allData){
-    return <div>loading...</div>
+    return <div><ProfileViewSkeleton /></div>
   }
 
   
@@ -80,9 +82,30 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
   const navigateToWriteReview=(profileId:string)=>{
     router.push(`/review/add/${profileId}`) 
   }
+  
+
+  const formatDateToMonthYear = (createdAt:Date) => {
+  const date = new Date(createdAt);
+
+  const monthIndex = date.getMonth();
+  const year = date.getFullYear();
+
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const monthName = monthNames[monthIndex];
+
+  return `${monthName} ${year}`;
+};
+
 
 
     return (
+      <>
+       {/* {showLoader&&<Loader  />} */}
+      
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Agent Header */}
@@ -204,8 +227,9 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
               <div className="sm:col-span-1">
                 <dt className="text-sm font-medium text-gray-500">Active Since</dt>
                 <dd className="mt-1 text-sm text-gray-900 flex items-center">
+                 
                   <ClockIcon className="h-4 w-4 text-gray-400 mr-1" />
-                  January 2022
+                  {formatDateToMonthYear(allData.createdAt)}
                 </dd>
               </div>
             </dl>
@@ -257,12 +281,12 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
             {allData.businessName} is here to help you find the perfect property.
             </p>
             <div className="flex justify-center space-x-4">
-              <Link href='/contact'>
+              <Link href='/'>
                 <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-primary bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
                   Contact {allData.businessName}
                 </button>
               </Link>
-              <Link href="/search">
+              <Link href="/">
                 <button className="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md shadow-sm text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
                   Search Property
                 </button>
@@ -271,6 +295,7 @@ const ViewDetails=({params}:{ params: Promise<{ id: string }> })=>{
           </div>
         </div>
       </div>
+      </>
     )
 }
 

@@ -1,4 +1,3 @@
-
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -23,93 +22,93 @@ const Footer = ()=>{
                       />
                       <div className="text-center md:text-left">
                         <p className="text-lg font-bold text-primary">Props24</p>
-                        <p className="text-sm text-gray-500 mb-4">Il TripAdvisor degli Agenti Immobiliari</p>
+                        <p className="text-sm text-gray-500 mb-4">The TripAdvisor for Real Estate Agents</p>
                       </div>
                       <p className="text-sm text-gray-500 hidden md:block">
-                        Dal 2020 aiutiamo i clienti a trovare i migliori agenti immobiliari in tutta Italia.
+                        Since 2020, we've been helping clients find the best real estate agents across Italy.
                       </p>
                     </div>
                   </div>
                   
                   {/* Navigation sections */}
                   <div className="col-span-1">
-                    <h3 className="text-sm font-semibold text-primary tracking-wider uppercase mb-4">Chi Siamo</h3>
+                    <h3 className="text-sm font-semibold text-primary tracking-wider uppercase mb-4">About Us</h3>
                     <ul className="space-y-3">
                       <li>
                         <Link href="/about" className="text-sm text-gray-500 hover:text-primary-light">
-                          La Nostra Storia
+                          Our Story
                         </Link>
                       </li>
                       <li>
                         <Link href="/team" className="text-sm text-gray-500 hover:text-primary-light">
-                          Il Nostro Team
+                          Our Team
                         </Link>
                       </li>
                       <li>
                         <Link href="/contact" className="text-sm text-gray-500 hover:text-primary-light">
-                          Contattaci
+                          Contact Us
                         </Link>
                       </li>
                       <li>
                         <Link href="/faq" className="text-sm text-gray-500 hover:text-primary-light">
-                          Domande Frequenti
+                          Frequently Asked Questions
                         </Link>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="col-span-1">
-                    <h3 className="text-sm font-semibold text-primary tracking-wider uppercase mb-4">Esplora</h3>
+                    <h3 className="text-sm font-semibold text-primary tracking-wider uppercase mb-4">Explore</h3>
                     <ul className="space-y-3">
                       <li>
                         <Link href="/agents" className="text-sm text-gray-500 hover:text-primary-light">
-                          Trova Agenti
+                          Find Agents
                         </Link>
                       </li>
                       <li>
                         <Link href="/reviews/new" className="text-sm text-gray-500 hover:text-primary-light">
-                          Scrivi una Recensione
+                          Write a Review
                         </Link>
                       </li>
                       <li>
                         <Link href="/reviews" className="text-sm text-gray-500 hover:text-primary-light">
-                          Leggi Recensioni
+                          Read Reviews
                         </Link>
                       </li>
                       <li>
                         <Link href="/locations" className="text-sm text-gray-500 hover:text-primary-light">
-                          Zone Popolari
+                          Popular Areas
                         </Link>
                       </li>
                       <li>
                         <Link href="/join" className="text-sm text-gray-500 hover:text-primary-light">
-                          Diventa un Agente
+                          Become an Agent
                         </Link>
                       </li>
                     </ul>
                   </div>
                   
                   <div className="col-span-1">
-                    <h3 className="text-sm font-semibold text-primary tracking-wider uppercase mb-4">Per Professionisti</h3>
+                    <h3 className="text-sm font-semibold text-primary tracking-wider uppercase mb-4">For Professionals</h3>
                     <ul className="space-y-3">
                       <li>
                         <Link href="/owners" className="text-sm text-gray-500 hover:text-primary-light">
-                          Proprietari di Agenzie
+                          Agency Owners
                         </Link>
                       </li>
                       <li>
                         <Link href="/sponsored" className="text-sm text-gray-500 hover:text-primary-light">
-                          Posizionamenti Sponsorizzati
+                          Sponsored Listings
                         </Link>
                       </li>
                       <li>
                         <Link href="/advertise" className="text-sm text-gray-500 hover:text-primary-light">
-                          Pubblicizza con Noi
+                          Advertise With Us
                         </Link>
                       </li>
                       <li>
                         <Link href="/resources" className="text-sm text-gray-500 hover:text-primary-light">
-                          Risorse per Agenti
+                          Agent Resources
                         </Link>
                       </li>
                     </ul>
@@ -141,25 +140,23 @@ const Footer = ()=>{
                     </div>
                     <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-sm text-center md:text-right">
                       <Link href="/termini" className="text-gray-500 hover:text-primary-light">
-                        Termini di Utilizzo
+                        Terms of Service
                       </Link>
                       <Link href="/privacy" className="text-gray-500 hover:text-primary-light">
-                        Informativa sulla Privacy
+                        Privacy Policy
                       </Link>
                       <Link href="/cookie" className="text-gray-500 hover:text-primary-light">
-                        Politica dei Cookie
+                        Cookie Policy
                       </Link>
                     </div>
                   </div>
                   <p className="text-sm text-gray-400 text-center mt-6">
-                    &copy; 2024 Props24. Tutti i diritti riservati.
+                    &copy; 2024 Props24. All rights reserved.
                   </p>
                 </div>
               </div>
             </footer>
             </>
-
-
     )
 }
 

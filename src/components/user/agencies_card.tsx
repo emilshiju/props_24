@@ -141,14 +141,20 @@ const AgenciesCard = () => {
                 <ReviewStars reviews={data.reviews || []} />
             
             <div className="text-start pl-6">
-                              <div >
+                              {/* <div >
                                 <h5 className="text-lg font-medium text-gray-900">
                                   {data?.businessName}
                                 </h5>
                               </div>
                               <p className="text-sm text-gray-500  mb-3">
                                 {data?.city.cityName},ITALY
-                              </p>
+                              </p> */}
+                                <h3 className="font-semibold text-lg text-gray-800 group-hover:text-accent">{data?.businessName}</h3>
+                    <p className="text-gray-600">{data?.specialization.title}</p>
+                    <p className="text-sm text-gray-500 mt-2 mb-2">{data?.city.cityName},ITALY</p>
+                           
+                            
+
                             </div>
                             
           </div>

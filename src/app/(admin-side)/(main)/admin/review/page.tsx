@@ -21,6 +21,7 @@ import { specialisation_Res_Type } from "@/src/type/components_type/all_admin_ty
 import { deleteSpecializationApi ,listSpecializationApi} from "@/src/lib/api_service_client/admin_service/specialization_handler";
 import { deleteReviewApi, listAllReviewApi } from "@/src/lib/api_service_client/admin_service/review_handler";
 import { reviewResType } from "@/src/type/components_type/all_users_type";
+import Loader from "@/src/components/loader";
 
 
 
@@ -31,16 +32,18 @@ const ListReview=()=>{
 
  
     const [allData,setData]=useState<reviewResType []>([])
+    const [showLoader,setLoader]=useState(false)
 
-
-    
 
     const fetchAllReview=async()=>{
+      setLoader(true)
+      const ress=await  listAllReviewApi()
+      setLoader(false)
 
-       const ress=await  listAllReviewApi()
-
-       if(ress.status){
+      if(ress.status){
         setData(ress.data)
+      }else{
+        toast.error(ress.data)
        }
     }
 
@@ -54,11 +57,12 @@ const ListReview=()=>{
 
 
     const handleDelete=async(id:string)=>{
-
+        setLoader(true)
         const deleted =await deleteReviewApi(id)
+        setLoader(false)
 
         if(deleted.status){
-            toast.success('sucessfully deleted')
+            toast.success(deleted.data)
             fetchAllReview()
 
         }else{
@@ -69,6 +73,11 @@ const ListReview=()=>{
 
 
     return (
+
+      <>
+      {showLoader&&<Loader/>}
+      
+     
 
         <div className="overflow-hidden rounded-xl  border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
@@ -90,12 +99,7 @@ const ListReview=()=>{
                   >
                     Description
                   </TableCell>
-                  {/* <TableCell
-                    isHeader
-                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                  >
-                    Status
-                  </TableCell> */}
+                
                   <TableCell
                     isHeader
                     className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
@@ -120,19 +124,9 @@ const ListReview=()=>{
                        
                       </div>
                     </TableCell>
-                    {/* <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                     
-                      {city.cityName}
-                       
-                    </TableCell> */}
+                    
                     <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                      
-                      {/* <button
-  type="button"
-  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
->
-  Edit
-</button> */}
+                     
 <button
 onClick={()=>handleDelete(list.id)}
   type="button"
@@ -149,6 +143,7 @@ onClick={()=>handleDelete(list.id)}
           </div>
         </div>
       </div>
+       </>
     )
 }
 

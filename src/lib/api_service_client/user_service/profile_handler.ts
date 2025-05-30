@@ -69,10 +69,13 @@ export const getProfileDetailsApi=async(id:string)=>{
         
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in getProfileDetails",error)
 
-        return {status:false,message:"error" }
+        return {
+            status:false,
+            data: error?.response?.data?.message ?? "something went wrong ",
+        }
     }
 }
 

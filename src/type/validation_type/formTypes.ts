@@ -19,3 +19,8 @@ export interface AdminLoginValues {
   email:string;
   password:string
 }
+
+export interface confirmEmailValues{
+  role:string,
+  email: string;
+}

@@ -273,7 +273,13 @@ export async function searchAll(data:string){
           },
         },
       ],
-    }
+    },
+     include: {
+    specialization: true,
+    city: true,
+    properties: true,
+    reviews: true,
+  },
    })
 
    allData.allAgent.push(...allAgentList)
@@ -299,7 +305,13 @@ export async function searchAll(data:string){
           },
         },
       ],
-    }
+    },
+     include: {
+    specialization: true,
+    city: true,
+    properties: true,
+    reviews: true,
+  },
    })
 
    allData.allAgencies.push(...allAgenciesList)
@@ -314,8 +326,9 @@ export async function searchAll(data:string){
       details:true
     }
   });
+  const citiesWithDetails = allCityList.filter(city => city.details)
 
-  allData.allCity.push(...allCityList)
+  allData.allCity.push(...citiesWithDetails)
   
 
    console.log("got allllllllllllllllllllllllllll")

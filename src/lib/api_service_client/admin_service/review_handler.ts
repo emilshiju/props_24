@@ -18,11 +18,12 @@ export const addReviewAdminApi=async(data:reviewType)=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in addReviewAdminApi",error)
+        
         return {
             status:false,
-            data:'error occured'
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -43,11 +44,12 @@ export const listAllReviewApi=async()=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in listAllReviewApi",error)
-        return {
+        
+         return {
             status:false,
-            data:'error occured'
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }
@@ -65,11 +67,12 @@ export const deleteReviewApi=async(id:string)=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occurrd in the deleteReviewApi",error)
+       
         return {
             status:false,
-            data:'error occured'
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }

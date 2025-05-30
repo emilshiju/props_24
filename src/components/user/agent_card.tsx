@@ -19,8 +19,7 @@ const AgentCard = () => {
   const fetchAllAgent=async()=>{
     const ress=await getAllAgentApi()
     if(ress.status){
-      console.log("got all")
-      console.log(ress.data)
+  
       setData(ress.data)
     }
   }
@@ -38,6 +37,8 @@ const AgentCard = () => {
   const checkScrollPosition = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      console.log('widthhhhhhhhhhhhh  of agenttttttttttttt')
+      console.log(scrollLeft,scrollWidth,clientWidth-1)
       setShowArrows({
         left: scrollLeft > 0,
         right: scrollLeft < scrollWidth - clientWidth - 1
@@ -145,14 +146,20 @@ const AgentCard = () => {
             
 
             <div className="text-start pl-6">
-                              <div >
+                              {/* <div >
                                 <h5 className="text-lg font-medium text-gray-900">
                                   {data?.businessName}
                                 </h5>
                               </div>
-                              <p className="text-sm text-gray-500  mb-3">
-                                {data?.city.cityName},ITALY
+                              <p className="text-sm text-gray-500  mb-1">
+                                {data?.specialization.title}
                               </p>
+                              <p className="text-sm text-gray-500  mb-1">
+                                {data?.city.cityName}
+                              </p> */}
+                              <h3 className="font-semibold text-lg text-gray-800 group-hover:text-accent">{data?.businessName}</h3>
+                    <p className="text-gray-600">{data?.specialization.title}</p>
+                    <p className="text-sm text-gray-500 mt-2 mb-2">{data?.city.cityName},ITALY</p>
                             </div>
                             
           </div>

@@ -57,12 +57,12 @@ const ListReview=({ profileId }: { profileId: string })=>{
             <StarIcon className="h-6 w-6 text-yellow-400 mr-2" />
             <h2 className="text-xl font-semibold text-gray-900">Recent Reviews</h2>
           </div>
-          <Link 
+          {/* <Link 
             href=''
             className="text-sm font-medium text-accent hover:text-accent/90"
           >
             Vedi tutte le 23 recensioni
-          </Link>
+          </Link> */}
         </div>
         <div className="border-t border-gray-200">
           {allData&&allData.map((data,index) => (

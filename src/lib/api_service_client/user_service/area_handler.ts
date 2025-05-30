@@ -15,12 +15,12 @@ export const listAllCityApi=async()=>{
         }
 
 
-    }catch(error){
+    }catch(error:any){
         console.log("error occured in listAllCityAPi",error)
 
-        return {
+         return {
             status:false,
-            data:"internal error"
+            data: error?.response?.data?.message ?? "something went wrong ",
         }
     }
 }

@@ -8,6 +8,8 @@ import { listAllCityApi } from '@/src/lib/api_service_client/user_service/area_h
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'
 import Loader from '@/src/components/loader';
+import ListCitiesSkeleton from '@/src/components/user/listCity_skeleton';
+import toast from 'react-hot-toast';
 
 
 
@@ -16,19 +18,21 @@ const AllLocation=()=>{
     
 
     const [allCity,setAllCity]=useState<cityAndDetaield []>([])
+     const [showLoader,setLoader]=useState(false)
 
     const router = useRouter()
     
 
     const fetchAllCity=async()=>{
-
+        setLoader(true)
         const ress=await listAllCityApi()
+        setLoader(false)
 
         if(ress.status){
             const filtered = ress.data.filter((city:cityAndDetaield)=> city.details)
             setAllCity(filtered)
         }else{
-
+          toast.error(ress.data)
         }
 
     }
@@ -44,9 +48,13 @@ const AllLocation=()=>{
       router.push(`/area/${id}`)
     }
 
+    
+
     return (
 
         <div>
+ {showLoader&&<ListCitiesSkeleton  />}
+
           
 
 

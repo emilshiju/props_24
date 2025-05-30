@@ -3,7 +3,7 @@
 
 const SkeletonList = () => {
   return (
-    <div className="flex gap-4  px-4 py-2" >
+    <div className="flex gap-4  " >
       {Array(4)
         .fill(0)
         .map((_, index) => (

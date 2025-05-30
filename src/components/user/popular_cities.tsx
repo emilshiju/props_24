@@ -40,6 +40,9 @@ const Popular_Cities = () => {
   const checkScrollPosition = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+       console.log('widthhhhhhhhhhhhh of citiyyyyyyyyyyyyyyyy')
+      console.log(scrollLeft,scrollWidth,clientWidth-1)
+
       setShowArrows({
         left: scrollLeft > 0,
         right: scrollLeft < scrollWidth - clientWidth - 1

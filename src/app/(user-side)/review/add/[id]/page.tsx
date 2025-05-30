@@ -61,7 +61,7 @@ const AddReview = ({params}:{ params: Promise<{ id: string }> }) => {
   const initialValues={name:"",content:""}
 
   const handleSubmit=async(values_data:reviewValidationType,formikHelpers: FormikHelpers<reviewValidationType>)=>{
-  // alert("vanu")
+  
     console.log("got all revie data",values_data)
     const totalTrue = allStar.filter(val => val).length;
     console.log(totalTrue)

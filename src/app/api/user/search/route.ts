@@ -12,11 +12,10 @@ export async function POST(request:NextRequest){
         console.log(data)
 
         const allData = await searchAll(data)
-
        
 
         if(!allData ){
-            return NextResponse.json({status:false,message:[]},{status:500})
+            return NextResponse.json({status:false,message:"iternal server errir"},{status:500})
         }
 
         return NextResponse.json({status:true,message:allData },{status:200})

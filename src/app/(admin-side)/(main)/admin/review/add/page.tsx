@@ -8,33 +8,17 @@ import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { reviewType } from '@/src/type/components_type/all_admin_type';
 import { addReviewDetailsApi } from '@/src/lib/api_service_client/user_service/review_handler';
 import { addReviewAdminApi } from '@/src/lib/api_service_client/admin_service/review_handler';
+import Loader from '@/src/components/loader';
+import toast from 'react-hot-toast';
 
 
 
-
-interface Agent {
-  id: string;
-  name: string;
-}
-
-interface Agency {
-  id: string;
-  name: string;
-}
-
-interface Review {
-  id?: string;
-  entityType: 'agent' | 'agency';
-  entityId: string;
-  reviewerName: string;
-  content: string;
-  rating: number;
-}
 
 const ReviewManagement = () => {
 
     const [allAgent,setAgent]=useState<agent_agencies []>([])
     const [allAgency,setAgency]=useState<agent_agencies []>([])
+    const [showLoader,setLoader]=useState(false)
 
 
 
@@ -66,59 +50,15 @@ const ReviewManagement = () => {
     },[])
 
 
-  const agents: Agent[] = [
-    { id: '1', name: 'John Doe' },
-    { id: '2', name: 'Jane Smith' },
-    { id: '3', name: 'Mike Johnson' },
-  ];
 
-  const agencies: Agency[] = [
-    { id: '101', name: 'Premier Realty' },
-    { id: '102', name: 'Elite Properties' },
-    { id: '103', name: 'City Homes' },
-  ];
+  
 
   const [entityType, setEntityType] = useState<'agent' | 'agency'>('agent');
-  const [selectedEntity, setSelectedEntity] = useState<string>('');
-  const [reviewerName, setReviewerName] = useState<string>('');
-  const [content, setContent] = useState<string>('');
-  const [rating, setRating] = useState<number>(5);
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  
+ 
+ 
 
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     setIsSubmitting(true);
-    
-//     // Simulate API call
-//     setTimeout(() => {
-//       const newReview: Review = {
-//         entityType,
-//         entityId: selectedEntity,
-//         reviewerName,
-//         content,
-//         rating,
-//       };
-      
-//       setReviews([...reviews, newReview]);
-//       resetForm();
-//       setIsSubmitting(false);
-//     }, 1000);
-//   };
-
-  const resetForm = () => {
-    setSelectedEntity('');
-    setReviewerName('');
-    setContent('');
-    setRating(5);
-  };
-
-  const getEntityName = (id: string) => {
-    if (entityType === 'agent') {
-      return agents.find(a => a.id === id)?.name || 'Unknown Agent';
-    }
-    return agencies.find(a => a.id === id)?.name || 'Unknown Agency';
-  };
+  
 
    const initialValues={name:"",content:"",profileId:"",rating:5}
 
@@ -126,23 +66,26 @@ const ReviewManagement = () => {
   const handleSubmit=async(values_data:reviewType,formikHelpers: FormikHelpers<reviewType>)=>{
 
 
-    console.log("got alllll")
-    console.log(values_data)
-
   const payload = {
     ...values_data,
     rating: Number(values_data.rating),
   };
 
   
-
+    setLoader(true)
     const ress=await addReviewAdminApi(payload)
+    setLoader(false)
+
 
     if(ress.status){
+
       formikHelpers.resetForm()
-        alert("sucess")
+        
+      toast.success(ress.data)
+        
     }else{
-        alert("error")
+       
+        toast.success(ress.data)
     }
 
 
@@ -152,7 +95,9 @@ const ReviewManagement = () => {
   return (
 
     
-    
+    <>
+     {showLoader&&<Loader />}
+   
    
     <div className="container mx-auto p-4 max-w-4xl">
       <h1 className="text-2xl font-bold mb-6 text-gray-800">Review Management</h1>
@@ -285,9 +230,9 @@ const ReviewManagement = () => {
             <button
               type="submit"
               className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-              disabled={isSubmitting}
+            
             >
-              {isSubmitting ? 'Submitting...' : 'Add Review'}
+               Add Review
             </button>
           </div>
         </Form>
@@ -297,6 +242,7 @@ const ReviewManagement = () => {
 )}</Formik>
 
     </div>
+     </>
      
   );
 };
