@@ -24,3 +24,8 @@ export interface confirmEmailValues{
   role:string,
   email: string;
 }
+
+export interface resetPasswordValues{
+  password:string,
+  confirmPassword:string
+}

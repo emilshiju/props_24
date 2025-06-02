@@ -294,7 +294,7 @@ const Register = ()=>{
           confirmPassword
           </label>
           <div >
-            <input
+            <Field
               id="confirmPassword"
               name="confirmPassword"
               type="password"

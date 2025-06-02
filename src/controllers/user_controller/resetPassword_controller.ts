@@ -14,11 +14,13 @@ export async function confirmEmail(email:string,role:Role){
       },
     });
 
-    if(user){
+    if(!user){
         return {status:'not_exists'}
     }
 
-    return {status:'success'}
+
+
+    return {status:'sucess',data:user}
 
 
     }catch(error){
@@ -26,4 +28,32 @@ export async function confirmEmail(email:string,role:Role){
         return {status:'error'}
     }
 
+}
+
+
+
+
+export async function resetPassword(email:string,password:string){
+
+  try{
+
+     const user = await prisma.user.findUnique({
+      where: { email }
+    })
+
+    if (!user) {
+      return false
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { email },
+      data: { password: password }
+    })
+    return true
+
+
+  }catch(error){
+    console.log("error occured in the resetPassword controler",error)
+    return false
+  }
 }

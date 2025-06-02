@@ -40,14 +40,14 @@ export async function POST(request:Request) {
         console.log("completed OTP registered")
 
         if(!registered){
-            throw new Error('OTP Registeration Failed');
+            return NextResponse.json({status:false, message: "error occur in generate OTP" },{ status: 500 } );
         }
 
-        const sentMessage = sendEmail(mailOptions)
+        const sentMessage =await  sendEmail(mailOptions)
         console.log("completed send message")
 
         if(!sentMessage){
-            throw new Error('Email not sent');
+            return NextResponse.json({status:false, message: "error occur in generate OTP" },{ status: 500 } );
         }
 
 
