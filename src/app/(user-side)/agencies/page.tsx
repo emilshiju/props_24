@@ -28,62 +28,10 @@ import { cityResType, specialisation_Res_Type } from '@/src/type/components_type
 import {  getSideBarFilterAPi ,getChangedSideBarFilterApi, getAll, getAllSearchedListApi, getAllAgentApi, getAllAgenciesApi} from '@/src/lib/api_service_client/user_service/filter_handler'
 import { string } from 'yup'
 import { agent_agencies } from '@/src/type/components_type/common_type'
+import ReviewStars from '@/src/components/user/reviewStars'
+import FilterSkeleton from '@/src/components/user/filter_skeleton'
 
-const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-]
-const subCategories = [
-  { name: 'Agent', href: '#' },
-  { name: 'Agencies', href: '#' },
-  // { name: 'Travel Bags', href: '#' },
-  // { name: 'Hip Bags', href: '#' },
-  // { name: 'Laptop Sleeves', href: '#' },
-]
-const filters = [
-  {
-    id: 'color',
-    name: 'Color',
-    options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
-    ],
-  },
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: true },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
-    ],
-  },
-  {
-    id: 'size',
-    name: 'Size',
-    options: [
-      { value: '2l', label: '2L', checked: false },
-      { value: '6l', label: '6L', checked: false },
-      { value: '12l', label: '12L', checked: false },
-      { value: '18l', label: '18L', checked: false },
-      { value: '20l', label: '20L', checked: false },
-      { value: '40l', label: '40L', checked: true },
-    ],
-  },
-]
 
-function classNames(...classes:any) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function Agencies() {
     
@@ -92,6 +40,8 @@ export default function Agencies() {
   const [sideBarFilter,setSideBarFilter]=useState<FilterSection_Type []>([])
 
   const [listAllFilteredProduct,setAllFilteredProduct]=useState<agent_agencies []>([])
+
+  const [showSkeleton,setSkeleton]=useState(false)
 
 
   const router = useRouter()
@@ -111,11 +61,12 @@ export default function Agencies() {
 
 
   const fetchAllAgencies=async()=>{
-
+    
+    setSkeleton(true)
     const ress= await getAllAgenciesApi()
+    setSkeleton(false)
 
     if(ress.status){
-      // setAll(ress.data)
       console.log("got all",ress.data)
       setAllFilteredProduct(ress.data)
     }
@@ -143,11 +94,7 @@ export default function Agencies() {
 
 
   const changeSideBarFiltering=async(sectionName:string,valueId:string,isChecked:boolean)=>{
-    console.log("got valueee idddddddddddddddddddddddddddd")
     
-    console.log(sectionName,valueId,isChecked)
-    
-
 
    const updatedSideBarFilter:any= sideBarFilter.map((data:any,index)=>{
 
@@ -171,8 +118,12 @@ export default function Agencies() {
 
 
 
-      
+    setSkeleton(true)
+
     const filteredResult = await  getChangedSideBarFilterApi(updatedSideBarFilter,{sectionName:sectionName},{value:valueId},{status:isChecked},'agencies')
+
+    setSkeleton(false)
+
     
     setAllFilteredProduct(filteredResult.data)
 
@@ -186,6 +137,8 @@ export default function Agencies() {
 
 
   return (
+    <>
+      {showSkeleton&&<FilterSkeleton />}
     <div className="bg-white">
       <div>
         {/* Mobile filter dialog */}
@@ -217,16 +170,7 @@ export default function Agencies() {
 
               {/* Filters */}
               <form className="mt-4 border-t border-gray-200">
-                {/* <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <div  className="block px-2 py-3">
-                        {category.name}
-                      </div>
-                    </li>
-                  ))}
-                </ul> */}
+              
 
                 {sideBarFilter.map((section) => (
                   <Disclosure key={section.id} as="div" className="border-t border-gray-200 px-4 py-6">
@@ -307,42 +251,9 @@ export default function Agencies() {
 
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
-                {/* <div>
-                  <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Sort
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
-                    />
-                  </MenuButton>
-                </div> */}
-
-                {/* <MenuItems
-                  transition
-                  className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-                >
-                  <div className="py-1">
-                    {sortOptions.map((option) => (
-                      <MenuItem key={option.name}>
-                        <a
-                          href={option.href}
-                          className={classNames(
-                            option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                            'block px-4 py-2 text-sm data-focus:bg-gray-100 data-focus:outline-hidden',
-                          )}
-                        >
-                          {option.name}
-                        </a>
-                      </MenuItem>
-                    ))}
-                  </div>
-                </MenuItems> */}
+                
               </Menu>
 
-              {/* <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon aria-hidden="true" className="size-5" />
-              </button> */}
               <button
                 type="button"
                 onClick={() => setMobileFiltersOpen(true)}
@@ -449,80 +360,55 @@ export default function Agencies() {
               <div className="lg:col-span-3">
                 
               
-                <div className="flex flex-wrap justify-center sm:justify-start gap-4">
-           
-              {listAllFilteredProduct&&listAllFilteredProduct.map((data,index)=>(
-                
-                <div
-                onClick={()=>navigateToDetailPage(data.id)}
-                key={index}
-                className="w-[280px] sm:w-[400px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
-              >
-                
-                  <div className="flex items-center p-3 pl-6">
-                    <Image
-                      className="rounded-t-lg"
-                      src={data?.imageUrl}
-                      alt="Technology acquisitions"
-                      width={160}
-                      height={110}
-                    />
-                    <div className="pl-4 flex flex-col">
-                      <h1 className="text-lg font-medium text-gray-900">{data.businessName}</h1>
-                      <h1 className="text-sm text-gray-500 pt-1">{data?.city?.cityName},Italy</h1>
-                    </div>
-                  </div>
+               <div className="flex flex-wrap justify-center sm:justify-start gap-4">
+                        
+                            {listAllFilteredProduct&&listAllFilteredProduct.map((data,index)=>(
+                              
+                                <div
               
-              
-                <div className="flex items-center p-3 pl-6">
-                  <div className="flex text-yellow-400">
-                    <StarIcon key={1} className="h-5 w-5" />
-                    <StarIcon key={2} className="h-5 w-5" />
-                    <StarIcon key={3} className="h-5 w-5" />
-                  </div>
-                  <span className="text-black text-sm sm:text-base">(20 reviews)</span>
-                </div>
-              
-                <div className="flex justify-start text-start  px-6">
-                  {/* <Link href="#">
-                    <h5 className="mb-2 text-sm sm:text-sm font-bold tracking-tight text-gray-900">
-                      {data?.specialization.title}
-                    </h5>
-                  </Link>
-                  <div className="sm:col-span-1">
-                    <dt className="text-sm font-medium text-gray-500">Proprietà Vendute</dt>
-                    <dd className="mt-1 text-sm text-gray-900">2323+</dd>
-                  </div> */}
-                
-                </div>
-              
-                <div className="flex items-center mt-4 mb-4 px-6">
-                  <button className="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                    View Agency
-                  </button>
-                </div>
-              </div>
-              
+                                onClick={()=>navigateToDetailPage(data.id)}
+                                          key={index}
+                                          className="w-[280px] sm:w-[285px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
+                                        >
+                                          <Link href="#">
+                                            <div className="flex justify-center pt-4">
+                                              <Image
+                                                className="rounded-t-lg"
+                                                src={data?.imageUrl}
+                                                alt="Technology acquisitions"
+                                                width={245}
+                                                height={235}
+                                              />
+                                            </div>
+                                          </Link>
 
-                        ))}
-              </div>
+
+                                          
+                                           {/* review section */}
+                                         <ReviewStars reviews={data.reviews || []} />
+
+
+                                          <div className="text-start pl-6">
+                                            <div >
+                                              <h5 className="text-lg font-medium text-gray-900">
+                                                {data?.businessName}
+                                              </h5>
+                                            </div>
+                                            <p className="text-sm text-gray-500  mb-3">
+                                              {data.city.cityName},ITALY
+                                            </p>
+                                          </div>
+                                        </div>
+              
+                                      ))}
+                            </div>
+
 
 
               </div>
-
-              
-
-
-
-
 
 
             </div>
-
-
-         
-
-
 
 
             
@@ -530,5 +416,7 @@ export default function Agencies() {
         </main>
       </div>
     </div>
+
+    </>
   )
 }

@@ -151,13 +151,16 @@ export async function applyComplexFilters(sideBarFilteredData:any,sectionName:an
                     select: {
                       title: true
                     }
-                  }
+                  },
+                  reviews:true
+
                 }
                 
               });
           
               return allFilteredCity;
             }
+
           
             if (data.name === 'specialization') {
               const specializationValues = data.options
@@ -181,7 +184,8 @@ export async function applyComplexFilters(sideBarFilteredData:any,sectionName:an
                     select: {
                       title: true
                     }
-                  }
+                  },
+                  reviews:true
                 }
 
 

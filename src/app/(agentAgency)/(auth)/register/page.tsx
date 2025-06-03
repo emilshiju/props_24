@@ -313,9 +313,9 @@ const Register = ()=>{
          
 
           <div className="text-sm">
-            <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+            <Link href="/confirm" className="font-medium text-blue-600 hover:text-blue-500">
             Forgot your password?
-            </a>
+            </Link>
           </div>
         </div>
 

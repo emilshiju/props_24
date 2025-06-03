@@ -26,6 +26,8 @@ const ConfirmEmail=()=>{
         const router = useRouter();
     
         const [showLoader,setLoader]=useState(false)
+
+        const [showTextBox,setTextBox]=useState(false)
       
     
         const initialValues = {role:'', email:'' };
@@ -41,7 +43,7 @@ const ConfirmEmail=()=>{
           setLoader(false)
            
           if(response.status){
-            
+            setTextBox(true)
           }else{
             toast.error(response.data)
           }
@@ -56,7 +58,22 @@ const ConfirmEmail=()=>{
     return (
 
         <>
-{showLoader&&<Loader />}
+
+         {showTextBox&&<div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md p-8 mx-4 bg-white rounded-lg shadow-md text-center">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Check Your Email</h2>
+        <p className="text-gray-600">
+          A password reset link has been sent to your email address.
+        </p>
+        <p className="text-gray-600 mt-2">
+          Please check your inbox and click the link to reset your password.
+        </p>
+      </div>
+    </div>}
+
+
+ {showLoader&&<Loader />}
+
         <div className="min-h-[80vh] flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8 bg-gray-50">
             <div className="w-full max-w-md bg-white rounded-lg shadow-sm p-8"> 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -152,7 +169,7 @@ const ConfirmEmail=()=>{
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                {/* <span className="bg-white px-2 text-gray-500">Don't have an account?</span> */}
+                
               </div>
             </div>
 
@@ -166,7 +183,7 @@ const ConfirmEmail=()=>{
 
 
         </div>
-      </div>
+      </div> 
     </>
     )
 }

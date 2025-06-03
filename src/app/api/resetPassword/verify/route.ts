@@ -1,6 +1,6 @@
 
 import { confirmEmail } from "@/src/controllers/user_controller/resetPassword_controller";
-import { createJwtToken } from "@/src/lib/token/jwt_token";
+import { createJwtToken, createJwtToken_resetPassword } from "@/src/lib/token/jwt_token";
 import sendEmail from "@/src/service/node_mailer";
 import { MailOptions } from "@/src/type/nodeMailer_type";
 import { NextRequest, NextResponse } from "next/server";
@@ -30,7 +30,8 @@ export async function POST(request:NextRequest){
             return NextResponse.json({status:false,message:"internal error"},{status:500})
         }
 
-        const token=createJwtToken({id:ress.data.id,email:ress.data.email,role:ress.data.role})
+        // const token=createJwtToken({id:ress.data.id,email:ress.data.email,role:ress.data.role})
+        const token=await createJwtToken_resetPassword({id:ress.data.id,email:ress.data.email,role:ress.data.role})
 
          // Create reset password link
         const resetLink = `http://localhost:3001/resetPassword?token=${token}`;

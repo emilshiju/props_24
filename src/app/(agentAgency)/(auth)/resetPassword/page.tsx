@@ -6,12 +6,17 @@ import { resetPasswordValues } from '@/src/type/validation_type/formTypes';
 import { changePasswordApi } from '@/src/lib/api_service_client/user_service/resetPassword';
 import toast from 'react-hot-toast';
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import Loader from '@/src/components/loader';
 
 
 const ResetPassword=()=>{
     
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
+
+    const router = useRouter();
+
+    const [showLoader,setLoader]=useState(false)
     
 
     const initialValues = {password:'', confirmPassword:'' };
@@ -28,7 +33,9 @@ const ResetPassword=()=>{
 
 
        if(ress.status){
-        toast.success(ress.data)
+      
+        router.push('/login')
+        
        }else{
         toast.error(ress.data)
        }
@@ -39,7 +46,7 @@ const ResetPassword=()=>{
 
         <>
 
-
+         {showLoader&&<Loader />}
 
          <div className="min-h-[80vh] flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8 bg-gray-50">
                     <div className="w-full max-w-md bg-white rounded-lg shadow-sm p-8"> 

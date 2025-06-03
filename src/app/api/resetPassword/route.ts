@@ -15,15 +15,21 @@ export async function PUT(request:NextRequest){
         console.log("i got dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         console.log(data)
 
-        if(!data){
+        if(!data||!token){
             return NextResponse.json({status:false,message:"internal error"},{status:500})
         }
-        const decoded:extracted_token = jwtDecode(token);
+        const decoded:extracted_token = await jwtDecode(token);
 
         if(!decoded){
             return NextResponse.json({status:false,message:"internal error"},{status:500})
         }
         
+        
+        const currentTime = Math.floor(Date.now() / 1000);
+        if (decoded.exp && decoded.exp < currentTime) {
+            return NextResponse.json({status:false, message:"token has expired"}, {status:401})
+        }
+
 
         const ress=await resetPassword(decoded.email,data.password)
 
