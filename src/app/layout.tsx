@@ -10,8 +10,8 @@ export const metadata = {
   title: 'Props24 - The TripAdvisor for Real Estate Agents',
   description: 'Find and review the best real estate agents in your area',
   icons: {
-    icon: '/images/Asset 7.svg',
-    apple: '/images/Asset 7.svg',
+    icon: '/images/24.svg',
+    apple: '/images/24.svg',
   },
 }
 
