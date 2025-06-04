@@ -8,6 +8,8 @@ import {  userReviewSchema } from '@/src/util/validation/review_scehma';
 import { reviewReqType, reviewValidationType } from '@/src/type/components_type/all_users_type';
 import { addReviewDetailsApi } from '@/src/lib/api_service_client/user_service/review_handler';
 import toast from 'react-hot-toast';
+import Loader from '@/src/components/loader';
+import ReviewFormSkeleton from '@/src/components/user/review_skeleton';
 
 
 const AddReview = ({params}:{ params: Promise<{ id: string }> }) => {
@@ -19,6 +21,9 @@ const AddReview = ({params}:{ params: Promise<{ id: string }> }) => {
   const [allData,setData]=useState<detailed_profile_type|null>()
 
   const [allStar, setStar] = useState<boolean[]>([false, false, false, false,false]);
+
+  const [showLoader,setLoader]=useState(false)
+
 
   const onClickReviewStar=(index:number)=>{
 
@@ -36,16 +41,14 @@ const AddReview = ({params}:{ params: Promise<{ id: string }> }) => {
 
 
   const fetchProfileDetails=async(id:string)=>{
-
+    // setLoader(true)
     const response = await getProfileDetailsApi(id)
-
-        console.log("got profileeeeeeeeeeee detailssssssssssssssssssssssssssssssssssssssss")
-        console.log(response.data)
+    // setLoader(false)
 
         if(response.status){
           setData(response.data)
         }else{
-          alert("internal server error")
+          toast.error(response.data)
         }
 
   }
@@ -62,11 +65,13 @@ const AddReview = ({params}:{ params: Promise<{ id: string }> }) => {
 
   const handleSubmit=async(values_data:reviewValidationType,formikHelpers: FormikHelpers<reviewValidationType>)=>{
   
-    console.log("got all revie data",values_data)
-    const totalTrue = allStar.filter(val => val).length;
-    console.log(totalTrue)
+    setLoader(true)
 
+    const totalTrue = allStar.filter(val => val).length;
+   
     const ress=await addReviewDetailsApi(values_data,totalTrue,id)
+
+    setLoader(false)
 
     if(ress.status){
       formikHelpers.resetForm();
@@ -80,11 +85,17 @@ const AddReview = ({params}:{ params: Promise<{ id: string }> }) => {
 
   }
 
+  if(!allData){
+    return <><ReviewFormSkeleton  /></>
+  }
+
 
   return (
 
 
-    
+    <>
+    {showLoader&&<Loader  />}
+
     <div className="min-h-screen flex flex-col items-center justify-start py-6 sm:py-14 bg-white mx-auto px-4">
   <div className="w-full max-w-6xl">
     <h1 className="text-3xl md:text-4xl font-bold text-black text-start mb-8 md:mb-12 leading-tight">
@@ -200,12 +211,17 @@ const AddReview = ({params}:{ params: Promise<{ id: string }> }) => {
           </div>
 
 
+
+          
           <button
-            type="submit"
-            className="w-full rounded-full bg-black text-white py-2 md:py-3 px-4  hover:shadow-md transition-colors"
-          >
-            Submit Review
-          </button>
+  type="submit"
+  className="w-full  rounded-full bg-black text-white py-2 md:py-3 px-4 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-[0_-8px_25px_rgba(255,255,255,0.6)]"
+>
+  Continue
+</button>
+
+
+
         </Form>
 
 
@@ -232,7 +248,7 @@ const AddReview = ({params}:{ params: Promise<{ id: string }> }) => {
 
   </div>
 </div>
-
+    </>
 
 
   );

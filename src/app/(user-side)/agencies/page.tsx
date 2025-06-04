@@ -41,7 +41,7 @@ export default function Agencies() {
 
   const [listAllFilteredProduct,setAllFilteredProduct]=useState<agent_agencies []>([])
 
-  const [showSkeleton,setSkeleton]=useState(false)
+  const [showSkeleton,setSkeleton]=useState(true)
 
 
   const router = useRouter()
@@ -62,7 +62,7 @@ export default function Agencies() {
 
   const fetchAllAgencies=async()=>{
     
-    setSkeleton(true)
+    // setSkeleton(true)
     const ress= await getAllAgenciesApi()
     setSkeleton(false)
 
