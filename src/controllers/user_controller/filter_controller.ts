@@ -23,7 +23,7 @@ export async function getAllAgent(){
 
     return resAllAgent
       .map((user) => user.profile)
-      .filter((profile) => profile !== null);
+      .filter((profile) => profile !== null&& profile.verified === true);
 
 
   }catch(error){
@@ -58,7 +58,7 @@ export async function getAllAgencies() {
 
     return resAllAgencies
         .map((user) => user.profile)
-        .filter((profile) => profile !== null);
+        .filter((profile) => profile !== null&& profile.verified === true);
 
 
 
