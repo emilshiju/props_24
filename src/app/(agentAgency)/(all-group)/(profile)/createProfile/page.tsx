@@ -446,6 +446,7 @@ const CreateProfile = ()=>{
           :<div onClick={handleChooseClick} className="border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center h-48 text-gray-400">
             <i className="pi pi-image text-4xl mb-2" />
             <p className="text-lg">Drag and Drop Image Here</p>
+             <p className="text-lg"> Image dimensions must be 215 x 215 pixels</p>
             <input   ref={fileInputRef} type="file" onChange={handleFileChange} style={{ display: 'none' }} />
           </div>}
 

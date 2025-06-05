@@ -402,7 +402,8 @@ const MultiSectionForm: React.FC = () => {
               </span>{' '}
               or drag and drop
             </p>
-            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB </p>
+            <p className="text-xs text-gray-500"> Image dimensions must be 582 x 364</p>
           </>
         )}
         

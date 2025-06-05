@@ -43,7 +43,7 @@ const  detailedCityValidationSchema = Yup.object().shape({
     const file = value as File;
     return ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'].includes(file.type);
   })
-  .test('dimensions', 'Image dimensions must be 728x455',(value) => {
+  .test('dimensions', 'Image dimensions must be 582x364',(value) => {
       if (typeof value === 'string') return true;
       if (!value) return true; // Skip if no file
       
@@ -52,7 +52,7 @@ const  detailedCityValidationSchema = Yup.object().shape({
         img.onload = () => {
           const width = img.width;
           const height = img.height;
-          resolve(width === 728 && height === 455);
+          resolve(width === 582 && height === 364);
         };
         img.onerror = () => resolve(false);
         img.src = URL.createObjectURL(value as File);

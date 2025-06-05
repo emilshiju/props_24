@@ -79,10 +79,10 @@ const AddFeaturedProperties=()=>{
 
         if (selectedFile) {
 
-          const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+          const validImageTypes = ['image/jpeg', 'image/png', ];
 
           if (!validImageTypes.includes(selectedFile.type)) {
-              toast.error('Please select a valid image file (jpg, png, gif, webp)');
+              toast.error('Please select a valid image file (jpg, png, )');
               return;
           }
 
@@ -379,6 +379,7 @@ const AddFeaturedProperties=()=>{
           :<div onClick={handleChooseClick} className="border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center h-48 text-gray-400">
             <i className="pi pi-image text-4xl mb-2" />
             <p className="text-lg">Drag and Drop Image Here</p>
+            <p className="text-lg">Image dimensions must be 600 x 400</p>
             <input   ref={fileInputRef} type="file" onChange={handleFileChange} style={{ display: 'none' }} />
           </div>}
 

@@ -158,7 +158,7 @@ const Register = ()=>{
               toast.error(errorMessage);
             }else{
 
-              router.push('/afterRegister')
+              router.push('/createProfile')
               
             }
 
@@ -313,8 +313,8 @@ const Register = ()=>{
          
 
           <div className="text-sm">
-            <Link href="/confirm" className="font-medium text-blue-600 hover:text-blue-500">
-            Forgot your password?
+            <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500">
+            already have an account ?
             </Link>
           </div>
         </div>
