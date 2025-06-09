@@ -1,18 +1,9 @@
+const ListReview = () => {
+  return (
+    <div>
+      <h2>LIST REVIEW</h2>
+    </div>
+  );
+};
 
-
-
-const ListReview=()=>{
-
-    return (
-
-
-        <div>
-
-            <h2>LIST REVIEW</h2>
-
-        </div>
-    )
-}
-
-
-export default ListReview
+export default ListReview;
