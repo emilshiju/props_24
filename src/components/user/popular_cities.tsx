@@ -1,10 +1,9 @@
 "use client"
-import Link from "next/link"
 import Image from "next/image"
 import { useRef, useState, useEffect } from "react";
-import { MagnifyingGlassIcon, StarIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
+import {  ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import { listCityApi } from "@/src/lib/api_service_client/admin_service/city_handler";
-import { cityAndDetaield, cityResType } from "@/src/type/components_type/all_admin_type";
+import { cityAndDetaield } from "@/src/type/components_type/all_admin_type";
 import { useRouter } from 'next/navigation'
 
 

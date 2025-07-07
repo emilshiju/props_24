@@ -1,11 +1,11 @@
 
 import { detailedView } from "@/src/controllers/agentAgenciesController/property_controller";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
 
 
 
-export async function GET(request:NextRequest,{params}:{params:{id:string}}){
+export async function GET({params}:{params:{id:string}}){
 
 
     try{
@@ -23,7 +23,7 @@ export async function GET(request:NextRequest,{params}:{params:{id:string}}){
 
     }catch(error){
         
-        console.log("error occured in route detailedView property")
+        console.log("error occured in route detailedView property",error)
         return NextResponse.json({status:false,message:'internal error'},{status:500})
     }
 

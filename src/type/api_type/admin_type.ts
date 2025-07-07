@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface resListUsers{status:boolean,data:any,statusCode?: number}
 
 export interface singeUser {

@@ -35,7 +35,7 @@ export async function POST(request:Request) {
             text: 'Hello, this is a test email.',
         };
 
-        const registered:Boolean = await otpRegister(data.email,otp)
+        const registered:boolean = await otpRegister(data.email,otp)
 
         console.log("completed OTP registered")
 

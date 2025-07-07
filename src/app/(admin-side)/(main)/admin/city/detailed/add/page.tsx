@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, ChangeEvent, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import detailedCityValidationSchema from "@/src/util/validation/cityDetailScehma";
 import {
@@ -16,6 +16,7 @@ import {
 
 import { toast } from "react-hot-toast";
 import Loader from "@/src/components/loader";
+import Image from "next/image";
 
 const MultiSectionForm: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>("city");
@@ -107,7 +108,7 @@ const MultiSectionForm: React.FC = () => {
     }
   };
 
-  const [isDragging, setIsDragging] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const triggerFileInput = () => {
@@ -374,11 +375,7 @@ const MultiSectionForm: React.FC = () => {
                 <div>
                   <div className="max-w-md mx-auto p-4">
                     <div
-                      className={`border-2 border-dashed rounded-lg p-6 text-center ${
-                        isDragging
-                          ? "border-blue-500 bg-blue-50"
-                          : "border-gray-300"
-                      }`}
+                      className={"border-2 border-dashed rounded-lg p-6 text-center border-gray-300"}
                       onClick={triggerFileInput}
                     >
                       <input
@@ -398,11 +395,17 @@ const MultiSectionForm: React.FC = () => {
 
                       {preview ? (
                         <div className="relative">
-                          <img
+                          {/* <img
                             src={preview}
                             alt="Preview"
                             className="max-h-64 mx-auto rounded-md mb-4"
-                          />
+                          /> */}
+                          <Image
+    src={preview}
+    alt="Preview"
+    fill
+    className="max-h-64 mx-auto rounded-md mb-4"
+  />
                           <button
                             type="button"
                             onClick={(e) => {

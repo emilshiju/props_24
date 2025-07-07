@@ -1,10 +1,9 @@
 "use client"
 import Link from 'next/link'
 import Image from 'next/image'
-import { MagnifyingGlassIcon, HeartIcon, UserCircleIcon, Bars3Icon, StarIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react';
 import { useRouter ,usePathname } from 'next/navigation';
-import Loader from '../loader';
+
 
 
 const Header = () =>{
@@ -45,7 +44,7 @@ const Header = () =>{
 
       <nav className="bg-white border-gray-200">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-25 py-5">
-    <Link href='http://localhost:3001'>
+    <Link href='http://localhost:3000'>
     <Image  
       src="/images/props_24.svg" 
       alt="Props24 Logo" 

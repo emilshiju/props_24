@@ -1,14 +1,8 @@
 "use client";
-import {
-  MagnifyingGlassIcon,
-  StarIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
-} from "@heroicons/react/24/solid";
 
 import Link from "next/link";
 import Image from "next/image";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import {  useRouter  } from "next/navigation";
 
 import { useState, useEffect } from "react";
 import {
@@ -18,92 +12,30 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
+  Menu, 
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
-  ChevronDownIcon,
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { listCityApi } from "@/src/lib/api_service_client/admin_service/city_handler";
-import { listSpecializationApi } from "@/src/lib/api_service_client/admin_service/specialization_handler";
-import {
-  cityResType,
-  specialisation_Res_Type,
-} from "@/src/type/components_type/all_admin_type";
+
 import {
   getSideBarFilterAPi,
   getChangedSideBarFilterApi,
-  getAll,
-  getAllSearchedListApi,
   getAllAgentApi,
 } from "@/src/lib/api_service_client/user_service/filter_handler";
-import { string } from "yup";
+
+
 import { agent_agencies } from "@/src/type/components_type/common_type";
 import ReviewStars from "@/src/components/user/reviewStars";
 import FilterSkeleton from "@/src/components/user/filter_skeleton";
+import { FilterOption, FilterSection_Type } from "@/src/type/components_type/filter_type";
 
-const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
-];
-const subCategories = [
-  { name: "Agent", href: "#" },
-  { name: "Agencies", href: "#" },
-  // { name: 'Travel Bags', href: '#' },
-  // { name: 'Hip Bags', href: '#' },
-  // { name: 'Laptop Sleeves', href: '#' },
-];
-const filters = [
-  {
-    id: "color",
-    name: "Color",
-    options: [
-      { value: "white", label: "White", checked: false },
-      { value: "beige", label: "Beige", checked: false },
-      { value: "blue", label: "Blue", checked: true },
-      { value: "brown", label: "Brown", checked: false },
-      { value: "green", label: "Green", checked: false },
-      { value: "purple", label: "Purple", checked: false },
-    ],
-  },
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
-      { value: "organization", label: "Organization", checked: false },
-      { value: "accessories", label: "Accessories", checked: false },
-    ],
-  },
-  {
-    id: "size",
-    name: "Size",
-    options: [
-      { value: "2l", label: "2L", checked: false },
-      { value: "6l", label: "6L", checked: false },
-      { value: "12l", label: "12L", checked: false },
-      { value: "18l", label: "18L", checked: false },
-      { value: "20l", label: "20L", checked: false },
-      { value: "40l", label: "40L", checked: true },
-    ],
-  },
-];
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
+
+
 
 export default function Agent() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -152,10 +84,10 @@ export default function Agent() {
 
     console.log(sectionName, valueId, isChecked);
 
-    const updatedSideBarFilter: any = sideBarFilter.map((data: any, index) => {
+    const updatedSideBarFilter: FilterSection_Type[]  = sideBarFilter.map((data: FilterSection_Type) => {
       if (data.name == sectionName) {
         console.log("got", data.name);
-        data.options = data.options.map((one: any) => {
+        data.options = data.options.map((one:FilterOption) => {
           if (one.value === valueId) {
             console.log("secc", one.value);
             return { ...one, checked: isChecked }; // Set the checked value accordingly
@@ -171,13 +103,13 @@ export default function Agent() {
 
     setSkeleton(true);
 
-    const filteredResult = await getChangedSideBarFilterApi(
+    const filteredResult = await getChangedSideBarFilterApi({
       updatedSideBarFilter,
-      { sectionName: sectionName },
-      { value: valueId },
-      { status: isChecked },
-      "agent"
-    );
+       sectionName: sectionName ,
+       value: valueId ,
+      status: isChecked ,
+      item:"agent"
+  });
 
     setSkeleton(false);
 
@@ -231,7 +163,7 @@ export default function Agent() {
                 <form className="mt-4 border-t border-gray-200">
                   <h3 className="sr-only">Categories</h3>
 
-                  {sideBarFilter.map((section: any) => (
+                  {sideBarFilter.map((section: FilterSection_Type) => (
                     <Disclosure
                       key={section.id}
                       as="div"
@@ -257,7 +189,7 @@ export default function Agent() {
                       <DisclosurePanel className="pt-6">
                         <div className="space-y-6">
                           {section.options.map(
-                            (option: any, optionIdx: any) => (
+                            (option: FilterOption, optionIdx: number) => (
                               <div key={option.value} className="flex gap-3">
                                 <div className="flex h-5 shrink-0 items-center">
                                   <div className="group grid size-4 grid-cols-1">

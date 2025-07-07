@@ -33,7 +33,7 @@ export async function POST(request:Request){
 
     }catch(error){
 
-        console.log("error in verify otp ")
+        console.log("error in verify otp ",error)
 
         return NextResponse.json({status:false,message: "error occur in verify OTP" },{ status: 500 } );
 

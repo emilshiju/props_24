@@ -1,5 +1,7 @@
 import { AdminLoginValues } from "@/src/type/validation_type/formTypes";
 import axiosClient from "../../axios_client";
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
+
 
 export const adminLoginApi = async (data: AdminLoginValues) => {
   try {
@@ -12,12 +14,14 @@ export const adminLoginApi = async (data: AdminLoginValues) => {
       data: resAdminLoginApi.data.message,
       statusCode: resAdminLoginApi.status,
     };
-  } catch (error: any) {
-    console.log("admin login api error", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
 
-    return {
-      status: false,
-      data: error.response.data.message ?? "error occured try again later",
-    };
   }
 };

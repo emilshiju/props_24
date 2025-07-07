@@ -12,6 +12,9 @@ export async function POST(request:NextRequest){
         console.log(data)
 
         const allData = await searchAll(data)
+
+        console.log("got all dataaaaaaaaaaaaaaaaaaa")
+        console.log(allData)
        
 
         if(!allData ){

@@ -1,5 +1,6 @@
 import { specialisation_Type } from "@/src/type/api_type/admin_type";
 import axiosClient from "../../axios_client";
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 
 export const addSpecializationApi = async (data: specialisation_Type) => {
   try {
@@ -13,14 +14,15 @@ export const addSpecializationApi = async (data: specialisation_Type) => {
       data: resAddSpecializationApi.data.message,
       statusCode: resAddSpecializationApi.status,
     };
-  } catch (error: any) {
-    console.log("errror occured in addSpecializationApi", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
 
-    return {
-      status: false,
-      data:
-        error.response?.data?.message || "something went wrong try again later",
-    };
   }
 };
 
@@ -33,14 +35,15 @@ export const listSpecializationApi = async () => {
       data: ress.data.message,
       statusCode: ress.status,
     };
-  } catch (error: any) {
-    console.log("error occrued in listSpecializationApi", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data:
-        error.response?.data?.message || "something went wrong try again later",
+      data: error
     };
+
   }
 };
 
@@ -55,13 +58,14 @@ export const deleteSpecializationApi = async (id: string) => {
       data: deleted.data.message,
       statusCode: deleted.status,
     };
-  } catch (error: any) {
-    console.log("error occured in deleteSpecialization", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data:
-        error.response?.data?.message || "something went wrong try again later",
+      data: error
     };
+
   }
 };

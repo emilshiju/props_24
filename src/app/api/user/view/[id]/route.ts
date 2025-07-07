@@ -25,7 +25,7 @@ export async function GET(request:NextRequest,{params}:{params:{id:string}}){
 
         
     }catch(error){
-        console.log("error occured in route view ")
+        console.log("error occured in route view ",error)
         return NextResponse.json({status:false,message:"internal Error"},{status:500})
     }
 }

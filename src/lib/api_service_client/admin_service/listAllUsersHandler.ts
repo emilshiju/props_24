@@ -1,6 +1,8 @@
-import axios from "axios";
+
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 import axiosClient from "../../axios_client";
-import { useId } from "react";
+
+
 
 export const listAllUsersApi = async () => {
   try {
@@ -11,13 +13,15 @@ export const listAllUsersApi = async () => {
       data: reslistAllUsersApi.data.message,
       statusCode: reslistAllUsersApi.status,
     };
-  } catch (error: any) {
-    console.log("error occur in list  listAllUsersAPi ", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
 
-    return {
-      status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
-    };
   }
 };
 
@@ -32,13 +36,15 @@ export const getSingleUserDetailsApi = async (userId: string) => {
       data: resgetSingleUserDetailsApi.data.message,
       statusCode: resgetSingleUserDetailsApi.status,
     };
-  } catch (error: any) {
-    console.log("error occur in the api getsingle userdetails api", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+
   }
 };
 
@@ -53,12 +59,12 @@ export const blockUserApi = async (userId: string) => {
       data: resBlockUserApi.data.message,
       statusCode: resBlockUserApi.status,
     };
-  } catch (error: any) {
-    console.log("error occur in blockUserApi", error);
+  } catch (err:unknown) {
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
   }
 };
@@ -74,12 +80,12 @@ export const unblockUserApi = async (userId: string) => {
       data: resUnBlockUserAPi.data.message,
       statusCode: resUnBlockUserAPi.status,
     };
-  } catch (error: any) {
-    console.log("error occurin unblockUserAPi", error);
+  } catch (err:unknown) {
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
   }
 };

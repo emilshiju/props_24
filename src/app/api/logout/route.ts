@@ -1,11 +1,11 @@
 
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 
 
 
-export async function GET(request:NextRequest){
+export async function GET(){
 
     try{
 
@@ -19,7 +19,7 @@ export async function GET(request:NextRequest){
 
         
     }catch(error){
-        console.log("error occuring while logout")
+        console.log("error occuring while logout",error)
         return NextResponse.json({status:false, message: 'Logged out successfully' },{status:500});
     }
 }

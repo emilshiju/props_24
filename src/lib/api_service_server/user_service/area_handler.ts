@@ -1,3 +1,4 @@
+import { getApiErrorMessage } from '@/src/type/api_type/apiRes_type';
 import { cookies } from 'next/headers';
 
 export const getDetailedCityApi=async(id:string)=>{
@@ -5,7 +6,7 @@ export const getDetailedCityApi=async(id:string)=>{
 
     try{
 
-        const res=await fetch(`http://localhost:3001/api/admin/city/${id}/detailedView`, {
+        const res=await fetch(`http://localhost:3000/api/admin/city/${id}/detailedView`, {
             method: 'GET',}
         )
 
@@ -54,7 +55,7 @@ export const checkProfileVerification=async()=>{
         const cookieStore = await cookies();
         const authToken = cookieStore.get('auth_token')?.value;
 
-        const res=await fetch('http://localhost:3001/api/profile/exists', {
+        const res=await fetch('http://localhost:3000/api/profile/exists', {
             method: 'GET',
             headers: {
                 'Cookie': `auth_token=${authToken}`,
@@ -85,14 +86,15 @@ export const checkProfileVerification=async()=>{
         // console.log("got resssssssssssponseeeeeeeeeeeeeeeeeeeeeeee",res)
 
 
-    }catch(error:any){
-        console.log("error occured in areahandler",error)
-
-        return {
-            status:error?.response?.data?.status??  "error",
-            data: error?.response?.data?.message ?? "something went wrong ",
+    }catch(err:unknown){
+        
+          const error=getApiErrorMessage(err)
             
-        }
+                return {
+                  status: false,
+                  data: error
+                };
+        
     }
 
 

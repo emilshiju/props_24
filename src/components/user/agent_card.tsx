@@ -2,7 +2,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useRef, useState, useEffect } from "react";
-import { MagnifyingGlassIcon, StarIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import { getAllAgentApi } from "@/src/lib/api_service_client/user_service/filter_handler";
 import { agent_agencies } from "@/src/type/components_type/common_type";
 import { useRouter } from "next/navigation";

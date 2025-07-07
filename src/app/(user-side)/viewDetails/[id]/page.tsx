@@ -7,26 +7,20 @@ import {
   PhoneIcon,
   CheckBadgeIcon,
   ClockIcon,
-  HomeIcon,
-  UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import {
-  HeartIcon,
-  CalendarIcon,
   DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useEffect, use, useState } from "react";
 import { getProfileDetailsApi } from "@/src/lib/api_service_client/user_service/profile_handler";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import {  useRouter  } from "next/navigation";
 import Image from "next/image";
 import FeaturedProperties from "@/src/components/user/featured_properties";
-import { UserProfileType } from "@/src/type/components_type/listUsers";
 import { detailed_profile_type } from "@/src/type/components_type/common_type";
 import ListReview from "@/src/components/user/review";
 import { findAverageReviewApi } from "@/src/lib/api_service_client/user_service/review_handler";
 import toast from "react-hot-toast";
-import Loader from "@/src/components/loader";
 import ProfileViewSkeleton from "@/src/components/user/viewProfile_skeleton";
 
 const ViewDetails = ({ params }: { params: Promise<{ id: string }> }) => {
@@ -38,7 +32,6 @@ const ViewDetails = ({ params }: { params: Promise<{ id: string }> }) => {
 
   const [averageValue, setAverageValue] = useState(Number || 0);
 
-  const [showLoader, setLoader] = useState(false);
 
   const fetchProfileData = async (id: string) => {
     const response = await getProfileDetailsApi(id);

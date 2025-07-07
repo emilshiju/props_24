@@ -1,35 +1,25 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import AgentCard from "../../components/user/agent_card";
 import AgenciesCard from "../../components/user/agencies_card";
 import Why_props_24 from "../../components/user/why_props_24";
-import Footer from "../../components/user/footer";
 import Popular_Cities from "../../components/user/popular_cities";
-import { useState } from "react";
 
-// export const metadata = {
-//   title: 'Props24 - The TripAdvisor for Real Estate Agents',
-//   description: 'Find and review the best real estate agents in your area',
-//   icons: {
-//     icon: '/images/Asset 7.svg',
-//     apple: '/images/Asset 7.svg',
-//   },
-// }
+
 
 const Home = () => {
-  const router = useRouter();
+  
 
-  const [inputSearch, setInputSearch] = useState("");
+  // const [inputSearch, setInputSearch] = useState("");
 
-  const handleSearch = () => {
-    router.push(`/filterPage?search=${inputSearch}`);
-  };
+  // const handleSearch = () => {
+  //   router.push(`/filterPage?search=${inputSearch}`);
+  // };
 
-  const handleSearchBarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputSearch(e.target.value);
-  };
+  // const handleSearchBarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setInputSearch(e.target.value);
+  // };
 
   return (
     <div>

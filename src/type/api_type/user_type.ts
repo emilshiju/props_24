@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 
 export  interface UserDetails {
     userName:string;
@@ -12,3 +13,10 @@ export  interface UserDetails {
     message: string;
     statusCode?: number;
   }
+
+type ApiErrorResponse = {
+  status: boolean | string; 
+  message: string;
+}
+
+export type TypedApiError = AxiosError<ApiErrorResponse>;

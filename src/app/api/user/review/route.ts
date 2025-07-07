@@ -1,23 +1,25 @@
-import { getAllReview } from "@/src/controllers/user_controller/review_controller";
-import { NextRequest, NextResponse } from "next/server";
+
+import { NextResponse } from "next/server";
 
 
-export async function GET(request:NextRequest){
+export async function GET(){
 
 
     try{
 
-        const ress=await getAllReview()
+        return NextResponse.json({status:false,message:'error occured'},{status:500})
 
-        if(!ress){
-            return NextResponse.json({status:false,message:'error occured'},{status:500})
-        }
+        // const ress=await getAllReview()
 
-        return NextResponse.json({status:true,message:ress},{status:200})
+        // if(!ress){
+        //     return NextResponse.json({status:false,message:'error occured'},{status:500})
+        // }
+
+        // return NextResponse.json({status:true,message:ress},{status:200})
 
 
     }catch(error){
-        console.log("error occured in the route list review")
+        console.log("error occured in the route list review",error)
         return NextResponse.json({status:false,message:'error occured'},{status:500})
     }
 }

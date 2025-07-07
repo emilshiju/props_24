@@ -618,7 +618,7 @@ export interface SampleAgent {
     },
     // Per rendere scalabile il sistema, usiamo una funzione generativa per città aggiuntive
     ...Array.from({ length: 20 }, (_, i) => {
-      const cityIndex = i + 10;
+      
       const cities = [
         'Bari', 'Catania', 'Padova', 'Parma', 'Cagliari', 
         'Trieste', 'Brescia', 'Pisa', 'Siena', 'Perugia',

@@ -71,6 +71,7 @@ export function middleware(request: NextRequest) {
       return NextResponse.next();
 
     } catch (err) {
+      console.log("error in middleware",err)
       
       return NextResponse.redirect(new URL('/', request.url));
     }
@@ -99,6 +100,8 @@ export function middleware(request: NextRequest) {
             
             return NextResponse.next();
         } catch (err) {
+           console.log("error in middleware",err)
+           
             return NextResponse.redirect(new URL('/adminLogin', request.url));
         }
     }

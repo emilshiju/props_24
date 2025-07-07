@@ -1,6 +1,6 @@
 
 import { confirmEmail } from "@/src/controllers/user_controller/resetPassword_controller";
-import { createJwtToken, createJwtToken_resetPassword } from "@/src/lib/token/jwt_token";
+import {  createJwtToken_resetPassword } from "@/src/lib/token/jwt_token";
 import sendEmail from "@/src/service/node_mailer";
 import { MailOptions } from "@/src/type/nodeMailer_type";
 import { NextRequest, NextResponse } from "next/server";

@@ -1,10 +1,10 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import { FormValues } from "@/src/type/validation_type/formTypes";
 import registerSchema from "@/src/util/validation/register_schema";
-import axiosClient from "@/src/lib/axios_client";
+
 import {
   requestOtpApi,
   verifyOtpApi,
@@ -28,7 +28,7 @@ const Register = () => {
     confirmPassword: "",
     role: "",
   });
-  const [otpVerification, setOtpVerification] = useState<Boolean>(false);
+  const [otpVerification, setOtpVerification] = useState<boolean>(false);
   const [resendOtp, setResendOtp] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const timeRef = useRef<NodeJS.Timeout | null>(null);
@@ -91,7 +91,7 @@ const Register = () => {
     index: number
   ) => {
     const newDigits = [...digits];
-    let value = e.target.value;
+    const value = e.target.value;
     newDigits[index] = value;
     setDigits(newDigits);
     if (
@@ -120,7 +120,7 @@ const Register = () => {
   }, [timeLeft]);
 
   const afterOtpSubmit = async () => {
-    let otp = digits.join("");
+    const otp = digits.join("");
 
     if (otp.length == 0) {
       toast.error("ENTER THE OTP");
@@ -308,7 +308,7 @@ const Register = () => {
                           href="/login"
                           className="font-medium text-blue-600 hover:text-blue-500"
                         >
-                          already have an account ?
+                         {" already have an account ?" }
                         </Link>
                       </div>
                     </div>
@@ -332,7 +332,7 @@ const Register = () => {
                   </div>
                   <div className="relative flex justify-center text-sm">
                     <span className="bg-white px-2 text-gray-500">
-                      Don't have an account?
+                      {"Don't have an account?"}
                     </span>
                   </div>
                 </div>
@@ -382,7 +382,7 @@ const Register = () => {
                     </div>
 
                     <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-                      <p>Didn't receive code?</p>
+                      <p>{"Didn't receive code?"}</p>
                       {resendOtp && (
                         <p
                           className="flex flex-row items-center text-blue-600"

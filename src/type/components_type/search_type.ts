@@ -1,50 +1,7 @@
-export interface VerifyOTPResponse {
-    status: boolean;
-    found?: boolean;  
-
-  }
-
-
-  export interface registeredUser {
-    id: string;          
-    email: string;      
-    password: string;    
-    role:'admin'|'user'|'agent'|'agencies'
-    status: boolean;     
-    createdAt: Date;     
-  }
-  
 
 
 
-  
-
-export interface profileType {
-  businessName: string;
-  phone: string;
-  licenseNumber: string;
-  bio: string;
-  specialization: string;
-  city:string;
-  imageUrl:string
-}
-
-
-
-export interface LoginType {role:"admin" | "user" | "agent" | "agencies",email:string,password:string}
-
-
-
-export type Role = 'admin' | 'user' | 'agent' | 'agencies';
-
-
-
-
-
-
-
-
-export interface SearchAllUserType {
+export interface SearchUserResponse {
   allAgent: EntitytProfile[];
   allAgencies:EntitytProfile[];
   allCity: AllCity[];
@@ -58,9 +15,9 @@ export interface EntitytProfile {
   phone: string;
   licenseNumber: string;
   bio: string;
-  imageUrl: string|null
+  imageUrl: string;
   verified: boolean;
-  createdAt: Date;
+  createdAt: string;
   userId: string;
   specializationId: string;
   cityId: string;
@@ -74,15 +31,15 @@ export interface Specialization {
   id: string;
   title: string;
   description: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface AllCity {
   id: string;
   cityName: string;
   country: string;
-  createdAt:Date;
-  details?: CityDetails|null
+  createdAt: string;
+  details?: CityDetails;
 }
 
 export interface CityDetails {
@@ -93,10 +50,10 @@ export interface CityDetails {
   averagePrice: string;
   description: string;
   popularity: string;
-  imageUrl: string|null
+  imageUrl?: string;
   areas: Array<{ heading: string; content: string }>;
   types: Array<{ heading: string; content: string; price: string }>;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface Property {
@@ -117,5 +74,5 @@ export interface Review {
   profileId: string;
   name: string;
   content: string;
-  createdAt: Date;
+  createdAt: string;
 }

@@ -1,12 +1,6 @@
 
-
-
-
-
-
 "use client"
 import React, { useEffect, useState }  from "react";
-import { useRouter } from 'next/navigation';
 import {
   Table,
   TableBody,
@@ -17,8 +11,7 @@ import {
 
 import { toast } from 'react-hot-toast';
 
-import { specialisation_Res_Type } from "@/src/type/components_type/all_admin_type";
-import { deleteSpecializationApi ,listSpecializationApi} from "@/src/lib/api_service_client/admin_service/specialization_handler";
+
 import { deleteReviewApi, listAllReviewApi } from "@/src/lib/api_service_client/admin_service/review_handler";
 import { reviewResType } from "@/src/type/components_type/all_users_type";
 import Loader from "@/src/components/loader";

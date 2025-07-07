@@ -21,7 +21,7 @@ export async function POST(request:NextRequest){
         return NextResponse.json({status:true,message:'sucessfully updated'},{status:200})
 
     }catch(error){
-        console.log("error occured in route edit detaield city")
+        console.log("error occured in route edit detaield city",error)
         return NextResponse.json({status:false,message:'internal error'},{status:500})
     }
 }

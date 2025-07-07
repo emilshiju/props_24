@@ -1,20 +1,15 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Outfit } from "next/font/google";
+import React from "react";
 
 import AppHeader from "@/src/components/agent-agency/AppHeader";
 import AppSidebar from "@/src/components/agent-agency/AppSidebar";
 import Backdrop from "@/src/components/agent-agency/Backdrop";
 import { useSidebar } from "@/src/context/agentAgency/sidebar_context";
-import { toast, Toaster } from "react-hot-toast";
-import { profileExistsApi } from "@/src/lib/api_service_client/agent_agencies_service/protected_handler";
-import { useRouter } from "next/navigation";
-import Loader from "@/src/components/loader";
+import {  Toaster } from "react-hot-toast";
 
 const CommonPageSideBar = ({ children }: { children: React.ReactNode }) => {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
 
-  const router = useRouter();
 
   // Dynamic class for main content margin based on sidebar state
   const mainContentMargin = isMobileOpen

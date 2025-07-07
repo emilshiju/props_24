@@ -18,7 +18,7 @@ export async function DELETE(request:NextRequest,{params}:{params:{id:string}}){
 
 
     }catch(error){
-        console.log("error occured in route delete property")
+        console.log("error occured in route delete property",error)
         return NextResponse.json({status:false,message:'internal error'},{status:500})
     }
 }

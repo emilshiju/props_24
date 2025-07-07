@@ -3,10 +3,9 @@ import Loader from "@/src/components/loader";
 import { addCityApi } from "@/src/lib/api_service_client/admin_service/city_handler";
 import { cityType } from "@/src/type/components_type/all_admin_type";
 import citySchema from "@/src/util/validation/cities_scehma";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import { useEffect, useState } from "react";
-// import 'react-hot-toast/style.css';
-import { toast, Toaster } from "react-hot-toast";
+import { Formik, Form, Field, FormikHelpers } from "formik";
+import {  useState } from "react";
+import { toast } from "react-hot-toast";
 
 const AddCitie = () => {
   const [showLoader, setLoader] = useState(false);

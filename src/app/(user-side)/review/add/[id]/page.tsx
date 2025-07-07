@@ -3,10 +3,9 @@
 import { getProfileDetailsApi } from "@/src/lib/api_service_client/user_service/profile_handler";
 import { detailed_profile_type } from "@/src/type/components_type/common_type";
 import React, { useEffect, use, useState } from "react";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import { userReviewSchema } from "@/src/util/validation/review_scehma";
 import {
-  reviewReqType,
   reviewValidationType,
 } from "@/src/type/components_type/all_users_type";
 import { addReviewDetailsApi } from "@/src/lib/api_service_client/user_service/review_handler";
@@ -37,7 +36,7 @@ const AddReview = ({ params }: { params: Promise<{ id: string }> }) => {
     });
   };
 
-  const [currentRatingValue, setRatingValue] = useState(0);
+  
 
   const fetchProfileDetails = async (id: string) => {
     // setLoader(true)
@@ -102,7 +101,7 @@ const AddReview = ({ params }: { params: Promise<{ id: string }> }) => {
             validationSchema={userReviewSchema}
             onSubmit={handleSubmit}
           >
-            {({ values, handleChange, errors, touched }) => (
+            {({  errors, touched }) => (
               <div className="flex flex-col lg:flex-row items-start gap-8 w-full">
                 {/* Left side - Image and details */}
                 <div className="w-full lg:w-auto lg:flex-shrink-0">
@@ -135,7 +134,7 @@ const AddReview = ({ params }: { params: Promise<{ id: string }> }) => {
                         htmlFor="name"
                         className="text-base md:text-lg font-medium mb-2 md:mb-3 block"
                       >
-                        What's your name?
+                        {"What's your name?"}
                       </label>
                       <Field
                         type="text"

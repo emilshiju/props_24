@@ -20,7 +20,7 @@ export const createJwtToken = (userDetails:tokenPayload)=>{
 
 
     }catch(error){
-        console.log("error occuring while creating token")
+        console.log("error occuring while creating token",error)
 
         return false
         
@@ -50,7 +50,7 @@ export const createJwtToken_resetPassword=(userDetails:tokenPayload)=>{
 
 
     }catch(error){
-        console.log("error occuring while creating token")
+        console.log("error occuring while creating token",error)
 
         return false
         

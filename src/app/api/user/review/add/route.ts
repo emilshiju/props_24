@@ -24,7 +24,7 @@ export async function POST(request:NextRequest){
 
 
     }catch(error){
-        console.log("error occured in the route add review route")
+        console.log("error occured in the route add review route",error)
         return NextResponse.json({status:false,message:"error occured"},{status:500})
     }
 }

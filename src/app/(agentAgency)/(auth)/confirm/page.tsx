@@ -1,22 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
-import loginSchema from "@/src/util/validation/login_scehma";
+import { Formik, Form, Field,  FormikHelpers } from "formik";
+
 import {
   confirmEmailValues,
-  LoginValues,
 } from "@/src/type/validation_type/formTypes";
-import { loginUserApi } from "@/src/lib/api_service_client/user_service/auth_handler";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import Loader from "@/src/components/loader";
 import ConfirmEmailScehma from "@/src/util/validation/confirmEmail_scehma";
 import { confirmEmailApi } from "@/src/lib/api_service_client/user_service/resetPassword";
 
 const ConfirmEmail = () => {
-  const router = useRouter();
 
   const [showLoader, setLoader] = useState(false);
 

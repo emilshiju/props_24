@@ -1,4 +1,6 @@
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 import axiosClient from "../../axios_client";
+
 
 export const get_AllPending_Verification_AgentApi = async () => {
   try {
@@ -11,13 +13,15 @@ export const get_AllPending_Verification_AgentApi = async () => {
       data: res_Get_AllPending_Verification_AgenciesApi.data.message,
       statusCode: res_Get_AllPending_Verification_AgenciesApi.status,
     };
-  } catch (error: any) {
-    console.log("error occured in getAllPendingVerificationAgent", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+    
   }
 };
 
@@ -32,13 +36,15 @@ export const get_AllPending_Verification_AgenciesApi = async () => {
       data: res_Get_AllPending_Verification_AgenciesApi.data.message,
       statusCode: res_Get_AllPending_Verification_AgenciesApi.status,
     };
-  } catch (error: any) {
-    console.log("error occrued in getAllPedingVericationAgencies ", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
 
-    return {
-      status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
-    };
   }
 };
 
@@ -53,12 +59,13 @@ export const get_EntitiDetails_Api = async (userId: string) => {
       data: res_EntitiDetails_Api.data.message,
       statusCode: res_EntitiDetails_Api.status,
     };
-  } catch (error: any) {
-    console.log("error occrued in getEntitieDetails", error);
+  } catch (err:unknown) {
+
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
   }
 };
@@ -74,12 +81,14 @@ export const verifyEntitieApi = async (profileId: string) => {
       data: resVerifyEntitieApi.data.message,
       statusCode: resVerifyEntitieApi.status,
     };
-  } catch (error: any) {
-    console.log("error occred in verifyEntitie", error);
+  } catch (err: unknown) {
+    
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+
   }
 };

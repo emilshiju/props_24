@@ -1,4 +1,6 @@
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 import axiosClient from "../../axios_client";
+import { FilterSection_Type } from "@/src/type/components_type/filter_type";
 
 export const getAllAgentApi = async () => {
   try {
@@ -9,13 +11,15 @@ export const getAllAgentApi = async () => {
       data: resAllAgentApi.data.message,
       statusCode: resAllAgentApi.status,
     };
-  } catch (error) {
-    console.log("error occured in getAllAgentApi", error);
+  } catch (err) {
+
+     const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: "something went wrong",
+      data: error
     };
+
   }
 };
 
@@ -28,12 +32,15 @@ export const getAllAgenciesApi = async () => {
       data: resAllAgenciesApi.data.message,
       statusCode: resAllAgenciesApi.status,
     };
-  } catch (error) {
-    console.log("error occured in getAllAgenciesApi", error);
+  } catch (err:unknown) {
+
+     const error=getApiErrorMessage(err)
+
     return {
       status: false,
-      data: "error occured",
+      data: error
     };
+
   }
 };
 export const getSideBarFilterAPi = async () => {
@@ -45,33 +52,43 @@ export const getSideBarFilterAPi = async () => {
       data: resGetFilterAPi.data.message,
       statusCode: resGetFilterAPi.status,
     };
-  } catch (error) {
-    console.log("error occrued in getFilterAPi", error);
+  } catch (err) {
+
+     const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: "error occured",
+      data: error
     };
+
   }
 };
 
-export const getChangedSideBarFilterApi = async (
-  sideBarFilteredData: any,
-  sectionName: any,
-  currentData: any,
-  status: any,
-  item: any
-) => {
+export const getChangedSideBarFilterApi = async ({
+  updatedSideBarFilter,
+  sectionName,
+  value,
+  status,
+  item,
+}:{
+
+  updatedSideBarFilter: FilterSection_Type[];
+  sectionName: string;
+  value: string;
+  status: boolean; 
+  item: string;  
+
+}) => {
   try {
     console.log(
       "come in hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      sideBarFilteredData
+      updatedSideBarFilter
     );
 
     const filtered_res = await axiosClient.post("/user/filter", {
-      sideBarFilteredData,
+      sideBarFilteredData:updatedSideBarFilter,
       sectionName,
-      currentData,
+      currentData:value,
       status,
       item,
     });
@@ -81,13 +98,15 @@ export const getChangedSideBarFilterApi = async (
       data: filtered_res.data.message,
       statusCode: filtered_res.status,
     };
-  } catch (error) {
-    console.log("error occur in changeSideBarFilterApi", error);
+  } catch (err) {
+   
+     const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: "error occured",
+      data: error
     };
+
   }
 };
 
@@ -100,13 +119,15 @@ export const getAll = async () => {
       data: allList.data.message,
       statusCode: allList.status,
     };
-  } catch (error) {
-    console.log("error occured in getAll", error);
+  } catch (err) {
+
+     const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: "error occured",
+      data: error
     };
+
   }
 };
 
@@ -123,13 +144,15 @@ export const getAllSearchedListApi = async (value: string) => {
       data: resAllSearchedListApi.data.message,
       statusCode: resAllSearchedListApi.data,
     };
-  } catch (error) {
-    console.log("error occured in getAllSearchedList", error);
+  } catch (err) {
 
-    return {
-      status: false,
-      data: "internal error",
-    };
+     const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
+
   }
 };
 

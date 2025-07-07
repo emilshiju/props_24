@@ -4,7 +4,7 @@ import Loader from "@/src/components/loader";
 import { adminLoginApi } from "@/src/lib/api_service_client/admin_service/admin_login_handler";
 import { AdminLoginValues } from "@/src/type/validation_type/formTypes";
 import adminLoginSchema from "@/src/util/validation/adminLogin";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 import { toast } from "react-hot-toast";

@@ -1,12 +1,11 @@
 
 
-import { StarIcon, MapPinIcon, BuildingOfficeIcon, EnvelopeIcon, PhoneIcon, CheckBadgeIcon, ClockIcon, HomeIcon, UserGroupIcon } from '@heroicons/react/24/solid'
-import { HeartIcon, CalendarIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
+import {  MapPinIcon, HomeIcon,} from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import { getPropertyDetailsApi } from '@/src/lib/api_service_client/user_service/profile_handler'
 import { useEffect, useState } from 'react'
 import { property_type } from '@/src/type/components_type/common_type'
-
+import Image from 'next/image';
 
 const FeaturedProperties=({ profileId }: { profileId: string })=>{
 
@@ -35,38 +34,6 @@ const FeaturedProperties=({ profileId }: { profileId: string })=>{
     },[])
     
 
-    const featuredProperties = [
-      {
-        id: 'p1',
-        title: 'Elegante Appartamento nel Centro Storico',
-        price: '€485,000',
-        beds: 2,
-        baths: 1,
-        sqm: 95,
-        image: 'https://picsum.photos/id/1067/600/400',
-         location:'regr'
-      },
-      {
-        id: 'p2',
-        title: 'Villa con Vista Panoramica',
-        price: '€1,250,000',
-        beds: 4,
-        baths: 3,
-        sqm: 280,
-        image: 'https://picsum.photos/id/164/600/400',
-        location:'regr'
-      },
-      {
-        id: 'p3',
-        title: 'Loft Moderno in Zona Residenziale',
-        price: '€320,000',
-        beds: 1,
-        baths: 1,
-        sqm: 75,
-        image: 'https://picsum.photos/id/1048/600/400',
-        location:'regr'
-      }
-    ];
     
 
 
@@ -91,11 +58,17 @@ const FeaturedProperties=({ profileId }: { profileId: string })=>{
                         {allData.map(property => (
                           <div key={property.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                             <div className="h-48 bg-gray-300 relative">
-                              <img 
+                              {/* <img 
                                 src={property.imageUrl} 
                                 alt={property.name} 
                                 className="h-full w-full object-cover"
-                              />
+                              /> */}
+                                <Image
+    src={property.imageUrl}
+    alt={property.name}
+    fill
+    className="object-cover"
+  />
                               {/* <div className="absolute top-2 right-2">
                                 <button className="p-1.5 bg-white rounded-full shadow-sm hover:bg-gray-100">
                                   <HeartIcon className="h-5 w-5 text-gray-400 hover:text-red-500" />

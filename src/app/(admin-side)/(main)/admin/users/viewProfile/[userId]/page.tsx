@@ -4,7 +4,7 @@ import Loader from "@/src/components/loader"
 import { getSingleUserDetailsApi } from "@/src/lib/api_service_client/admin_service/listAllUsersHandler"
 import { UserProfileType } from "@/src/type/components_type/listUsers"
 import Image from "next/image"
-import { useEffect, useId, useState } from "react"
+import { useEffect, useState } from "react"
 import {use} from "react"
 import toast from "react-hot-toast"
 const ViewProfile=({params}:{ params: Promise<{ userId: string }> })=>{
@@ -37,7 +37,7 @@ const ViewProfile=({params}:{ params: Promise<{ userId: string }> })=>{
 
     fetchUserDetails()
 
-  },[])
+  },[userId])
 
     return (
         <div>

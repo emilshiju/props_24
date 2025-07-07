@@ -8,7 +8,7 @@ import {
   cityType,
 } from "@/src/type/components_type/all_admin_type";
 import citySchema from "@/src/util/validation/cities_scehma";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import { toast } from "react-hot-toast";
 import { use, useEffect, useState } from "react";
 import Loader from "@/src/components/loader";
@@ -35,6 +35,7 @@ const EditCitie = ({ params }: { params: Promise<{ id: string }> }) => {
 
   useEffect(() => {
     fetchDetails();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initialValues = {

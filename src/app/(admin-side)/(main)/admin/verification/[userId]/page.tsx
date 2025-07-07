@@ -7,7 +7,6 @@ import { get_EntitiDetails_Api, verifyEntitieApi } from "@/src/lib/api_service_c
 import { user_type } from "@/src/type/components_type/verification_type";
 import {use, useEffect} from "react"
 import Image from "next/image";
-import Badge from "@/src/components/admin/ui/badge/badge";
 import Loader from "@/src/components/loader";
 import toast from "react-hot-toast";
 

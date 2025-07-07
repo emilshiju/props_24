@@ -1,11 +1,9 @@
 "use client"
-import React, { useEffect, useState }  from "react";
-import { addCityApi } from '@/src/lib/api_service_client/admin_service/city_handler';
+import React, { useState }  from "react";
 import { addSpecializationApi } from '@/src/lib/api_service_client/admin_service/specialization_handler';
 import { specialisation_Type } from '@/src/type/api_type/admin_type';
-import { cityType } from '@/src/type/components_type/all_admin_type';
 import specializationSchema from '@/src/util/validation/specialization_scehma';
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
+import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { toast } from 'react-hot-toast';
 import Loader from "@/src/components/loader";
 

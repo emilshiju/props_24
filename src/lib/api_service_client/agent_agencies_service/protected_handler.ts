@@ -1,3 +1,4 @@
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 import axiosClient from "../../axios_client";
 
 export const profileExistsApi = async () => {
@@ -9,13 +10,14 @@ export const profileExistsApi = async () => {
       data: ress.data.message,
       statusCode: ress.status,
     };
-  } catch (error: any) {
-    console.log("error occured in the profileExistsApi", error);
+  } catch (err: unknown) {
+    
+    const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
 
-    return {
-      status: error?.response?.data?.status ?? "error",
-      data: error?.response?.data?.message ?? "something went wrong ",
-      statusCode: error?.response?.status ?? 500,
-    };
   }
 };

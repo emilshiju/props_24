@@ -1,5 +1,6 @@
 import { FormValues, LoginValues } from "@/src/type/validation_type/formTypes";
 import axiosClient from "../../axios_client";
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 
 export const registerUserApi = async (userDetails: FormValues) => {
   try {
@@ -12,11 +13,15 @@ export const registerUserApi = async (userDetails: FormValues) => {
       data: responseRegisterUsrApi.data,
       statusCode: responseRegisterUsrApi.status,
     };
-  } catch (error: any) {
-    return {
-      status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
-    };
+  } catch (err) {
+    
+     const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
+
   }
 };
 
@@ -29,15 +34,15 @@ export const loginUserApi = async (userData: LoginValues) => {
       data: loginUserAPi.data.message,
       statusCode: loginUserAPi.status,
     };
-  } catch (error: any) {
-    console.log("error occurred in loginUserApi:", error);
+  } catch (err) {
+    
+     const error=getApiErrorMessage(err)
 
-    const errorMessage =
-      error.response?.data?.message ||
-      error.message ||
-      "Something went wrong. Please try again.";
+    return {
+      status: false,
+      data: error
+    };
 
-    return { status: false, data: errorMessage };
   }
 };
 
@@ -50,13 +55,15 @@ export const checkEmailApi = async (data: string) => {
       data: ress.data.message,
       statusCode: ress.data,
     };
-  } catch (error: any) {
-    console.log("error occuredin checkemail api route", error);
+  } catch (err) {
+    
+     const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error.response?.data?.message || "something went wrong",
+      data: error
     };
+
   }
 };
 
@@ -69,11 +76,14 @@ export const logoutApi = async () => {
       data: ress.data.message,
       statusCode: ress.status,
     };
-  } catch (error: any) {
-    console.log("error occured in the logoutApi", error);
+  } catch (err) {
+    
+     const error=getApiErrorMessage(err)
+
     return {
       status: false,
-      data: error.response?.data?.message || "internal server error",
+      data: error
     };
+
   }
 };

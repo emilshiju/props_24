@@ -3,7 +3,7 @@ import prisma from "../prisma_client";
 
 export async function addReviewDetails(data: reviewReqType) {
   try {
-    const added = await prisma.review.create({
+     await prisma.review.create({
       data: {
         name: data.name,
         content: data.content,

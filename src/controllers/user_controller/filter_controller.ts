@@ -1,4 +1,7 @@
+import { FilterSection_Type } from "@/src/type/components_type/filter_type";
 import prisma from "../prisma_client";
+
+
 
 export async function getAllAgent() {
   try {
@@ -89,21 +92,21 @@ export async function getFilter() {
 }
 
 export async function applyComplexFilters(
-  sideBarFilteredData: any,
-  sectionName: any,
-  currentData: any,
-  status: any,
-  item: any
+  sideBarFilteredData: FilterSection_Type[],
+  sectionName: string,
+  currentData: string,
+  status: boolean,
+  item: "admin"|"user"|"agent"|"agencies"
 ) {
   try {
     console.log("sectin nameeeeeeeeeeeeeeeeeeeeeeeeeee");
     console.log(sideBarFilteredData);
 
-    const promises = sideBarFilteredData.map(async (data: any) => {
+    const promises = sideBarFilteredData.map(async (data) => {
       if (data.name === "city") {
         const cityValues = data.options
-          .filter((option: any) => option.checked)
-          .map((option: any) => option.value);
+          .filter((option) => option.checked)
+          .map((option) => option.value);
 
         const allFilteredCity = await prisma.profile.findMany({
           where: {
@@ -134,8 +137,8 @@ export async function applyComplexFilters(
 
       if (data.name === "specialization") {
         const specializationValues = data.options
-          .filter((option: any) => option.checked)
-          .map((option: any) => option.value);
+          .filter((option) => option.checked)
+          .map((option) => option.value);
 
         const allFilteredSpecialization = await prisma.profile.findMany({
           where: {
@@ -194,14 +197,16 @@ export async function getAllList() {
 
     return list;
   } catch (error) {
-    console.log("error occured in getAllList controler");
+    console.log("error occured in getAllList controler",error);
     return false;
   }
 }
 
 export async function searchAll(data: string) {
   try {
-    const allData: any = { allAgent: [], allAgencies: [], allCity: [] };
+    
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const allData:any = { allAgent: [], allAgencies: [], allCity: [] };
 
     const allAgentList = await prisma.profile.findMany({
       where: {
@@ -228,6 +233,10 @@ export async function searchAll(data: string) {
         reviews: true,
       },
     });
+
+    if(!allAgentList){
+      return false
+    }
 
     allData.allAgent.push(...allAgentList);
 

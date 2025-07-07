@@ -31,7 +31,7 @@ export async function resetPassword(email: string, password: string) {
       return false;
     }
 
-    const updatedUser = await prisma.user.update({
+     await prisma.user.update({
       where: { email },
       data: { password: password },
     });

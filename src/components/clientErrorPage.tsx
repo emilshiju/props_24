@@ -7,7 +7,7 @@ type Props = {
   error: Error | null;
 };
 
-const ClientErrorPage: React.FC<Props> = ({ error }) => {
+const ClientErrorPage: React.FC<Props> = () => {
   const router = useRouter();
 
   return (

@@ -24,9 +24,10 @@ const Footer = ()=>{
                         <p className="text-lg font-bold text-primary">Props24</p>
                         <p className="text-sm text-gray-500 mb-4">The TripAdvisor for Real Estate Agents</p>
                       </div>
-                      <p className="text-sm text-gray-500 hidden md:block">
-                        Since 2020, we've been helping clients find the best real estate agents across Italy.
-                      </p>
+                   <p className="text-sm text-gray-500 hidden md:block">
+  Since 2020, we&apos;ve been helping clients find the best real estate agents across Italy.
+</p>
+
                     </div>
                   </div>
                   

@@ -3,6 +3,7 @@ import {
   detailedCityReqType,
 } from "@/src/type/components_type/all_admin_type";
 import axiosClient from "../../axios_client";
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 
 export const addCityApi = async (data: cityType) => {
   try {
@@ -13,13 +14,15 @@ export const addCityApi = async (data: cityType) => {
       data: resAddCitieApi.data.message,
       statusCode: resAddCitieApi.status,
     };
-  } catch (error: any) {
-    console.log("error occured in add cities api", error);
+  } catch (err: unknown) {
+    
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error.response?.data?.message || "Internal  error",
+      data: error
     };
+
   }
 };
 
@@ -32,13 +35,15 @@ export const listCityApi = async () => {
       data: resListCitieApi.data.message,
       statusCode: resListCitieApi.status,
     };
-  } catch (error: any) {
-    console.log("error occured in listCitie", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+
   }
 };
 
@@ -53,13 +58,15 @@ export const singleCityDisplayApi = async (cityId: string) => {
       data: resSingleCityDisplayApi.data.message,
       statusCode: resSingleCityDisplayApi.status,
     };
-  } catch (error: any) {
-    console.log("erro roccur in the singleCityDisplayAPi", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+
   }
 };
 
@@ -75,13 +82,15 @@ export const editCityApi = async (cityId: string, data: cityType) => {
       data: resEditCityApi.data.message,
       statusCode: resEditCityApi.status,
     };
-  } catch (error: any) {
-    console.log("error ocured in editCitieApi", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+
   }
 };
 
@@ -96,13 +105,14 @@ export const deleteCityApi = async (cityId: string) => {
       data: resDeleteCitieApi.data.message,
       statusCode: resDeleteCitieApi.status,
     };
-  } catch (error: any) {
-    console.log("error ocrrued in delteCitieApi", error);
+  } catch (err:unknown) {
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+
   }
 };
 
@@ -118,12 +128,12 @@ export const cityDetailsApi = async (data: detailedCityReqType) => {
       data: resCityDetailsApi.data.message,
       statusCode: resCityDetailsApi.status,
     };
-  } catch (error: any) {
-    console.log("error occrued in cityDetailsApi", error);
+  } catch (err:unknown ) {
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
   }
 };
@@ -139,12 +149,12 @@ export const listCityDetailsApi = async () => {
       data: resListCityDetailsApi.data.message,
       statusCode: resListCityDetailsApi.status,
     };
-  } catch (error: any) {
-    console.log("error occured in listCityApi", error);
+  } catch (err:unknown) {
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
   }
 };
@@ -160,15 +170,18 @@ export const detailedViewCityApi = async (id: string) => {
       data: resDetailedViewCityApi.data.message,
       statusCode: resDetailedViewCityApi.status,
     };
-  } catch (error: any) {
-    console.log("error occured in getDetailedCityApi", error);
+  } catch (err: unknown) {
+
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
-  }
-};
+
+    
+  };
+}
 
 export const editDetailedCityApi = async (
   id: string,
@@ -185,12 +198,14 @@ export const editDetailedCityApi = async (
       data: resEditDetailedCityAPi.data.message,
       statusCode: resEditDetailedCityAPi.status,
     };
-  } catch (error: any) {
-    console.log("error occured in editDetailedCityApi");
+  } catch (err: unknown) {
+    
+    const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
 
-    return {
-      status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
-    };
   }
 };

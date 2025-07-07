@@ -11,7 +11,6 @@ import {
     TableRow,
   } from "@/src/components/admin/ui/table"
 
-import Badge from "@/src/components/admin/ui/badge/badge"
 import Image from "next/image";
 import { get_AllPending_Verification_AgenciesApi } from "@/src/lib/api_service_client/admin_service/pendingdVerificationHandler";
 import { user_type } from "@/src/type/components_type/verification_type";

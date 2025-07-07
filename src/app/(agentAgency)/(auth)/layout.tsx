@@ -1,11 +1,8 @@
 "use client";
-import { profileExistsApi } from "@/src/lib/api_service_client/agent_agencies_service/protected_handler";
 import "../../globals.css";
 
 import { Inter } from "next/font/google";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Loader from "@/src/components/loader";
+import React from "react";
 import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });

@@ -3,8 +3,7 @@ import {
   detailedCityReqType,
 } from "@/src/type/components_type/all_admin_type";
 import prisma from "../prisma_client";
-// import { AddCityResponse } from "@/src/type/controller_type/admin_controller";
-import { Asul } from "next/font/google";
+
 
 export async function addCity(data: cityType) {
   try {
@@ -21,7 +20,7 @@ export async function addCity(data: cityType) {
       return { status: "exists", message: "already exists" };
     }
 
-    const response = await prisma.city.create({
+     await prisma.city.create({
       data: {
         cityName: data.city.trim(),
         country: data.country,
@@ -44,7 +43,7 @@ export async function listCity() {
       },
     });
 
-    const filtered = response.filter((city) => city.details);
+    await response.filter((city) => city.details);
 
     return response;
   } catch (error) {
@@ -74,7 +73,7 @@ export async function detailedView(cityId: string) {
 
 export async function editCity(id: string, data: cityType) {
   try {
-    const updatedCity = await prisma.city.update({
+     await prisma.city.update({
       where: {
         id: id,
       },
@@ -104,7 +103,7 @@ export async function deleteCity(cityId: string) {
       return false;
     }
 
-    const deletedCity = await prisma.city.delete({
+     await prisma.city.delete({
       where: {
         id: cityId,
       },
@@ -131,7 +130,7 @@ export async function addDetailedCity(data: detailedCityReqType) {
       return { status: "exists", message: "City details already exist." };
     }
 
-    const added = await prisma.cityDetails.create({
+    await prisma.cityDetails.create({
       data: {
         cityId: data.city,
         availableProperties: data.details.availableProperties,
@@ -196,7 +195,7 @@ export async function detailedViewCity(id: string) {
 
     return city;
   } catch (error) {
-    console.log("error occured in detailedViewCity");
+    console.log("error occured in detailedViewCity",error);
     return false;
   }
 }

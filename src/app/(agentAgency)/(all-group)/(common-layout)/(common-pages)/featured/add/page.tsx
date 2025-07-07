@@ -1,12 +1,11 @@
 "use client";
 import {
-  addCityApi,
   listCityApi,
 } from "@/src/lib/api_service_client/admin_service/city_handler";
 import { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/navigation";
+
 import featurePropertieSchema from "@/src/util/validation/feature_propertie_schema";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import { cityResType } from "@/src/type/components_type/all_admin_type";
 import { X } from "lucide-react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -18,8 +17,10 @@ import "primeicons/primeicons.css";
 import { PropertyType } from "@/src/type/validation_type/propertyType";
 import { addPropertyApi } from "@/src/lib/api_service_client/agent_agencies_service/property_handler";
 import Loader from "@/src/components/loader";
+import NextImage from "next/image";
 
 const AddFeaturedProperties = () => {
+  
   const [showPropertyImage, setPropertieImage] = useState(false);
 
   const [showLoader, setLoader] = useState(false);
@@ -32,7 +33,7 @@ const AddFeaturedProperties = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [previewURL, setPreviewURL] = useState<string>("");
 
-  const router = useRouter();
+  
 
   const fetchAllCity = async () => {
     const resAllCity = await listCityApi();
@@ -352,11 +353,21 @@ const AddFeaturedProperties = () => {
             {file ? (
               <div className="flex items-center justify-between border rounded-md p-4 shadow-sm bg-white">
                 <div className="flex items-center space-x-4">
-                  <img
+                  {/* <img
                     src={previewURL}
                     alt="Preview"
                     className="w-[100px] h-[100px]  object-cover rounded-sm"
-                  />
+                  /> */}
+
+                  <NextImage
+  src={previewURL}
+  alt="Preview"
+  width={100}
+  height={100}
+  className="object-cover rounded-sm"
+/>
+
+                  
                   <div className="flex flex-col">
                     <span className="text-sm font-medium text-gray-800">
                       {file.name}

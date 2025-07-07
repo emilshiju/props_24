@@ -32,7 +32,7 @@ export async function POST(request:NextRequest){
        return NextResponse.json({status:true,message:"sucessfully added"},{status:200})
 
     }catch(error){
-        console.log("error occured in  route agentAgencies property add ")
+        console.log("error occured in  route agentAgencies property add ",error)
         return NextResponse.json({status:false,message:'internal server error'},{status:500})
     }
 }

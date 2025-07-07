@@ -5,7 +5,7 @@ import { useSidebar } from "@/src/context/admin_context/sidebar_context";
 import AppHeader from "@/src/components/admin/AppHeader";
 import AppSidebar from "@/src/components/admin/AppSidebar";
 import Backdrop from "@/src/components/admin/Backdrop";
-import {toast ,Toaster } from 'react-hot-toast';
+import {Toaster } from 'react-hot-toast';
 
 const AdminLayout=({ children }: { children: React.ReactNode })=>{
 

@@ -1,4 +1,6 @@
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 import axiosClient from "../../axios_client";
+
 
 export const requestOtpApi = async (data: string) => {
   try {
@@ -9,10 +11,12 @@ export const requestOtpApi = async (data: string) => {
       data: ress.data.message,
       statusCode: ress.status,
     };
-  } catch (error: any) {
+  } catch (err) {
+     const error=getApiErrorMessage(err)
+
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
   }
 };
@@ -29,12 +33,14 @@ export const verifyOtpApi = async (otp: string, email: string) => {
       data: resposneVerityOtpApi.data,
       statusCode: resposneVerityOtpApi.status,
     };
-  } catch (error: any) {
-    console.log("error in verifyOTPAPI", error);
+  } catch (err) {
 
-    return {
-      status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
-    };
+     const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
+
   }
 };

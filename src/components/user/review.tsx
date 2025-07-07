@@ -1,12 +1,11 @@
 
 
-import { StarIcon, MapPinIcon, BuildingOfficeIcon, EnvelopeIcon, PhoneIcon, CheckBadgeIcon, ClockIcon, HomeIcon, UserGroupIcon } from '@heroicons/react/24/solid'
-import { HeartIcon, CalendarIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
-import Link from 'next/link'
+import { StarIcon    } from '@heroicons/react/24/solid'
+import {  CalendarIcon  } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react'
 import { listSeparatedReviewApi } from '@/src/lib/api_service_client/user_service/review_handler'
 import { reviewResType } from '@/src/type/components_type/all_users_type'
-import { useSearchParams,useRouter,usePathname } from 'next/navigation'
+import {useRouter } from 'next/navigation'
 
 
 const ListReview=({ profileId }: { profileId: string })=>{
@@ -65,7 +64,7 @@ const ListReview=({ profileId }: { profileId: string })=>{
           </Link> */}
         </div>
         <div className="border-t border-gray-200">
-          {allData&&allData.map((data,index) => (
+          {allData&&allData.map((data) => (
             <div key={data.id} className="px-4 py-5 sm:px-6 border-b border-gray-200 last:border-b-0">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">

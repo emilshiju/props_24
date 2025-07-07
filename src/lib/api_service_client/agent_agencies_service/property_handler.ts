@@ -2,8 +2,10 @@ import { PropertyType } from "@/src/type/validation_type/propertyType";
 import axiosClient from "../../axios_client";
 import {
   formPropertyType,
-  PropertyResType,
+
 } from "@/src/type/api_type/common_type";
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
+
 
 export const addPropertyApi = async (data: PropertyType, imageUrl: string) => {
   try {
@@ -25,15 +27,15 @@ export const addPropertyApi = async (data: PropertyType, imageUrl: string) => {
       data: resAddPropertyApi.data.message,
       statusCode: resAddPropertyApi.status,
     };
-  } catch (error: any) {
-    console.log("error occurred in addPropertyApi:", error);
+  } catch (err) {
+    
+    const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
 
-    const errorMessage =
-      error.response?.data?.message ||
-      error.message ||
-      "Something went wrong. Please try again.";
-
-    return { status: false, data: errorMessage };
   }
 };
 
@@ -48,11 +50,12 @@ export const listAllPropertyApi = async () => {
       data: resAllProperty.data.message,
       statusCode: resAllProperty.status,
     };
-  } catch (error) {
-    console.log("error occured in listAllPropertyAPi");
+  } catch (err) {
+    const error=getApiErrorMessage(err)
+
     return {
       status: false,
-      data: "internal error",
+      data: error
     };
   }
 };
@@ -68,11 +71,12 @@ export const findSinglePropertyAPi = async (id: string) => {
       data: resFindSinglePropertyApi.data.message,
       statusCode: resFindSinglePropertyApi.status,
     };
-  } catch (error) {
-    console.log("error occured in findSinglePropertyApi", error);
+  } catch (err) {
+    const error=getApiErrorMessage(err)
+
     return {
       status: false,
-      data: "internal error",
+      data: error
     };
   }
 };
@@ -91,13 +95,15 @@ export const editProperetyApi = async (data: formPropertyType, id: string) => {
       data: resEdited.data.message,
       statusCode: resEdited.status,
     };
-  } catch (error: any) {
-    console.log("error occured in editPropertyApi", error);
+  } catch (err:unknown) {
+    
+    const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+
   }
 };
 
@@ -112,11 +118,14 @@ export const deletePropertyApi = async (id: string) => {
       data: deleted.data.message,
       statusCode: deleted.status,
     };
-  } catch (error: any) {
-    console.log("error occured in deletePropertyAPi", error);
+  } catch (err) {
+    
+    const error=getApiErrorMessage(err)
+
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+
   }
 };

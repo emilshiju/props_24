@@ -22,7 +22,7 @@ export async function POST(request:NextRequest){
         return NextResponse.json({status:true,message:"sucess"},{status:200})
 
     }catch(error){
-        console.log("error occured in exists email checking route")
+        console.log("error occured in exists email checking route",error)
         return NextResponse.json({status:false,message:"internal error"},{status:500})
     }
     

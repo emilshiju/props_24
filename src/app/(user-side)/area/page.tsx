@@ -1,20 +1,14 @@
 "use client";
-import {
-  MapPinIcon,
-  HomeIcon,
-  BuildingOfficeIcon,
-} from "@heroicons/react/24/outline";
+
 import Link from "next/link";
-import { sampleLocations } from "@/src/util/data/sampleData";
+
 import { useEffect, useState } from "react";
 import {
   cityAndDetaield,
-  cityResType,
 } from "@/src/type/components_type/all_admin_type";
 import { listAllCityApi } from "@/src/lib/api_service_client/user_service/area_handler";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Loader from "@/src/components/loader";
 import ListCitiesSkeleton from "@/src/components/user/listCity_skeleton";
 import toast from "react-hot-toast";
 
@@ -55,7 +49,7 @@ const AllLocation = () => {
         {/* Hero Header */}
         <div className="mb-12 bg-gradient-to-r from-primary to-primary-light py-12 px-6 rounded-xl text-center text-white">
           <h1 className="text-3xl font-bold sm:text-4xl mb-4">
-            Explore Italian Cities
+            Explore  Cities
           </h1>
           <p className="text-lg text-primary-light/90 max-w-2xl mx-auto">
             Discover the main cities and areas that make Italy an extraordinary

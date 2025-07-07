@@ -10,7 +10,6 @@ import {
   TableRow,
 } from "@/src/components/admin/ui/table"
 
-import Badge from "@/src/components/admin/ui/badge/badge"
 import Image from "next/image";
 import { blockUserApi, listAllUsersApi, unblockUserApi } from "@/src/lib/api_service_client/admin_service/listAllUsersHandler";
 import { resListUsers, user_type } from "@/src/type/api_type/admin_type";
@@ -152,7 +151,7 @@ const ListUsers=()=>{
   
               {/* Table Body */}
               <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                {allUsers&&allUsers.map((user,index) => (
+                {allUsers&&allUsers.map((user) => (
                   <TableRow key={user.id}>
                     <TableCell className="px-5 py-4 sm:px-6 text-start">
                       <div className="flex items-center gap-3">

@@ -39,7 +39,7 @@ export async function listSpecialization() {
 
     return allSpecialization;
   } catch (error) {
-    console.log("error occrued in listSpecialization");
+    console.log("error occrued in listSpecialization",error);
 
     return false;
   }
@@ -47,7 +47,7 @@ export async function listSpecialization() {
 
 export async function deleteSpecialization(id: string) {
   try {
-    const deleted = await prisma.specialization.delete({
+   await prisma.specialization.delete({
       where: {
         id: id,
       },

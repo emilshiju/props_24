@@ -93,7 +93,7 @@ const ListCitie = () => {
               {/* Table Body */}
               <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
                 {allCitie &&
-                  allCitie.map((city, index) => (
+                  allCitie.map((city) => (
                     <TableRow key={city.id}>
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                         {city.cityName}

@@ -9,7 +9,7 @@ export async function get_All_Pending_VerificationAgent() {
 
     return res_agent;
   } catch (error) {
-    console.log("error occur in get_all_pending_verification_agent");
+    console.log("error occur in get_all_pending_verification_agent",error);
 
     return false;
   }
@@ -24,7 +24,7 @@ export async function get_All_Pending_VerificationAgencies() {
 
     return res_agencies;
   } catch (error) {
-    console.log("error occur in get_all_pending_verification_agencies");
+    console.log("error occur in get_all_pending_verification_agencies",error);
 
     return false;
   }
@@ -64,7 +64,7 @@ export async function getDetails(userId: string) {
 
 export async function verifyProfile(profileId: string) {
   try {
-    const verifiedProfile = await prisma.profile.update({
+   await prisma.profile.update({
       where: {
         id: profileId,
       },

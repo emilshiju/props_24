@@ -1,12 +1,11 @@
 import { checkIsVerified } from "@/src/controllers/agentAgenciesController/common_controller";
 import { extracted_token } from "@/src/type/controller_type/token_type";
-import { profileType } from "@/src/type/controller_type/user_controller";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import { cookies } from 'next/headers';
 import { jwtDecode } from 'jwt-decode'
 
 
-export async function GET(request:NextRequest){
+export async function GET(){
 
 
     try{

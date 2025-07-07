@@ -26,7 +26,7 @@ export async function GET(request:NextRequest,{params}:{params:{id:string}}){
 
     }catch(error){
 
-        console.log("error occured in the route review list")
+        console.log("error occured in the route review list",error)
         return NextResponse.json({status:false,message:'error occured'},{status:500})
     }
 }

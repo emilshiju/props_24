@@ -1,5 +1,5 @@
 "use client";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Form, Field,  } from "formik";
 import featurePropertieSchema from "@/src/util/validation/feature_propertie_schema";
 import { use, useEffect, useState } from "react";
 import {
@@ -22,6 +22,7 @@ const EditFeaturedProperty = ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = use(params);
+  
   const router = useRouter();
 
   const [allData, setAllData] = useState<PropertyResType | null>(null);
@@ -73,7 +74,7 @@ const EditFeaturedProperty = ({
 
   const handleSubmit = async (
     values_data: formPropertyType,
-    formikHelpers: FormikHelpers<formPropertyType>
+    
   ) => {
     setLoader(true);
     const edited = await editProperetyApi(values_data, id);

@@ -1,9 +1,6 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import { Dropdown } from "../dropdown/Dropdown";
-import { DropdownItem } from "../dropdown/DropdownItem";
 import { logoutApi } from "@/src/lib/api_service_client/user_service/auth_handler";
 import toast from "react-hot-toast";
 import { useRouter } from 'next/navigation';

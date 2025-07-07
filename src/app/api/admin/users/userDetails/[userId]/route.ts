@@ -23,7 +23,7 @@ export async function GET(request:NextRequest,{params}:{params:{userId:string}})
 
     }catch(error){
         
-        console.log("error occured in route userdetails")
+        console.log("error occured in route userdetails",error)
 
         return NextResponse.json({status:false, message: 'internal error' },{status:500});
         

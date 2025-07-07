@@ -1,9 +1,6 @@
 "use client";
 import {
-  MagnifyingGlassIcon,
   StarIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
 } from "@heroicons/react/24/solid";
 
 import Link from "next/link";
@@ -31,19 +28,17 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { listCityApi } from "@/src/lib/api_service_client/admin_service/city_handler";
-import { listSpecializationApi } from "@/src/lib/api_service_client/admin_service/specialization_handler";
-import {
-  cityResType,
-  specialisation_Res_Type,
-} from "@/src/type/components_type/all_admin_type";
+
+
 import {
   getSideBarFilterAPi,
   getChangedSideBarFilterApi,
   getAll,
   getAllSearchedListApi,
 } from "@/src/lib/api_service_client/user_service/filter_handler";
-import { string } from "yup";
+import { FilterOption, FilterSection_Type } from "@/src/type/components_type/filter_type";
+import { agent_agencies } from "@/src/type/components_type/common_type";
+
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -55,9 +50,7 @@ const sortOptions = [
 const subCategories = [
   { name: "Agent", href: "#" },
   { name: "Agencies", href: "#" },
-  // { name: 'Travel Bags', href: '#' },
-  // { name: 'Hip Bags', href: '#' },
-  // { name: 'Laptop Sleeves', href: '#' },
+
 ];
 const filters = [
   {
@@ -97,18 +90,26 @@ const filters = [
   },
 ];
 
-function classNames(...classes: any) {
+// function classNames(...classes:any) {
+//   return classes.filter(Boolean).join(" ");
+// }
+
+function classNames(...classes: Array<string | false | null | undefined>): string {
   return classes.filter(Boolean).join(" ");
 }
+
 
 export default function Example() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const [sideBarFilter, setSideBarFilter] = useState<FilterSection_Type[]>([]);
 
-  const [listAllFilteredProduct, setAllFilteredProduct] = useState([]);
+  const [listAllFilteredProduct, setAllFilteredProduct] = useState<
+      // agent_agencies[]
+      agent_agencies[]
+    >([]);
 
-  const [listAll, setAll] = useState([]);
+  // const [listAllFilteredProduct, setAllFilteredProduct] = useState([]);
 
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search");
@@ -173,10 +174,10 @@ export default function Example() {
     router.replace(`${pathname}?${params.toString()}`);
     // setSearchParams(searchParams);
 
-    const updatedSideBarFilter: any = sideBarFilter.map((data: any, index) => {
+    const updatedSideBarFilter: FilterSection_Type[] = sideBarFilter.map((data:FilterSection_Type,) => {
       if (data.name == sectionName) {
         console.log("got", data.name);
-        data.options = data.options.map((one: any) => {
+        data.options = data.options.map((one:FilterOption) => {
           if (one.value === valueId) {
             console.log("secc", one.value);
             return { ...one, checked: isChecked }; // Set the checked value accordingly
@@ -190,34 +191,17 @@ export default function Example() {
     console.log("tttttttttttttttttttttttttttttt");
     console.log(updatedSideBarFilter);
 
-    // if(sectionName=='Agent'){
-
-    //   if(valueId=='Agent'&&isChecked==true)
-    //     res.push({ name: 'agent', options: [{ checked: true }] });
-    //   else
-    //     res.push({ name: 'agent', options: [{ checked: false}] });
-
-    // }
-
-    //   if(sectionName=='Agencies'){
-
-    //     if(valueId=='Agencies'&&isChecked==true){
-    //       res.push({ name: 'agencies', options: [{ checked: true }] });
-    //     }else{
-    //       res.push({ name: 'agencies', options: [{ checked: false}] });
-    //     }
-
-    //   }
-
-    // console.log(res)
+   
     setSideBarFilter(updatedSideBarFilter);
 
     const filteredResult = await getChangedSideBarFilterApi(
+      {
       updatedSideBarFilter,
-      { sectionName: sectionName },
-      { value: valueId },
-      { status: isChecked }
-    );
+       sectionName: sectionName ,
+       value: valueId ,
+      status: isChecked ,
+      item:"agent"
+  });
 
     setAllFilteredProduct(filteredResult.data);
   };
@@ -414,46 +398,7 @@ export default function Example() {
               <form className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
 
-                {/* <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <div key={category.name} className="flex gap-3">
-                            <div className="flex h-5 shrink-0 items-center">
-                              <div className="group grid size-4 grid-cols-1">
-                                <input
-                                  onChange={(e)=>changeSideBarFiltering(category.name,category.name,e.target.checked)}
-                                  type="checkbox"
-                                  className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                                />
-                                <svg
-                                  fill="none"
-                                  viewBox="0 0 14 14"
-                                  className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
-                                >
-                                  <path
-                                    d="M3 8L6 11L11 3.5"
-                                    strokeWidth={2}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="opacity-0 group-has-checked:opacity-100"
-                                  />
-                                  <path
-                                    d="M3 7H11"
-                                    strokeWidth={2}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="opacity-0 group-has-indeterminate:opacity-100"
-                                  />
-                                </svg>
-                              </div>
-                            </div>
-                            <label  className="text-sm text-gray-600">
-                            {category.name}
-                            </label>
-                          </div>
-                    </li>
-                  ))}
-                </ul> */}
+                
 
                 {sideBarFilter.map((section) => (
                   <Disclosure
@@ -538,10 +483,9 @@ export default function Example() {
               {/* Product grid */}
               <div className="lg:col-span-3">
                 <div className="flex flex-wrap justify-center sm:justify-start gap-4">
-                  {/* <div className="flex justify-center" > */}
-                  {/* <div className="sm:grid grid-cols-1  sm:grid-cols-1 md:grid-cols-3 gap-4"> */}
+                  
                   {listAllFilteredProduct &&
-                    listAllFilteredProduct.map((data: any, index) => (
+                    listAllFilteredProduct.map((data, index) => (
                       <div
                         key={index}
                         className="w-[280px] sm:w-[285px] flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
@@ -579,114 +523,7 @@ export default function Example() {
                         </div>
                       </div>
 
-                      /* <div
-                            key='2'
-                            className="w-[280px] sm:w-[285px]  flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
-                          >
-                            <Link href="#">
-                              <div className="flex justify-center pt-4">
-                                <Image
-                                  className="rounded-t-lg"
-                                  src="/images/profile.png"
-                                  alt="Technology acquisitions"
-                                  width={245}
-                                  height={235}
-                                />
-                              </div>
-                            </Link>
-                            <div className="flex items-center p-3 pl-6">
-                              <div className="flex text-yellow-400">
-                                <StarIcon key={1} className="h-5 w-5" />
-                                <StarIcon key={2} className="h-5 w-5" />
-                                <StarIcon key={3} className="h-5 w-5" />
-                              </div>
-                              <span className="text-black text-1 text-sm">(20 reviews)</span>
-                            </div>
-                            <div className="text-start pl-6">
-                              <Link href="#">
-                                <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
-                                  'okjio'
-                                </h5>
-                              </Link>
-                              <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
-                                jhiuhiu
-                              </p>
-                            </div>
-                          </div>
-
-
-
-                          <div
-                            key='3'
-                            className="w-[280px] sm:w-[285px]  flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
-                          >
-                            <Link href="#">
-                              <div className="flex justify-center pt-4">
-                                <Image
-                                  className="rounded-t-lg"
-                                  src="/images/profile.png"
-                                  alt="Technology acquisitions"
-                                  width={245}
-                                  height={235}
-                                />
-                              </div>
-                            </Link>
-                            <div className="flex items-center p-3 pl-6">
-                              <div className="flex text-yellow-400">
-                                <StarIcon key={1} className="h-5 w-5" />
-                                <StarIcon key={2} className="h-5 w-5" />
-                                <StarIcon key={3} className="h-5 w-5" />
-                              </div>
-                              <span className="text-black text-1 text-sm">(20 reviews)</span>
-                            </div>
-                            <div className="text-start pl-6">
-                              <Link href="#">
-                                <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
-                                  'okjio'
-                                </h5>
-                              </Link>
-                              <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
-                                jhiuhiu
-                              </p>
-                            </div>
-                          </div>
-
-
-
-                          <div
-                            key='4'
-                            className="w-[280px] sm:w-[285px]  flex-shrink-0 bg-white border border-gray-200 rounded-lg shadow-sm scroll-snap-align-start"
-                          >
-                            <Link href="#">
-                              <div className="flex justify-center pt-4">
-                                <Image
-                                  className="rounded-t-lg"
-                                  src="/images/profile.png"
-                                  alt="Technology acquisitions"
-                                  width={245}
-                                  height={235}
-                                />
-                              </div>
-                            </Link>
-                            <div className="flex items-center p-3 pl-6">
-                              <div className="flex text-yellow-400">
-                                <StarIcon key={1} className="h-5 w-5" />
-                                <StarIcon key={2} className="h-5 w-5" />
-                                <StarIcon key={3} className="h-5 w-5" />
-                              </div>
-                              <span className="text-black text-1 text-sm">(20 reviews)</span>
-                            </div>
-                            <div className="text-start pl-6">
-                              <Link href="#">
-                                <h5 className="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
-                                  'okjio'
-                                </h5>
-                              </Link>
-                              <p className="mb-3 font-normal text-gray-700 text-sm sm:text-base">
-                                jhiuhiu
-                              </p>
-                            </div>
-                          </div>  */
+                     
                     ))}
                 </div>
               </div>

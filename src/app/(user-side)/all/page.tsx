@@ -1,25 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams, useRouter} from "next/navigation";
 import Link from "next/link";
-import { StarIcon, MapPinIcon } from "@heroicons/react/24/solid";
+
+
 import {
-  MagnifyingGlassIcon,
-  HomeIcon,
-  BuildingOfficeIcon,
-  UserGroupIcon,
-} from "@heroicons/react/24/outline";
-import {
-  getAllAgentApi,
-  getAllDataApi,
   getAllSearchedListApi,
 } from "@/src/lib/api_service_client/user_service/filter_handler";
+
 import Image from "next/image";
-import { listAllCityApi } from "@/src/lib/api_service_client/user_service/area_handler";
-import { cityAndDetaield } from "@/src/type/components_type/all_admin_type";
+
 import SkeletonList from "@/src/components/user/skeleton_agent";
 import ReviewStars from "@/src/components/user/reviewStars";
+import { AllCity, EntitytProfile } from "@/src/type/components_type/search_type";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -28,9 +22,9 @@ export default function SearchPage() {
   const [showLoader, setLoader] = useState(false);
 
   interface Results {
-    agents: any[]; // Or a more specific type if you know the structure of agents
-    agencies: any[]; // Same as above
-    locations: any[]; // Same as above
+    agents: EntitytProfile[];
+    agencies:EntitytProfile[]; // Same as above
+    locations: AllCity[]; // Same as above
   }
 
   const [activeTab, setActiveTab] = useState<string | number | null>(null); // Adjust based on your requirements
@@ -130,7 +124,7 @@ export default function SearchPage() {
               {/* <div className="flex justify-center" > */}
               {/* <div className="sm:grid grid-cols-1  sm:grid-cols-1 md:grid-cols-3 gap-4"> */}
               {results.agents &&
-                results.agents.map((data: any, index) => (
+                results.agents.map((data, index) => (
                   <div
                     key={index}
                     //  onClick={()=>navigateToDetailPage(data.id)}
@@ -183,7 +177,7 @@ export default function SearchPage() {
               {/* <div className="flex justify-center" > */}
               {/* <div className="sm:grid grid-cols-1  sm:grid-cols-1 md:grid-cols-3 gap-4"> */}
               {results.agencies &&
-                results.agencies.map((data: any, index) => (
+                results.agencies.map((data, index) => (
                   <div
                     // onClick={()=>navigateToDetailPage(data.id)}
                     key={index}

@@ -6,13 +6,13 @@ import {
   registeredUser,
   VerifyOTPResponse,
 } from "@/src/type/controller_type/user_controller";
-import { v4 as uuidv4 } from "uuid";
+
 
 export async function registerUser(
   details: UserDetails
 ): Promise<{ status: boolean; user?: registeredUser }> {
   try {
-    let user = await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         userName: details.userName,
         email: details.email,
@@ -52,7 +52,7 @@ export async function otpRegister(
       await prisma.otp.deleteMany({ where: { email: email } });
     }
 
-    const register = await prisma.otp.create({
+     await prisma.otp.create({
       data: { email: email, otp: otp },
     });
 
@@ -222,7 +222,7 @@ export async function getPropertyUser(profileId: string) {
 
     return properties;
   } catch (error) {
-    console.log("error occured in getpropertyUser");
+    console.log("error occured in getpropertyUser",error);
     return false;
   }
 }
@@ -239,7 +239,7 @@ export async function checkEmail(data: string) {
 
     return { status: "not_exists" };
   } catch (error) {
-    console.log("error occured in checkEmail");
+    console.log("error occured in checkEmail",error);
 
     return { status: "error" };
   }

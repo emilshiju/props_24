@@ -1,9 +1,9 @@
 import { getAllList } from "@/src/controllers/user_controller/filter_controller";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
 
 
-export async function GET(request:NextRequest){
+export async function GET(){
 
 
     try{
@@ -14,6 +14,6 @@ export async function GET(request:NextRequest){
 
 
     }catch(error){
-        console.log("error occur in route user list")
+        console.log("error occur in route user list",error)
     }
 }

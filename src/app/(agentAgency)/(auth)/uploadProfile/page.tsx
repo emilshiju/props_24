@@ -9,6 +9,7 @@ import { storage } from "@/src/service/firebase/firebase_init";
 import { toast } from "react-hot-toast";
 import { uploadProfileImageAPi } from "@/src/lib/api_service_client/user_service/profile_handler";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const ImageUploader = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -125,11 +126,20 @@ const ImageUploader = () => {
         {file ? (
           <div className="flex items-center justify-between border rounded-md p-4 shadow-sm bg-white">
             <div className="flex items-center space-x-4">
-              <img
+              {/* <img
                 src={previewURL}
                 alt="Preview"
                 className="w-[100px] h-[100px]  object-cover rounded-sm"
-              />
+              /> */}
+
+              <Image
+  src={previewURL}
+  alt="Preview"
+  width={100}
+  height={100}
+  className="object-cover rounded-sm"
+/>
+
               <div className="flex flex-col">
                 <span className="text-sm font-medium text-gray-800">
                   {file.name}

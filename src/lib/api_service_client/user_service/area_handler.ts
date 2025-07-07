@@ -1,4 +1,6 @@
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 import axiosClient from "../../axios_client";
+
 
 export const listAllCityApi = async () => {
   try {
@@ -9,12 +11,15 @@ export const listAllCityApi = async () => {
       data: resAllCity.data.message,
       statusCode: resAllCity.status,
     };
-  } catch (error: any) {
-    console.log("error occured in listAllCityAPi", error);
+  } catch (err: unknown) {
+    // console.log("error occured in listAllCityAPi", error);
+
+    const error=getApiErrorMessage(err)
+
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
   }
 };

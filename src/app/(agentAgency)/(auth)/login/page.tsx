@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import loginSchema from "@/src/util/validation/login_scehma";
 import { LoginValues } from "@/src/type/validation_type/formTypes";
 import { loginUserApi } from "@/src/lib/api_service_client/user_service/auth_handler";
@@ -180,9 +180,13 @@ const LoginPage = () => {
                       <div className="w-full border-t border-gray-300" />
                     </div>
                     <div className="relative flex justify-center text-sm">
-                      <span className="bg-white px-2 text-gray-500">
+                      {/* <span className="bg-white px-2 text-gray-500">
                         Don't have an account?
-                      </span>
+                      </span> */}
+                      <span className="bg-white px-2 text-gray-500">
+  Don&apos;t have an account?
+</span>
+
                     </div>
                   </div>
                 </div>

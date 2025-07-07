@@ -1,15 +1,8 @@
 "use client";
-import {
-  MagnifyingGlassIcon,
-  StarIcon,
-  MapPinIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
-} from "@heroicons/react/24/solid";
 
 import Link from "next/link";
 import Image from "next/image";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import {  useRouter } from "next/navigation";
 
 import { useState, useEffect } from "react";
 import {
@@ -20,36 +13,22 @@ import {
   DisclosureButton,
   DisclosurePanel,
   Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
-  ChevronDownIcon,
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { listCityApi } from "@/src/lib/api_service_client/admin_service/city_handler";
-import { listSpecializationApi } from "@/src/lib/api_service_client/admin_service/specialization_handler";
-import {
-  cityResType,
-  specialisation_Res_Type,
-} from "@/src/type/components_type/all_admin_type";
 import {
   getSideBarFilterAPi,
   getChangedSideBarFilterApi,
-  getAll,
-  getAllSearchedListApi,
-  getAllAgentApi,
   getAllAgenciesApi,
 } from "@/src/lib/api_service_client/user_service/filter_handler";
-import { string } from "yup";
 import { agent_agencies } from "@/src/type/components_type/common_type";
 import ReviewStars from "@/src/components/user/reviewStars";
 import FilterSkeleton from "@/src/components/user/filter_skeleton";
+import { FilterOption, FilterSection_Type } from "@/src/type/components_type/filter_type";
 
 export default function Agencies() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -96,10 +75,10 @@ export default function Agencies() {
     valueId: string,
     isChecked: boolean
   ) => {
-    const updatedSideBarFilter: any = sideBarFilter.map((data: any, index) => {
+    const updatedSideBarFilter: FilterSection_Type[] = sideBarFilter.map((data:FilterSection_Type) => {
       if (data.name == sectionName) {
         console.log("got", data.name);
-        data.options = data.options.map((one: any) => {
+        data.options = data.options.map((one: FilterOption) => {
           if (one.value === valueId) {
             console.log("secc", one.value);
             return { ...one, checked: isChecked }; // Set the checked value accordingly
@@ -110,18 +89,20 @@ export default function Agencies() {
 
       return data;
     });
+    console.log("updated side bar filterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+    console.log(updatedSideBarFilter)
 
     setSideBarFilter(updatedSideBarFilter);
 
     setSkeleton(true);
 
-    const filteredResult = await getChangedSideBarFilterApi(
+    const filteredResult = await getChangedSideBarFilterApi({
       updatedSideBarFilter,
-      { sectionName: sectionName },
-      { value: valueId },
-      { status: isChecked },
-      "agencies"
-    );
+      sectionName: sectionName,
+      value: valueId,
+      status: isChecked ,
+      item:"agencies"
+  });
 
     setSkeleton(false);
 
@@ -167,7 +148,7 @@ export default function Agencies() {
 
                 {/* Filters */}
                 <form className="mt-4 border-t border-gray-200">
-                  {sideBarFilter.map((section) => (
+                  {sideBarFilter.map((section:FilterSection_Type) => (
                     <Disclosure
                       key={section.id}
                       as="div"
@@ -192,7 +173,7 @@ export default function Agencies() {
                       </h3>
                       <DisclosurePanel className="pt-6">
                         <div className="space-y-6">
-                          {section.options.map((option, optionIdx) => (
+                          {section.options.map((option:FilterOption, optionIdx:number) => (
                             <div key={option.value} className="flex gap-3">
                               <div className="flex h-5 shrink-0 items-center">
                                 <div className="group grid size-4 grid-cols-1">

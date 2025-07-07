@@ -1,6 +1,6 @@
 import { ProfileData } from "@/src/type/validation_type/profilePage_type";
 import axiosClient from "../../axios_client";
-import { createProfileRes } from "@/src/type/api_type/user_type";
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 
 export const createProfileApi = async (data: ProfileData, imageUrl: string) => {
   try {
@@ -19,13 +19,16 @@ export const createProfileApi = async (data: ProfileData, imageUrl: string) => {
       message: resCreateProfileApi.data.message,
       statusCode: resCreateProfileApi.status,
     };
-  } catch (error: any) {
-    console.log("error occured in createProfileApi", error);
+  } catch (err) {
+    console.log("error occured in createProfileApi", err);
 
-    return {
-      status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
-    };
+     const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
+
   }
 };
 
@@ -40,10 +43,16 @@ export const uploadProfileImageAPi = async (imageUrl: string) => {
       message: resUploadImageAPi.data.message,
       statusCode: resUploadImageAPi.status,
     };
-  } catch (error) {
-    console.log("error in uploadProfileImage", error);
+  } catch (err) {
+    
+     const error=getApiErrorMessage(err)
 
-    return { status: false, message: "error" };
+    return {
+      status: false,
+      data: error
+    };
+
+   
   }
 };
 
@@ -56,13 +65,16 @@ export const getProfileDetailsApi = async (id: string) => {
       data: resProfielDetailsApi.data.message,
       statusCode: resProfielDetailsApi.status,
     };
-  } catch (error: any) {
-    console.log("error occured in getProfileDetails", error);
+  } catch (err) {
+    
+
+     const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+
   }
 };
 
@@ -75,9 +87,14 @@ export const getPropertyDetailsApi = async (id: string) => {
       data: resPropertyDetailsApi.data.message,
       statusCode: resPropertyDetailsApi.status,
     };
-  } catch (error) {
-    console.log("error occured in getPropertyDetailsApi");
+  } catch (err) {
+    
+     const error=getApiErrorMessage(err)
 
-    return { status: false, message: "error" };
+    return {
+      status: false,
+      data: error
+    };
+
   }
 };

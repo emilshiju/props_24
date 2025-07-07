@@ -3,6 +3,7 @@ import {
   resetPasswordValues,
 } from "@/src/type/validation_type/formTypes";
 import axiosClient from "../../axios_client";
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 
 export const confirmEmailApi = async (data: confirmEmailValues) => {
   try {
@@ -13,13 +14,16 @@ export const confirmEmailApi = async (data: confirmEmailValues) => {
       data: ress.data.message,
       statusCode: ress.status,
     };
-  } catch (error: any) {
-    console.log("error occured in teh confirmEmail", error);
+  } catch (err) {
+    
+
+     const error=getApiErrorMessage(err)
 
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
+
   }
 };
 
@@ -35,11 +39,13 @@ export const changePasswordApi = async (
       data: changed.data.message,
       statusCode: changed.status,
     };
-  } catch (error: any) {
-    console.log("error occured in the changePasswordApi", error);
+  } catch (err) {
+    
+    const error=getApiErrorMessage(err)
+
     return {
       status: false,
-      data: error?.response?.data?.message ?? "something went wrong ",
+      data: error
     };
   }
 };

@@ -83,7 +83,7 @@ export async function detailedView(id: string) {
 
     return detailed;
   } catch (error) {
-    console.log("error occured in detailedView");
+    console.log("error occured in detailedView",error);
     return false;
   }
 }
@@ -111,7 +111,7 @@ export async function editProperty(data: editPropertyType) {
 
 export async function deleteProperty(id: string) {
   try {
-    const deleted = await prisma.property.delete({
+     await prisma.property.delete({
       where: { id },
     });
 

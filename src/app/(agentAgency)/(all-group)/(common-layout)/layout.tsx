@@ -1,6 +1,5 @@
 import "../../../globals.css";
 import { Outfit } from "next/font/google";
-import { ThemeProvider } from "@/src/context/agentAgency/theme_context";
 import { SidebarProvider } from "@/src/context/agentAgency/sidebar_context";
 import "@/src/style/agentAgency/agentAgency.css";
 import { checkProfileVerification } from "@/src/lib/api_service_server/user_service/area_handler";

@@ -2,11 +2,10 @@
 
 import { getAllAgenciesApi, getAllAgentApi } from '@/src/lib/api_service_client/user_service/filter_handler';
 import { agent_agencies } from '@/src/type/components_type/common_type';
-import { adminUserReviewSchema, userReviewSchema } from '@/src/util/validation/review_scehma';
+import { adminUserReviewSchema } from '@/src/util/validation/review_scehma';
 import { useEffect, useState } from 'react';
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
+import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { reviewType } from '@/src/type/components_type/all_admin_type';
-import { addReviewDetailsApi } from '@/src/lib/api_service_client/user_service/review_handler';
 import { addReviewAdminApi } from '@/src/lib/api_service_client/admin_service/review_handler';
 import Loader from '@/src/components/loader';
 import toast from 'react-hot-toast';
@@ -108,7 +107,7 @@ const ReviewManagement = () => {
                 validationSchema={adminUserReviewSchema}
                 onSubmit={handleSubmit}
     
-          >{({ values, handleChange, errors, touched }) => (
+          >{({  handleChange, errors, touched }) => (
          
     
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">

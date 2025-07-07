@@ -2,12 +2,12 @@ import { getDetailedCityApi } from "@/src/lib/api_service_server/user_service/ar
 import { cityAndDetaield } from "@/src/type/components_type/all_admin_type";
 
 import {
-  StarIcon,
   MapPinIcon,
-  BuildingOfficeIcon,
+
   HomeIcon,
-  UserGroupIcon,
+
 } from "@heroicons/react/24/solid";
+
 import Link from "next/link";
 
 const DetailsCity = async ({ params }: { params: { id: string } }) => {

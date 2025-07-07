@@ -10,7 +10,7 @@ import {
   detailedCityType,
 } from "@/src/type/components_type/all_admin_type";
 import { use, useEffect, useState, useRef } from "react";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Form, Field, ErrorMessage} from "formik";
 import detailedCityValidationSchema from "@/src/util/validation/cityDetailScehma";
 import { toast } from "react-hot-toast";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -18,6 +18,7 @@ import { storage } from "@/src/service/firebase/firebase_init";
 
 import { useRouter } from "next/navigation";
 import Loader from "@/src/components/loader";
+import Image from "next/image";
 
 const EditDetailedCity = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
@@ -31,7 +32,7 @@ const EditDetailedCity = ({ params }: { params: Promise<{ id: string }> }) => {
 
   const [showLoader, setLoader] = useState(false);
 
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const triggerFileInput = () => {
@@ -82,7 +83,6 @@ const EditDetailedCity = ({ params }: { params: Promise<{ id: string }> }) => {
 
   const handleSubmit = async (
     values: detailedCityType,
-    formikHelpers: FormikHelpers<detailedCityType>
   ) => {
     try {
       let imageUrl: string | null = null;
@@ -127,7 +127,7 @@ const EditDetailedCity = ({ params }: { params: Promise<{ id: string }> }) => {
         toast.error(ress.data);
       }
     } catch (error) {
-      console.log("error occured in handlesubmit");
+      console.log("error occured in handlesubmit",error);
     }
   };
 
@@ -427,11 +427,17 @@ const EditDetailedCity = ({ params }: { params: Promise<{ id: string }> }) => {
 
                       {preview ? (
                         <div className="relative">
-                          <img
+                          {/* <img
                             src={preview}
                             alt="Preview"
                             className="max-h-64 mx-auto rounded-md mb-4"
-                          />
+                          /> */}
+                          <Image
+                              src={preview}
+                              alt="Preview"
+                              fill
+                              className="max-h-64 mx-auto rounded-md mb-4"
+                            />
                           <button
                             type="button"
                             onClick={(e) => {

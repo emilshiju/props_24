@@ -1,3 +1,4 @@
+import { getApiErrorMessage } from "@/src/type/api_type/apiRes_type";
 import axiosClient from "../../axios_client";
 
 export const checkEntityVerified = async () => {
@@ -9,11 +10,14 @@ export const checkEntityVerified = async () => {
       data: resVerified.data.message,
       statusCode: resVerified.status,
     };
-  } catch (error) {
-    console.log("error occured in the checkEntityVerified", error);
-    return {
-      status: false,
-      data: "internal server error",
-    };
+  } catch (err) {
+    
+    const error=getApiErrorMessage(err)
+    
+        return {
+          status: false,
+          data: error
+        };
+
   }
 };

@@ -1,11 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
+import { Formik, Form, Field } from "formik";
 import { ProfileData } from "@/src/type/validation_type/profilePage_type";
 import profileSchema from "@/src/util/validation/profile_scehma";
 import { createProfileApi } from "@/src/lib/api_service_client/user_service/profile_handler";
 import { toast } from "react-hot-toast";
-
+import NextImage from "next/image";
 import { useRouter } from "next/navigation";
 import {
   cityResType,
@@ -65,7 +65,7 @@ const CreateProfile = () => {
 
   const handleSubmit = async (
     values_data: ProfileData,
-    formikHelpers: FormikHelpers<ProfileData>
+    
   ) => {
     console.log("create profile submit");
     console.log(values_data);
@@ -398,11 +398,22 @@ const CreateProfile = () => {
               {file ? (
                 <div className="flex items-center justify-between border rounded-md p-4 shadow-sm bg-white">
                   <div className="flex items-center space-x-4">
-                    <img
+
+                    {/* <img
                       src={previewURL}
                       alt="Preview"
                       className="w-[100px] h-[100px]  object-cover rounded-sm"
+                    /> */}
+
+                     <NextImage
+                      src={previewURL}
+                      alt="Preview"
+                      width={100}
+                      height={100}
+                      className="object-cover rounded-sm"
                     />
+
+
                     <div className="flex flex-col">
                       <span className="text-sm font-medium text-gray-800">
                         {file.name}

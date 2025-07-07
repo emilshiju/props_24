@@ -2,7 +2,7 @@ import { applyComplexFilters, getFilter } from "@/src/controllers/user_controlle
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function GET(request:NextRequest){
+export async function GET(){
 
 
 
@@ -38,7 +38,7 @@ export async function POST(request:NextRequest){
 
         const {sideBarFilteredData,sectionName,currentData,status,item}=await request.json()
         console.log("in serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-        console.log(sideBarFilteredData,sectionName,currentData,status)
+        console.log(sideBarFilteredData,sectionName,currentData,status,item)
 
         const filteredResult =await  applyComplexFilters(sideBarFilteredData,sectionName,currentData,status,item)
 
@@ -49,6 +49,6 @@ export async function POST(request:NextRequest){
 
 
     }catch(error){
-        console.log("error occrued in route user filter post ")
+        console.log("error occrued in route user filter post ",error)
     }
 }

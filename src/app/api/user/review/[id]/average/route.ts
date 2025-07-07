@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-export async function GET(request:NextRequest,{params}:{params:{id:string}}){
+export async function GET(_request:NextRequest,{params}:{params:{id:string}}){
 
 
 
@@ -22,7 +22,7 @@ export async function GET(request:NextRequest,{params}:{params:{id:string}}){
         return NextResponse.json({status:true,message:value},{status:200})
 
     }catch(error){
-        console.log("error occured in the route review average")
+        console.log("error occured in the route review average",error)
         return NextResponse.json({status:false,message:'internal error'},{status:500})
     }
 }
