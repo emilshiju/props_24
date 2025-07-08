@@ -2,15 +2,15 @@ import { detailedView } from "@/src/controllers/admin_controller/city_controller
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function GET(request:NextRequest,{params}:{params:{id:string}}){
+export async function GET(request:NextRequest,{params}:{params: Promise<{ id: string }>}){
 
 
 
     try{
 
 
-        const { id } = await Promise.resolve(params);
-
+        const { id } = await params
+        
         const resCity = await detailedView(id)
 
         console.log("got cityyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")

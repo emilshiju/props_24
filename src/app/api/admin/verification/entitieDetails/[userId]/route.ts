@@ -2,12 +2,12 @@ import { getDetails } from "@/src/controllers/admin_controller/verification_hand
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function GET(request:NextRequest,{params}:{params:{userId:string}}){
+export async function GET(request:NextRequest,{params}:{params: Promise<{ userId: string }>}){
 
     try{
 
 
-        const { userId } = await Promise.resolve(params);
+        const { userId } = await params
 
         const resEntitieDetails = await getDetails(userId)
         

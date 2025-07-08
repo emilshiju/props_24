@@ -5,9 +5,10 @@ import { resetPasswordValues } from "@/src/type/validation_type/formTypes";
 import { changePasswordApi } from "@/src/lib/api_service_client/user_service/resetPassword";
 import toast from "react-hot-toast";
 import { useSearchParams, useRouter,  } from "next/navigation";
-// import Loader from "@/src/components/loader";
+import Loader from "@/src/components/loader";
+import { Suspense } from "react";
 
-const ResetPassword = () => {
+const ResetPasswordForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
@@ -132,6 +133,15 @@ const ResetPassword = () => {
         </div>
       </div>
     </>
+  );
+};
+
+const ResetPassword = () => {
+  return (
+    <Suspense fallback={<div><Loader></Loader></div>}>
+      {/* Or use your Loader component: <Suspense fallback={<Loader />}> */}
+      <ResetPasswordForm />
+    </Suspense>
   );
 };
 

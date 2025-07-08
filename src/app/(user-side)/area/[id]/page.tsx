@@ -10,16 +10,13 @@ import {
 
 import Link from "next/link";
 
-const DetailsCity = async ({ params }: { params: { id: string } }) => {
-  // throw new Error("This is a test error from TestCrash component!");
-
-  const { id } = await Promise.resolve(params);
-
+export default async function DetailsCity({ params }: {params: Promise<{ id: string }>}) {
+  const { id } =await  params;
   const ress = await getDetailedCityApi(id);
-
-  // if (!ress.status) {
-  //   return <div>Error fetching city details.</div>;
-  // }
+  
+  if (!ress.status) {
+    return <div>Error fetching city details.</div>;
+  }
 
   const alldata: cityAndDetaield = ress.data;
 
@@ -249,4 +246,4 @@ const DetailsCity = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default DetailsCity;
+// export default DetailsCity;

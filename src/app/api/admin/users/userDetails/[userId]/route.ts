@@ -2,12 +2,12 @@ import { getUserDetails } from "@/src/controllers/admin_controller/list_user_con
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function GET(request:NextRequest,{params}:{params:{userId:string}}){
+export async function GET(request:NextRequest,{params}:{params: Promise<{ userId: string }>}){
 
 
     try{
 
-        const { userId } = await Promise.resolve(params);
+        const { userId } = await params
 
 
         const resUserDetails = await getUserDetails(userId)

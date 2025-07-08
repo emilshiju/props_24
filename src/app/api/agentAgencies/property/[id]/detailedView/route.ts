@@ -1,17 +1,17 @@
 
 import { detailedView } from "@/src/controllers/agentAgenciesController/property_controller";
-import {  NextResponse } from "next/server";
+import {  NextRequest, NextResponse } from "next/server";
 
 
 
 
-export async function GET({params}:{params:{id:string}}){
+export async function GET(request:NextRequest,{params}:{params: Promise<{ id: string }>}){
 
 
     try{
 
 
-        const { id } = await Promise.resolve(params);
+        const { id } = await params
 
         const detailed  = await detailedView(id)
 

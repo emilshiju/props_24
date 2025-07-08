@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 
-export async function DELETE(request:NextRequest,{params}:{params:{id:string}}){
+export async function DELETE(request:NextRequest,{ params }: {params: Promise<{ id: string }>}){
 
     try{
         console.log("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
-        const { id } = await Promise.resolve(params);
+        const { id } = await params
 
         const ress = await deleteCity(id)
 

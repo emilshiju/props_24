@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter} from "next/navigation";
 import Link from "next/link";
 
@@ -14,8 +14,9 @@ import Image from "next/image";
 import SkeletonList from "@/src/components/user/skeleton_agent";
 import ReviewStars from "@/src/components/user/reviewStars";
 import { AllCity, EntitytProfile } from "@/src/type/components_type/search_type";
+import Loader from "@/src/components/loader";
 
-export default function SearchPage() {
+function SearchPageForm() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search");
   const router = useRouter();
@@ -254,3 +255,15 @@ export default function SearchPage() {
     </>
   );
 }
+
+
+const SearchForm=()=>{
+   return (
+    <Suspense fallback={<div><Loader /></div>}>
+      {/* Or use your Loader component: <Suspense fallback={<Loader />}> */}
+      <SearchPageForm />
+    </Suspense>
+  );
+}
+
+export default SearchForm
