@@ -2,7 +2,8 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  // baseURL: 'http://localhost:3000/api',
+  baseURL: 'https://props-24.vercel.app/api',
 });
 
 axiosClient.interceptors.request.use(
