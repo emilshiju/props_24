@@ -13,7 +13,9 @@ import Link from "next/link";
 export default async function DetailsCity({ params }: {params: Promise<{ id: string }>}) {
   const { id } =await  params;
   const ress = await getDetailedCityApi(id);
-  
+  {console.log("00000000000000000000000000000000000000000000000000000000000000")}
+  console.log(ress.status)
+  console.log("11111111111111111111111111111111111111111111111111111111111111111")
   if (!ress.status) {
     return <div>Error fetching city details.</div>;
   }

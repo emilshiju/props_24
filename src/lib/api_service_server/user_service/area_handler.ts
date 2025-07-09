@@ -6,7 +6,7 @@ export const getDetailedCityApi=async(id:string)=>{
 
     try{
 
-        const res=await fetch(`http://localhost:3000/api/admin/city/${id}/detailedView`, {
+        const res=await fetch(`https://props-24.vercel.app/api/admin/city/${id}/detailedView`, {
             method: 'GET',}
         )
 
