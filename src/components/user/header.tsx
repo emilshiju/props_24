@@ -44,7 +44,7 @@ const Header = () =>{
 
       <nav className="bg-white border-gray-200">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-25 py-5">
-    <Link href='http://localhost:3000'>
+    <Link href='https://props-24.vercel.app'>
     <Image  
       src="/images/props_24.svg" 
       alt="Props24 Logo" 

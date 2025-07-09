@@ -234,7 +234,7 @@ export default async function DetailsCity({ params }: {params: Promise<{ id: str
             </p>
           </div>
           <div className="mt-8 md:mt-0 text-center">
-            <Link href="/agents">
+            <Link href="/agent">
               <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-primary bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
                 Contact an Agent
               </button>
