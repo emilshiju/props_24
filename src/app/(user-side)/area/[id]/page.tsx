@@ -191,35 +191,7 @@ export default async function DetailsCity({ params }: {params: Promise<{ id: str
         </div>
       </div>
 
-      {/* Featured Agents */}
-      {/* <div className="mb-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Agenti di </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-            <Link href={`/agents/`} key='1' className="group">
-              <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                <div className={`relative h-32 bg-gradient-to-br flex items-center justify-center`}>
-                  <div className="h-16 w-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                    <span className="text-white text-2xl font-bold">kjhii</span>
-                  </div>
-                </div>
-                <div className="p-4">
-                  <div className="flex items-center mb-2">
-                  
-                    <span className="ml-2 text-sm text-gray-600">recensioni</span>
-                  </div>
-                  <h3 className="font-semibold text-lg group-hover:text-blue-600">kjhih</h3>
-                  <p className="text-gray-600">ohiuhiuh</p>
-                  <p className="text-sm text-gray-500 mt-2">jhiho</p>
-                </div>
-                <div className="bg-gray-50 px-4 py-3 border-t border-gray-100">
-                  <button className="text-blue-600 text-sm font-medium">Visualizza Profilo &rarr;</button>
-                </div>
-              </div>
-            </Link>
-        
-        </div>
-      </div> */}
+      
 
       {/* Call to Action */}
       <div className="bg-primary rounded-lg shadow-lg overflow-hidden">
