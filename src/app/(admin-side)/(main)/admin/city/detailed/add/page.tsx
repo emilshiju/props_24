@@ -16,7 +16,7 @@ import {
 
 import { toast } from "react-hot-toast";
 import Loader from "@/src/components/loader";
-import Image from "next/image";
+
 
 const MultiSectionForm: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>("city");
