@@ -400,10 +400,9 @@ const MultiSectionForm: React.FC = () => {
                             alt="Preview"
                             className="max-h-64 mx-auto rounded-md mb-4"
                           /> */}
-                          <Image
+                          <img
     src={preview}
     alt="Preview"
-    fill
     className="max-h-64 mx-auto rounded-md mb-4"
   />
                           <button
